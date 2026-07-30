@@ -3,7 +3,7 @@
    Paleta Basada en Logo Oficial: Voxel Amber Gold, Emerald Forest & Obsidian Nether
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&family=Unbounded:wght@700;800;900&display=swap');
 
 :root {
   /* Tokens Semánticos Oficiales (/diseño SKILL COMPLIANT) */
@@ -40,9 +40,9 @@
   --rarity-legendary: #fbbf24;
   --rarity-legendary-glow: 0 0 40px rgba(251, 191, 36, 0.7);
 
-  /* Tipografía Profesional (/diseño: 16px min body, line-height 1.5-1.75) */
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-title: 'Outfit', sans-serif;
+  /* Tipografía Editorial Display (/diseño: referencia Morist/Horizon con carácter geométrico arquitectónico) */
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-title: 'Unbounded', 'Syne', sans-serif;
 
   /* Elevaciones & Transiciones (Microinteracciones 150-300ms) */
   --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -489,10 +489,11 @@ button {
 
 .hero-title {
   font-family: var(--font-title);
-  font-size: clamp(3rem, 6.5vw, 5.4rem);
+  font-size: clamp(2.8rem, 6.2vw, 5.2rem);
   font-weight: 900;
   line-height: 1.05;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
   margin-bottom: 1.5rem;
   text-shadow: 0 8px 32px rgba(0,0,0,0.95);
 }
@@ -593,9 +594,10 @@ button {
 
 .section-title {
   font-family: var(--font-title);
-  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+  font-size: clamp(2.2rem, 4.2vw, 3.2rem);
   font-weight: 900;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
   margin-bottom: 1.25rem;
   line-height: 1.15;
 }
