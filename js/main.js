@@ -287,7 +287,7 @@ function createProductCardHTML(product) {
   const origPriceDisplay = product.originalPrice ? `$${product.originalPrice.toFixed(2)}` : '';
 
   // Asignar textura generada por AI para ítems clave si está disponible
-  let iconContent = `<span>${product.icon}</span>`;
+  let iconContent = product.icon;
   if (product.slug === 'mvp-plus' || product.slug === 'vip-plus') {
     iconContent = `<img src="img/vip-badge.png" alt="${product.name}" />`;
   } else if (product.slug === 'pet-dragon') {
@@ -432,7 +432,9 @@ function renderCartDrawerItems() {
   if (cart.length === 0) {
     bodyEl.innerHTML = `
       <div class="cart-empty-state">
-        <p style="font-size: 2.8rem; margin-bottom: 0.5rem;">🛒</p>
+        <div style="margin-bottom: 0.75rem; color: var(--color-text-muted);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        </div>
         <p>Tu carrito está vacío</p>
       </div>
     `;
@@ -443,7 +445,7 @@ function renderCartDrawerItems() {
   bodyEl.innerHTML = cart.map(item => `
     <div class="cart-item">
       <div style="display: flex; align-items: center; gap: 0.85rem;">
-        <div style="font-size: 1.5rem;">${item.icon}</div>
+        <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">${item.icon}</div>
         <div class="cart-item-info">
           <span class="cart-item-name">${item.name}</span>
           <span class="cart-item-price">$${item.price.toFixed(2)} USD</span>
@@ -453,7 +455,7 @@ function renderCartDrawerItems() {
         <button class="qty-btn js-qty-dec" data-id="${item.id}">-</button>
         <span style="min-width: 20px; text-align: center; font-weight: 700;">${item.quantity}</span>
         <button class="qty-btn js-qty-inc" data-id="${item.id}">+</button>
-        <button class="cart-item-remove js-remove-item" data-id="${item.id}" title="Eliminar">×</button>
+        <button class="cart-item-remove js-remove-item" data-id="${item.id}" title="Eliminar" aria-label="Eliminar ítem">×</button>
       </div>
     </div>
   `).join('');
@@ -514,7 +516,7 @@ function openProductModal(productId) {
   } else if (product.slug === 'pet-dragon') {
     iconBox.innerHTML = `<img src="img/dragon-pet.png" alt="${product.name}" />`;
   } else {
-    iconBox.textContent = product.icon;
+    iconBox.innerHTML = product.icon;
   }
 
   document.getElementById('modal-product-name').textContent = product.name;
