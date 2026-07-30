@@ -27,7 +27,59 @@ document.addEventListener('DOMContentLoaded', () => {
   initCartDrawer();
   initProductModal();
   initCheckoutModal();
+  initTransparentIcons();
 });
+
+/**
+ * 0.1. Eliminación dinámica de fondo negro (Alpha Transparente) para logo e íconos AI
+ */
+function initTransparentIcons() {
+  const checkAndRemoveBg = () => {
+    const images = document.querySelectorAll('.hero-main-logo, .navbar-logo-img, .category-icon-ai, .item-icon-wrap img, .detail-icon-box img');
+    images.forEach(img => {
+      if (img.complete && img.naturalWidth > 0) {
+        removeBlackBg(img);
+      } else {
+        img.addEventListener('load', () => removeBlackBg(img), { once: true });
+      }
+    });
+  };
+  checkAndRemoveBg();
+  setTimeout(checkAndRemoveBg, 600);
+}
+
+function removeBlackBg(img) {
+  try {
+    if (img.dataset.bgRemoved) return;
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const w = img.naturalWidth || img.width;
+    const h = img.naturalHeight || img.height;
+    if (!w || !h) return;
+
+    canvas.width = w;
+    canvas.height = h;
+    ctx.drawImage(img, 0, 0, w, h);
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      if (r < 28 && g < 28 && b < 28) {
+        data[i + 3] = 0; // Transparencia absoluta
+      } else if (r < 45 && g < 45 && b < 45) {
+        data[i + 3] = Math.min(255, Math.floor(Math.max(r, g, b) * 5));
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+    img.src = canvas.toDataURL('image/png');
+    img.dataset.bgRemoved = 'true';
+  } catch (err) {
+    // Si la imagen es externa o falla, CSS mix-blend-mode: screen se encarga
+  }
+}
 
 /**
  * 0. Partículas interactivas estilo Minecraft Shader en el Hero
