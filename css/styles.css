@@ -417,20 +417,20 @@ button {
 }
 
 .hero-main-logo {
-  max-width: 440px;
-  width: 90%;
+  max-width: 520px;
+  width: 94%;
   height: auto;
   border: none;
   background: transparent;
   box-shadow: none;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 45px rgba(245, 158, 11, 0.55)) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9));
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 65px rgba(245, 158, 11, 0.45));
   transition: transform var(--transition-smooth);
 }
 
 .hero-main-logo:hover {
-  transform: scale(1.06) rotate(-2deg);
-  filter: drop-shadow(0 0 65px rgba(245, 158, 11, 0.85)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.95));
+  transform: scale(1.05) rotate(-1.5deg);
+  filter: drop-shadow(0 25px 55px rgba(0, 0, 0, 1)) drop-shadow(0 0 85px rgba(245, 158, 11, 0.85));
 }
 
 @keyframes float-logo {

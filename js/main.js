@@ -63,21 +63,54 @@ function removeBlackBg(img) {
     const imgData = ctx.getImageData(0, 0, w, h);
     const data = imgData.data;
 
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      if (r < 28 && g < 28 && b < 28) {
-        data[i + 3] = 0; // Transparencia absoluta
-      } else if (r < 45 && g < 45 && b < 45) {
-        data[i + 3] = Math.min(255, Math.floor(Math.max(r, g, b) * 5));
+    // BFS Flood Fill desde las 4 esquinas exteriores para eliminar solo el fondo y jamás el interior
+    const visited = new Uint8Array(w * h);
+    const queue = [0, w - 1, (h - 1) * w, (h - 1) * w + w - 1];
+    queue.forEach(idx => (visited[idx] = 1));
+
+    let head = 0;
+    while (head < queue.length) {
+      const idx = queue[head++];
+      const x = idx % w;
+      const y = Math.floor(idx / w);
+      const pixelIdx = idx * 4;
+
+      const r = data[pixelIdx];
+      const g = data[pixelIdx + 1];
+      const b = data[pixelIdx + 2];
+
+      // Si el píxel es fondo oscuro del exterior
+      if (r < 42 && g < 42 && b < 42) {
+        data[pixelIdx + 3] = 0; // Transparencia pura exterior
+      } else if (r < 75 && g < 75 && b < 75) {
+        // Suavizado antialiasing de borde para que no quede halo oscuro
+        const maxVal = Math.max(r, g, b);
+        data[pixelIdx + 3] = Math.min(255, Math.floor((maxVal - 35) * 6.5));
+        if (data[pixelIdx + 3] <= 0) data[pixelIdx + 3] = 0;
+      } else {
+        continue; // Borde interior del logo: detener expansión del flood fill
+      }
+
+      // Expandir a los 4 vecinos
+      const neighbors = [];
+      if (x > 0) neighbors.push(idx - 1);
+      if (x < w - 1) neighbors.push(idx + 1);
+      if (y > 0) neighbors.push(idx - w);
+      if (y < h - 1) neighbors.push(idx + w);
+
+      for (let n of neighbors) {
+        if (!visited[n]) {
+          visited[n] = 1;
+          queue.push(n);
+        }
       }
     }
+
     ctx.putImageData(imgData, 0, 0);
     img.src = canvas.toDataURL('image/png');
     img.dataset.bgRemoved = 'true';
   } catch (err) {
-    // Si la imagen es externa o falla, CSS mix-blend-mode: screen se encarga
+    // Si falla por seguridad de origen, el logo se muestra con opacidad normal
   }
 }
 
