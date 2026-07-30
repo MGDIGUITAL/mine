@@ -1,504 +1,358 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AetherCraft Network | Servidor Minecraft Semi-Anárquico, SMP & SkyWars</title>
-  <meta name="description" content="Únete a AetherCraft Network, el servidor de Minecraft definitivo en español. SMP Survival Economía, Torneos PvP sin lag, recompensas épicas y soporte para versiones 1.16 - 1.21.">
-  
-  <!-- Custom Vanilla Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyLifeCraft — Tienda Oficial & Comunidad del Servidor de Minecraft</title>
+  <meta name="description" content="Bienvenido a MyLifeCraft. Explora nuestra tienda oficial con rangos VIP, MVP, monedas, llaves, kits y cosméticos con entrega automática al instante." />
+  <meta name="keywords" content="Minecraft, MyLifeCraft, Servidor Minecraft, Tienda Minecraft, Rangos VIP, MVP, Cosméticos Minecraft" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <!-- ======================================================================
-       HEADER & NAVBAR
-       ====================================================================== -->
-  <header class="site-header" id="main-header">
-    <nav class="nav-container" aria-label="Navegación Principal">
-      <a href="#inicio" class="brand-logo" aria-label="AetherCraft Network Inicio">
-        <div class="brand-icon">
-          <!-- Cube SVG Icon -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-          </svg>
-        </div>
-        <span>AETHER<span class="brand-text-highlight">CRAFT</span></span>
+  <!-- HEADER / NAVBAR FIJA -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#inicio" class="brand-logo">
+        <div class="brand-icon-box">M</div>
+        <span>MyLife<span class="brand-highlight">Craft</span></span>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#inicio" class="nav-link active">Inicio</a></li>
-        <li><a href="#modos" class="nav-link">Modos de Juego</a></li>
-        <li><a href="#leaderboard" class="nav-link">Top Jugadores</a></li>
-        <li><a href="#rango-vip" class="nav-link">Tienda & Rangos</a></li>
-        <li><a href="#faq" class="nav-link">Preguntas</a></li>
-      </ul>
+      <nav class="nav-links">
+        <a href="#inicio" class="nav-link active">Inicio</a>
+        <a href="#tienda" class="nav-link">Tienda</a>
+        <a href="#como-funciona" class="nav-link">¿Cómo Funciona?</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </nav>
 
       <div class="nav-actions">
-        <!-- Interactive IP Pill -->
-        <button class="server-ip-pill js-copy-ip" id="nav-copy-ip-btn" title="Haz clic para copiar la IP del servidor" aria-label="Copiar IP del servidor">
-          <span class="ip-status-indicator"></span>
-          <span class="ip-label-wrap">
-            <span class="ip-label">Servidor 1.20+</span>
-            <span class="ip-text">mc.aethercraft.net</span>
-          </span>
-          <span class="btn-copy">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span>Copiar IP</span>
-          </span>
+        <button class="nav-ip-pill js-copy-ip" title="Copiar IP del servidor">
+          <span class="status-dot"></span>
+          <span>play.mylifecraft.net</span>
+        </button>
+
+        <button class="cart-toggle-btn js-toggle-cart" title="Ver carrito de compras">
+          <span>🛒 Carrito</span>
+          <span class="cart-count-badge" id="cart-count-badge">0</span>
         </button>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <!-- ======================================================================
-       MAIN CONTENT
-       ====================================================================== -->
   <main>
-    
-    <!-- HERO SECTION -->
-    <section class="hero-section" id="inicio">
+    <!-- HERO FULLSCREEN -->
+    <section id="inicio" class="hero-section">
+      <div class="hero-overlay"></div>
       <div class="hero-content">
-        <div class="hero-badge" id="online-badge">
-          <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
-          <span>ESTADO: ONLINE • <strong id="live-player-count">1,248</strong> JUGADORES CONECTADOS</span>
+        <div class="hero-status-badge">
+          <span class="status-dot"></span>
+          <span>Servidor Activo — <strong id="online-player-count">...</strong> Jugadores en Línea</span>
         </div>
 
         <h1 class="hero-title">
-          El Siguiente Nivel en <span class="gradient-text">Servidores Minecraft</span>
+          Tu Aventura Comienza en <span>MyLifeCraft</span>
         </h1>
 
-        <p class="hero-description">
-          Una experiencia multijugador diseñada con rendimiento ultrarrápido, economía dinámica, protecciones anticheat de última generación y una comunidad hispanohablante activa 24/7.
+        <p class="hero-subtitle">
+          Explora un servidor diseñado para ofrecerte la máxima inmersión con economía dinámica, recompensas exclusivas y rangos de prestigio. Copia la IP y únete hoy.
         </p>
 
-        <div class="hero-cta-group">
-          <button class="btn btn-primary js-copy-ip" id="hero-copy-ip-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-              <polyline points="10 17 15 12 10 7"></polyline>
-              <line x1="15" y1="12" x2="3" y2="12"></line>
-            </svg>
-            <span>Jugar Ahora — mc.aethercraft.net</span>
-          </button>
-
-          <a href="#rango-vip" class="btn btn-secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-            <span>Ver Tienda de Rangos</span>
-          </a>
-        </div>
-
-        <!-- Live Server Statistics Strip -->
-        <div class="hero-stats-strip">
-          <div class="stat-item">
-            <span class="stat-number">
-              <span>99.9%</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
-            <span class="stat-label">Uptime Garantizado</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">
-              <span>18 ms</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-            </span>
-            <span class="stat-label">Ping Promedio Latam/ES</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">
-              <span>1.16 - 1.21</span>
-            </span>
-            <span class="stat-label">Compatibilidad Multi-Versión</span>
-          </div>
+        <div class="hero-actions">
+          <a href="#tienda" class="btn btn-green">Ir a la Tienda Oficial</a>
+          <button class="btn btn-secondary js-copy-ip">📋 Copiar IP (play.mylifecraft.net)</button>
         </div>
       </div>
     </section>
 
-    <!-- GAME MODES SECTION (BENTO GRID) -->
-    <section class="section-container" id="modos">
-      <div class="section-header">
-        <span class="section-tag">Modos de Juego</span>
-        <h2 class="section-title">Elige Tu Propia Aventura</h2>
-        <p class="section-subtitle">
-          Servidores dedicados con infraestructura escalable, sin lag ni reinicios inesperados. Explora modos de juego personalizados.
-        </p>
-      </div>
-
-      <div class="bento-grid">
-        <!-- Card 1: SMP Survival Economía (Span 2) -->
-        <div class="bento-card span-2" id="mode-survival">
-          <div>
-            <div class="bento-icon-wrapper">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-            </div>
-            <h3 class="bento-title">Survival SMP • Economía & Protección</h3>
-            <p class="bento-desc">
-              Construye ciudades, comercia en subastas dinámicas, obtén trabajos y protege tus construcciones de forma intuitiva. Incluye encantamientos personalizados y eventos de jefes mundiales cada fin de semana.
-            </p>
-          </div>
-          <div class="bento-tags">
-            <span class="tag">Economía Realista</span>
-            <span class="tag">Protección de Tierras</span>
-            <span class="tag">Subastas /ah</span>
-            <span class="tag">Guerras de Clanes</span>
-          </div>
-        </div>
-
-        <!-- Card 2: SkyWars / BedWars -->
-        <div class="bento-card" id="mode-skywars">
-          <div>
-            <div class="bento-icon-wrapper" style="background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.25); color: var(--accent-cyan);">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-              </svg>
-            </div>
-            <h3 class="bento-title">SkyWars & PvP Competitivo</h3>
-            <p class="bento-desc">
-              Combates rápidos en islas flotantes con sistema ELO, torneos semanales con recompensas en USD y cosméticos exclusivos para los ganadores.
-            </p>
-          </div>
-          <div class="bento-tags">
-            <span class="tag">PvP Fluido</span>
-            <span class="tag">Matchmaking 1v1 / 2v2</span>
-          </div>
-        </div>
-
-        <!-- Card 3: RPG Dungeons -->
-        <div class="bento-card" id="mode-rpg">
-          <div>
-            <div class="bento-icon-wrapper" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.25); color: var(--accent-gold);">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-            </div>
-            <h3 class="bento-title">Mazmorras RPG & Jefes Épicos</h3>
-            <p class="bento-desc">
-              Adéntrate en calabozos procedimentales con tus amigos, derrota dragones y mejora tu equipamiento con reliquias legendarias.
-            </p>
-          </div>
-          <div class="bento-tags">
-            <span class="tag">Armas Legendarias</span>
-            <span class="tag">Misiones Diarias</span>
-          </div>
-        </div>
-
-        <!-- Card 4: Infraestructura & Comunidad (Span 2) -->
-        <div class="bento-card span-2" id="mode-infra">
-          <div>
-            <div class="bento-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25); color: #10b981;">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-            </div>
-            <h3 class="bento-title">Infraestructura Dedicada & Soporte Anticheat</h3>
-            <p class="bento-desc">
-              Servidor alojado en bare-metal de alto rendimiento (Ryzen 9 7950X, NVMe Gen4), protección DDoS de clase empresarial e IA de moderación para garantizar una experiencia justa sin trampas ni toxicidad.
-            </p>
-          </div>
-          <div class="bento-tags">
-            <span class="tag">Anti-Cheat Heurístico</span>
-            <span class="tag">Cero Lag</span>
-            <span class="tag">Soporte 24/7 en Español</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LEADERBOARD SECTION -->
-    <section class="section-container" id="leaderboard">
-      <div class="section-header">
-        <span class="section-tag">Clasificación en Vivo</span>
-        <h2 class="section-title">Salón de la Fama</h2>
-        <p class="section-subtitle">
-          Datos actualizados en tiempo real del servidor. Domina el PvP y la economía para asegurar tu puesto entre los mejores.
-        </p>
-      </div>
-
-      <div class="leaderboard-widget">
-        <div class="leaderboard-header">
-          <div>
-            <h3 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 800;">Temporada 4 • Clasificación</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">Actualización cada 60 segundos</p>
-          </div>
-          
-          <!-- Interactive Leaderboard Tabs -->
-          <div class="leaderboard-tabs" id="leaderboard-tabs" aria-label="Pestañas de clasificación">
-            <button class="tab-btn active js-leaderboard-tab" data-tab="kills">Top Kills</button>
-            <button class="tab-btn js-leaderboard-tab" data-tab="economy">Top Economía</button>
-            <button class="tab-btn js-leaderboard-tab" data-tab="time">Tiempo Jugado</button>
-          </div>
-        </div>
-
-        <div class="leaderboard-table-wrap">
-          <table class="leaderboard-table" aria-label="Tabla de jugadores">
-            <thead>
-              <tr>
-                <th style="width: 80px;">Rango</th>
-                <th>Jugador / Clan</th>
-                <th>Puntuación</th>
-                <th style="width: 140px;">Estado</th>
-              </tr>
-            </thead>
-            <tbody id="leaderboard-body">
-              <!-- Dynamically rendered by main.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIP & STORE RANKS SECTION -->
-    <section class="section-container" id="rango-vip">
-      <div class="section-header">
-        <span class="section-tag">Tienda Oficial</span>
-        <h2 class="section-title">Desbloquea Poderes con Rangos</h2>
-        <p class="section-subtitle">
-          El 100% de las contribuciones se destinan a mantener la infraestructura y financiar nuevos eventos. Entrega inmediata in-game.
-        </p>
-      </div>
-
-      <div class="ranks-grid">
-        <!-- Rank 1: VIP -->
-        <article class="rank-card" id="rank-vip">
-          <h3 class="rank-name" style="color: var(--accent-cyan);">Rango VIP</h3>
-          <div class="rank-price">$4.99 <span>/ mensual</span></div>
-          <ul class="rank-features">
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Prefijo exclusivo <strong>[VIP]</strong> en chat</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Comando <code>/fly</code> en lobby y protecciones</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>3 Hogares adicionales (<code>/sethome</code>)</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Kit VIP cada 48 horas</span>
-            </li>
-          </ul>
-          <a href="#contacto" class="btn btn-secondary" style="margin-top: auto;">Adquirir Rango</a>
-        </article>
-
-        <!-- Rank 2: MVP (Featured) -->
-        <article class="rank-card featured" id="rank-mvp">
-          <span class="rank-badge-tag">MÁS POPULAR</span>
-          <h3 class="rank-name" style="color: var(--accent-emerald);">Rango MVP+</h3>
-          <div class="rank-price">$12.99 <span>/ permanente</span></div>
-          <ul class="rank-features">
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Prefijo brillante <strong>[MVP+]</strong> y color en chat</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Mascotas cosméticas y partículas custom</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>10 Hogares adicionales & mochila virtual</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Acceso prioritario al servidor completo</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Canal de soporte VIP en Discord</span>
-            </li>
-          </ul>
-          <a href="#contacto" class="btn btn-primary" style="margin-top: auto;">Adquirir MVP+</a>
-        </article>
-
-        <!-- Rank 3: LEYENDA -->
-        <article class="rank-card" id="rank-leyenda">
-          <h3 class="rank-name" style="color: var(--accent-gold);">Rango LEYENDA</h3>
-          <div class="rank-price">$24.99 <span>/ permanente</span></div>
-          <ul class="rank-features">
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Prefijo dorado dorado <strong>[LEYENDA]</strong></span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Hogares ilimitados y doble mochila virtual</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Anuncio personalizado de conexión al servidor</span>
-            </li>
-            <li>
-              <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Rol distinguido & canal privado en Discord</span>
-            </li>
-          </ul>
-          <a href="#contacto" class="btn btn-gold" style="margin-top: auto;">Ser Leyenda</a>
-        </article>
-      </div>
-    </section>
-
-    <!-- DISCORD COMMUNITY BANNER -->
+    <!-- PRODUCTOS DESTACADOS (FEATURED) -->
     <section class="section-container">
-      <div class="community-banner">
-        <div class="community-info">
-          <h3>¿Listo para unirte a la Comunidad?</h3>
-          <p>Únete a nuestro servidor de Discord oficial con más de 12,000 miembros. Participa en sorteos, reporta dudas y encuentra un clan para dominar en el Survival.</p>
-        </div>
-        <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="btn btn-discord">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path>
-          </svg>
-          <span>Unirse a Discord</span>
-        </a>
+      <div class="section-header">
+        <span class="section-tag">🔥 Lo Más Popular</span>
+        <h2 class="section-title">Productos Destacados</h2>
+        <p class="section-subtitle">
+          Los paquetes favoritos de nuestra comunidad con acceso prioritario y beneficios inmediatos.
+        </p>
+      </div>
+
+      <div class="products-grid" id="featured-products-grid">
+        <!-- Generado dinámicamente desde main.js -->
       </div>
     </section>
 
-    <!-- FAQ SECTION -->
-    <section class="section-container" id="faq">
+    <!-- ¿CÓMO FUNCIONA? -->
+    <section id="como-funciona" class="section-container">
       <div class="section-header">
-        <span class="section-tag">Ayuda & Soporte</span>
+        <span class="section-tag">⚡ Entrega Inmediata</span>
+        <h2 class="section-title">¿Cómo Funciona el Proceso de Compra?</h2>
+        <p class="section-subtitle">
+          Obtén tus rangos y monedas en menos de 60 segundos en tres sencillos pasos.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <div class="step-icon">🛒</div>
+          <h3 class="step-title">1. Elige tus Paquetes</h3>
+          <p class="step-desc">
+            Navega por nuestro catálogo de rangos, monedas, llaves o cosméticos y agrégalos a tu carrito.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <div class="step-icon">🎮</div>
+          <h3 class="step-title">2. Ingresa tu Usuario</h3>
+          <p class="step-desc">
+            Escribe tu nick de Minecraft en el checkout. Validamos tu nombre de usuario y skin con la API oficial de Mojang.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <div class="step-icon">🚀</div>
+          <h3 class="step-title">3. Recibe al Instante</h3>
+          <p class="step-desc">
+            Al confirmar tu orden, nuestro sistema RCON entrega tus ventajas de forma automática dentro del juego.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIENDA COMPLETA CON TABS Y BUSCADOR -->
+    <section id="tienda" class="section-container">
+      <div class="section-header">
+        <span class="section-tag">💎 Catálogo Oficial</span>
+        <h2 class="section-title">Tienda MyLifeCraft</h2>
+        <p class="section-subtitle">
+          Selecciona una categoría o utiliza la búsqueda para encontrar el ítem que necesitas.
+        </p>
+      </div>
+
+      <div class="store-controls">
+        <div class="category-tabs" id="category-tabs-container">
+          <!-- Categorías generadas por JS -->
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="store-search-input" 
+            class="search-input" 
+            placeholder="Buscar rangos, monedas, kits..." 
+          />
+        </div>
+      </div>
+
+      <div class="products-grid" id="store-products-grid">
+        <!-- Productos filtrados generados por JS -->
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-container" style="max-width: 900px;">
+      <div class="section-header">
+        <span class="section-tag">❓ Soporte</span>
         <h2 class="section-title">Preguntas Frecuentes</h2>
         <p class="section-subtitle">
-          Resolvemos tus dudas sobre versiones, conexión, compras de tienda y normativas generales.
+          Respuestas rápidas a las consultas habituales sobre nuestra tienda y métodos de pago.
         </p>
       </div>
 
-      <div class="faq-list">
-        <article class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>¿Qué versiones de Minecraft son compatibles con el servidor?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">
-              Puedes conectarte desde cualquier versión de Minecraft Java Edition entre la <strong>1.16 y la 1.21</strong>. Recomendamos usar la versión 1.20.4 o superior para disfrutar del máximo rendimiento y los bloques más nuevos.
-            </div>
-          </div>
-        </article>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">
+            ¿Cuánto tarda en llegar un rango o paquete a mi cuenta?
+          </summary>
+          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem;">
+            El proceso es 100% automatizado. Una vez que el pago es confirmado, los beneficios aparecen en el servidor de 30 a 60 segundos. Si estás conectado en el momento de la compra, recibirás una notificación en el chat.
+          </p>
+        </details>
 
-        <article class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>¿Es compatible con Minecraft Bedrock (Pe, Consolas)?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">
-              ¡Sí! Contamos con GeyserMC integrado. Puedes entrar desde Bedrock usando la IP <code>mc.aethercraft.net</code> y el puerto por defecto <strong>19132</strong>.
-            </div>
-          </div>
-        </article>
+        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">
+            ¿Qué métodos de pago son aceptados?
+          </summary>
+          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem;">
+            Aceptamos tarjetas de crédito y débito de toda Latinoamérica mediante MercadoPago, además de transferencias bancarias locales y saldo disponible en plataformas asociadas.
+          </p>
+        </details>
 
-        <article class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>¿Cuánto tiempo tardan en activarse los rangos después de comprar?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">
-              Todas las compras se procesan de forma automatizada mediante Tebex. Normalmente, tu rango y recompensas estarán disponibles en un plazo de 1 a 3 minutos dentro del servidor tras confirmar el pago.
-            </div>
-          </div>
-        </article>
-
-        <article class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>¿Cuáles son las reglas principales en el modo Survival?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">
-              No permitimos el uso de clientes modificados para obtener ventajas competitivas (Hacks/X-Ray), el grifeo en zonas protegidas ni el spam abusivo en el chat global. Revisa la normativa extendida en nuestro Discord.
-            </div>
-          </div>
-        </article>
+        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">
+            ¿Qué hago si escribí mal mi usuario de Minecraft en la compra?
+          </summary>
+          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem;">
+            Nuestro sistema incluye validación de usuario de Mojang en tiempo real para evitar errores. Sin embargo, si llegaste a confirmar con un nick incorrecto, comunícate al instante con nuestro soporte en Discord con tu número de orden.
+          </p>
+        </details>
       </div>
     </section>
-
   </main>
 
-  <!-- ======================================================================
-       FOOTER
-       ====================================================================== -->
+  <!-- MODAL DE DETALLE DE PRODUCTO -->
+  <div class="modal-overlay" id="product-modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="product-modal-close" title="Cerrar modal">×</button>
+
+      <div class="detail-header">
+        <div class="detail-icon-box" id="modal-product-icon">👑</div>
+        <div>
+          <span class="rarity-badge" id="modal-product-rarity">rare</span>
+          <h3 id="modal-product-name" style="font-size: 1.75rem; font-weight: 700; margin-top: 0.35rem;">Nombre</h3>
+          <p id="modal-product-price" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-green); margin-top: 0.25rem;">$0.00 USD</p>
+        </div>
+      </div>
+
+      <p id="modal-product-desc" style="color: var(--text-secondary); margin-bottom: 1.75rem; font-size: 1rem; line-height: 1.6;"></p>
+
+      <h4 class="detail-benefits-title">✨ Beneficios Incluidos en el Paquete:</h4>
+      <ul class="benefits-list" id="modal-product-benefits"></ul>
+
+      <button class="btn btn-green" id="product-modal-add-btn" style="width: 100%; padding: 1rem;">
+        🛒 Agregar al Carrito de Compras
+      </button>
+    </div>
+  </div>
+
+  <!-- CARRITO DE COMPRAS DRAWER -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay">
+    <aside class="cart-drawer">
+      <div class="cart-header">
+        <h3>Tu Carrito de Compras</h3>
+        <button class="modal-close-btn" id="cart-drawer-close" style="position: static;">×</button>
+      </div>
+
+      <div class="cart-items-body" id="cart-items-body">
+        <!-- Ítems renderizados por JS -->
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-total-row">
+          <span>Total a Pagar:</span>
+          <span id="cart-total-price" style="color: var(--accent-green);">$0.00 USD</span>
+        </div>
+        <button class="btn btn-green" id="btn-go-checkout" style="width: 100%; padding: 1rem;">
+          Proceder al Pago
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- MODAL DE CHECKOUT CON VALIDACIÓN MOJANG -->
+  <div class="modal-overlay" id="checkout-modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="checkout-modal-close" title="Cerrar checkout">×</button>
+
+      <h3 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem;">Completar Pedido</h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">
+        Verifica tu usuario de Minecraft para asegurar que los beneficios se entreguen en tu cuenta correcta.
+      </p>
+
+      <form id="checkout-form">
+        <div class="form-group">
+          <label class="form-label" for="input-mc-username">1. Nombre de Usuario en Minecraft (Nick)</label>
+          <div style="display: flex; gap: 0.6rem;">
+            <input 
+              type="text" 
+              id="input-mc-username" 
+              class="form-input" 
+              placeholder="Ej. Notch o Steve" 
+              required 
+            />
+            <button type="button" class="btn btn-secondary" id="btn-validate-mojang" style="white-space: nowrap;">
+              Verificar Nick
+            </button>
+          </div>
+
+          <!-- Preview de Cabeza de Minecraft al Validar -->
+          <div class="mojang-preview-box" id="mojang-preview-box">
+            <img id="mojang-head-img" src="" alt="Player Head" class="player-head-img" />
+            <span id="mojang-preview-name" style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-email">2. Correo Electrónico (Para recibo de compra)</label>
+          <input 
+            type="email" 
+            id="input-email" 
+            class="form-input" 
+            placeholder="ejemplo@correo.com" 
+            required 
+          />
+        </div>
+
+        <div style="margin: 2rem 0; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 500;">Total a Pagar:</span>
+          <span id="checkout-total-price" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-green);">$0.00 USD</span>
+        </div>
+
+        <button type="submit" class="btn btn-green" style="width: 100%; padding: 1rem; font-size: 1rem;">
+          ⚡ Confirmar Pedido y Pagar (MercadoPago)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- NOTIFICACIÓN TOAST -->
+  <div class="toast-alert" id="toast-alert">
+    <span>✨</span>
+    <span class="toast-msg">Notificación del sistema</span>
+  </div>
+
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-content">
-      <div class="footer-brand">
-        <a href="#inicio" class="brand-logo">
-          <div class="brand-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-          </div>
-          <span>AETHER<span class="brand-text-highlight">CRAFT</span></span>
+      <div class="footer-col">
+        <a href="#inicio" class="brand-logo" style="margin-bottom: 1rem;">
+          <div class="brand-icon-box">M</div>
+          <span>MyLife<span class="brand-highlight">Craft</span></span>
         </a>
-        <p>
-          Portal oficial de la comunidad de AetherCraft Network. Multijugador Minecraft de alto rendimiento y sin lag.
+        <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 320px;">
+          El servidor de Minecraft pensado para ofrecer la mejor experiencia multijugador con economía equilibrada, eventos y comunidad activa.
         </p>
       </div>
 
       <div class="footer-col">
-        <h4>Servidor</h4>
+        <h4>Tienda Oficial</h4>
         <ul>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#modos">Modos de Juego</a></li>
-          <li><a href="#leaderboard">Clasificación</a></li>
-          <li><a href="#rango-vip">Tienda Oficial</a></li>
+          <li><a href="#tienda">👑 Rangos VIP</a></li>
+          <li><a href="#tienda">💰 Paquetes de Monedas</a></li>
+          <li><a href="#tienda">🗝️ Llaves de Cofres</a></li>
+          <li><a href="#tienda">✨ Cosméticos y Pets</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Comunidad</h4>
         <ul>
-          <li><a href="https://discord.gg" target="_blank" rel="noopener noreferrer">Discord</a></li>
-          <li><a href="#faq">Soporte & Ayuda</a></li>
-          <li><a href="#normativa">Normativa General</a></li>
-          <li><a href="#eventos">Torneos & Sorteos</a></li>
+          <li><a href="https://discord.gg" target="_blank" rel="noopener">Servidor de Discord</a></li>
+          <li><a href="#faq">Preguntas Frecuentes</a></li>
+          <li><a href="#como-funciona">Guía de Entrega</a></li>
+          <li><a href="#inicio">Copiar IP del Servidor</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Legal</h4>
+        <h4>Servidor</h4>
         <ul>
-          <li><a href="#términos">Términos de Servicio</a></li>
-          <li><a href="#privacidad">Política de Privacidad</a></li>
-          <li><a href="#reembolsos">Política de Reembolso</a></li>
+          <li style="color: var(--accent-green); font-weight: 700;">IP: play.mylifecraft.net</li>
+          <li>Versión: Java 1.20+</li>
+          <li>Región: LATAM / Américas</li>
+          <li>Soporte 24/7</li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <div>
-        &copy; 2026 AetherCraft Network. Todos los derechos reservados.
-      </div>
-      <div>
-        No afiliado con Mojang AB ni Microsoft. Minecraft es una marca registrada de Mojang Synergies AB.
-      </div>
+      <p>© 2026 MyLifeCraft Network. No afiliado ni aprobado por Mojang AB o Microsoft.</p>
+      <p>Diseñado con altos estándares de UI/UX para Minecraft en Español.</p>
     </div>
   </footer>
 
-  <!-- ======================================================================
-       TOAST NOTIFICATION (COPY IP)
-       ====================================================================== -->
-  <div class="toast-notification" id="toast-notification" role="alert" aria-live="assertive">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-      <polyline points="22 4 12 14.01 9 11.01"></polyline>
-    </svg>
-    <span class="toast-message">¡IP copiada en el portapapeles!</span>
-  </div>
-
-  <!-- Custom Vanilla JS -->
-  <script src="js/main.js"></script>
+  <!-- Módulos Javascript -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

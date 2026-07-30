@@ -1,59 +1,44 @@
-# AetherCraft Network — Sitio Web del Servidor Minecraft
+# MyLifeCraft Network — Portal de Comercio Electrónico & Comunidad
 
-Portal web profesional para **AetherCraft Network**, un servidor de Minecraft en español especializado en modos **Survival SMP (Economía & Protección)**, **SkyWars/PvP Competitivo** y **Mazmorras RPG**.
-
-## Repositorio Vinculado
-- **Directorio de Trabajo Local:** `d:\SERVIDOR MINE`
-- **Repositorio Remoto Oficial:** `https://github.com/MGDIGUITAL/mine.git`
-- **Rama Principal:** `main`
-
-Cada vez que se abra o trabaje en la carpeta `d:\SERVIDOR MINE`, todas las modificaciones, componentes y funcionalidades se gestionarán y sincronizarán sobre este repositorio de GitHub.
+Bienvenido al repositorio oficial del sitio web de **MyLifeCraft**, el servidor de Minecraft en español diseñado con una experiencia **UI/UX Pro Max** inmersiva (inspirada en la estética de *Wynncraft*).
 
 ---
 
-## Arquitectura y Tecnologías
+## 💎 Características del Sitio
 
-El sitio web está implementado siguiendo los estándares de diseño **UI/UX Pro Max** y el **Protocolo de Matías (Perfil 2 — TRABAJO)**:
-
-- **Estructura (HTML5 Semántico):**
-  - Jerarquía clara con etiquetas `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, y `<footer>`.
-  - Optimización SEO (etiquetas `<title>`, `<meta name="description">`, un solo `<h1>` por página).
-  - Íconos SVG nativos y escalables (sin emojis en elementos de interfaz).
-
-- **Estilos (Vanilla CSS Moderno):**
-  - Sistema de tokens y variables en `:root` (`css/styles.css`).
-  - Paleta en tono oscuro obsidiana (`#06080d`) con acentos en verde esmeralda neón (`#10b981`), cian (`#06b6d4`) y oro (`#f59e0b`).
-  - Efectos visuales avanzados: *Glassmorphism* (`backdrop-filter`), gradientes animados y bordes con iluminación radial.
-  - Diseño responsivo adaptado a pantallas móviles, tablets y monitores de escritorio.
-
-- **Lógica e Interactividad (Vanilla JavaScript):**
-  - **Copia instantánea de IP (`mc.aethercraft.net`):** Botón interactivo con retroalimentación visual en el botón y notificación flotante (Toast alert).
-  - **Leaderboard Dinámico:** Cambio de pestañas en tiempo real (Top Kills, Top Economía, Tiempo Jugado).
-  - **Acordeón FAQ:** Navegación fluida para respuestas a preguntas frecuentes.
-  - **Micro-interacciones:** Seguimiento del cursor con luz radial sobre las tarjetas en la cuadrícula Bento.
-  - **Simulación de jugadores conectados:** Variación dinámica del contador en vivo para mostrar actividad.
+- **Diseño Oscuro Inmersivo:** Paleta negra y esmeralda con fondos sutiles de Minecraft, tipografía **Ubuntu** y sistema de rareza visual para ítems (`common`, `rare`, `epic`, `legendary`) con animaciones de brillo y resplandor.
+- **Tienda Completa en Tiempo Real:** Catálogo de 19 productos divididos en 5 categorías (`Rangos VIP`, `Monedas`, `Llaves`, `Kits` y `Cosméticos`), con búsqueda client-side instantánea.
+- **Carrito de Compras Persistente:** Cajón interactivo (*Cart Drawer*) con almacenamiento en `localStorage`, controles de cantidad y cálculo de total en vivo.
+- **Verificación Oficial de Mojang / Minotar:** El formulario de *Checkout* valida los nombres de usuario del servidor en tiempo real mostrando el avatar (*player head*) del jugador en Minecraft.
+- **Conexión a Supabase (PostgreSQL):** Incluye esquema y semillas de base de datos preparadas con **Row Level Security (RLS)** y mejores prácticas en `supabase/migrations/0002_mylifecraft_ecommerce_schema.sql`.
+- **Copiado de IP en un Clic:** Botón con notificación *Toast* que copia la dirección `play.mylifecraft.net` directamente al portapapeles.
+- **Contador Dinámico de Jugadores:** Consulta en vivo a la API `api.mcsrvstat.us` con respaldo local en caso de inactividad del servidor.
 
 ---
 
-## Estructura de Archivos
+## 🛠️ Estructura del Proyecto
 
-```
+```text
 d:\SERVIDOR MINE/
+├── index.html                  # Portal principal SPA con Hero, Tienda, FAQ, Modales y Carrito
 ├── css/
-│   └── styles.css        # Sistema de diseño, variables CSS y estilos responsivos
+│   └── styles.css              # Sistema de diseño y variables CSS estilo Wynncraft
 ├── js/
-│   └── main.js           # Controladores interactivos (IP, Leaderboard, FAQ, micro-animaciones)
-├── index.html            # Estructura principal del sitio web
-└── README.md             # Documentación técnica y vinculación de repositorio
+│   ├── data.js                 # Catálogo de los 19 productos y 5 categorías oficiales
+│   ├── main.js                 # Lógica interactiva: Carrito, Validación Mojang, Búsqueda y Toasts
+│   └── supabase-client.js      # Conector frontend para lectura/escritura en Supabase
+├── supabase/
+│   └── migrations/             # Migraciones SQL y datos de prueba para Supabase
+│       ├── 0001_initial_aethercraft_schema.sql
+│       └── 0002_mylifecraft_ecommerce_schema.sql
+├── .env.example                # Plantilla segura de variables de entorno
+└── README.md                   # Documentación oficial del repositorio
 ```
 
 ---
 
-## Ejecución Local y Pruebas
+## 🚀 Cómo Ejecutar Localmente
 
-Para previsualizar y probar el sitio web localmente:
-1. Abrir `index.html` directamente en cualquier navegador web moderno, o
-2. Ejecutar un servidor estático local en el puerto deseado:
-   ```bash
-   npx serve .
-   ```
+Al estar construido en **Vanilla HTML5, CSS y ES6 Modules**, el proyecto no requiere compilación ni dependencias pesadas:
+1. Abrir el archivo `index.html` mediante una extensión como **Live Server** en Visual Studio Code o servir la carpeta con cualquier servidor estático local (`npx serve .`).
+2. Para aplicar la base de datos remota, ejecutar el script `0002_mylifecraft_ecommerce_schema.sql` en el panel de **SQL Editor** en Supabase.
