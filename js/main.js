@@ -1,7 +1,7 @@
 /**
  * MYLIFECRAFT - MAIN ECOMMERCE INTERACTIVE LOGIC (VANILLA JS)
  * Implementa carrito en localStorage, filtro por categorías, modal de producto,
- * validación de usuario con API de Mojang, y notificaciones Toast.
+ * validación de usuario con API de Mojang, partículas en Hero y notificaciones Toast.
  */
 
 import { CATEGORIES, PRODUCTS } from './data.js';
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbarScroll();
   initCopyIp();
   initLiveServerStatus();
+  initHeroParticles();
   renderFeaturedProducts();
   renderCategoryTabs();
   renderStoreProducts();
@@ -27,6 +28,82 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductModal();
   initCheckoutModal();
 });
+
+/**
+ * 0. Partículas interactivas estilo Minecraft Shader en el Hero
+ */
+function initHeroParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let width = canvas.width = canvas.parentElement.offsetWidth;
+  let height = canvas.height = canvas.parentElement.offsetHeight;
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = canvas.parentElement.offsetWidth;
+    height = canvas.height = canvas.parentElement.offsetHeight;
+  });
+
+  const particles = [];
+  const particleCount = 45;
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 2.8 + 1,
+      speedX: (Math.random() - 0.5) * 0.45,
+      speedY: (Math.random() - 0.5) * 0.45 - 0.25,
+      alpha: Math.random() * 0.6 + 0.2,
+      color: Math.random() > 0.3 ? '#4ade80' : '#fbbf24'
+    });
+  }
+
+  let mouseX = width / 2;
+  let mouseY = height / 2;
+  window.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+
+      // Interacción leve con el ratón
+      const dx = p.x - mouseX;
+      const dy = p.y - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        p.x += dx * 0.012;
+        p.y += dy * 0.012;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
 
 /**
  * 1. Inicializar carrito desde localStorage
@@ -70,11 +147,9 @@ function initNavbarScroll() {
   if (!header) return;
   window.addEventListener('scroll', () => {
     if (window.scrollY > 30) {
-      header.style.background = 'rgba(10, 10, 10, 0.95)';
-      header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.8)';
+      header.classList.add('scrolled');
     } else {
-      header.style.background = 'rgba(10, 10, 10, 0.85)';
-      header.style.boxShadow = 'none';
+      header.classList.remove('scrolled');
     }
   });
 }
@@ -113,17 +188,17 @@ async function initLiveServerStatus() {
       return;
     }
   } catch (err) {
-    // Si la API falla o el servidor está offline, usamos simulación para preview
+    // Fallback silencioso para preview de interfaz
   }
 
-  // Fallback visual (entre 180 y 240 jugadores)
-  let count = 214;
+  // Fallback visual
+  let count = 248;
   counterEl.textContent = count;
   setInterval(() => {
     const delta = Math.floor(Math.random() * 5) - 2;
-    count = Math.max(180, Math.min(260, count + delta));
+    count = Math.max(210, Math.min(290, count + delta));
     counterEl.textContent = count.toLocaleString('es-ES');
-  }, 5000);
+  }, 4500);
 }
 
 /**
@@ -193,7 +268,7 @@ function renderStoreProducts() {
   if (filtered.length === 0) {
     gridEl.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
-        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">No encontramos productos con tu búsqueda.</p>
+        <p style="font-size: 1.3rem; margin-bottom: 0.5rem;">No encontramos productos con tu búsqueda.</p>
         <p>Prueba con otro término o categoría.</p>
       </div>
     `;
@@ -211,11 +286,19 @@ function createProductCardHTML(product) {
   const priceDisplay = `$${product.price.toFixed(2)}`;
   const origPriceDisplay = product.originalPrice ? `$${product.originalPrice.toFixed(2)}` : '';
 
+  // Asignar textura generada por AI para ítems clave si está disponible
+  let iconContent = `<span>${product.icon}</span>`;
+  if (product.slug === 'mvp-plus' || product.slug === 'vip-plus') {
+    iconContent = `<img src="img/vip-badge.png" alt="${product.name}" />`;
+  } else if (product.slug === 'pet-dragon') {
+    iconContent = `<img src="img/dragon-pet.png" alt="${product.name}" />`;
+  }
+
   return `
     <article class="product-card rarity-${product.rarity}" data-id="${product.id}">
       <div class="card-top-row">
         <div class="item-icon-wrap" title="${product.name}">
-          <span>${product.icon}</span>
+          ${iconContent}
         </div>
         <span class="rarity-badge ${product.rarity}">${product.rarity}</span>
       </div>
@@ -349,7 +432,7 @@ function renderCartDrawerItems() {
   if (cart.length === 0) {
     bodyEl.innerHTML = `
       <div class="cart-empty-state">
-        <p style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛒</p>
+        <p style="font-size: 2.8rem; margin-bottom: 0.5rem;">🛒</p>
         <p>Tu carrito está vacío</p>
       </div>
     `;
@@ -425,7 +508,15 @@ function openProductModal(productId) {
   const modal = document.getElementById('product-modal-overlay');
   if (!modal) return;
 
-  document.getElementById('modal-product-icon').textContent = product.icon;
+  const iconBox = document.getElementById('modal-product-icon');
+  if (product.slug === 'mvp-plus' || product.slug === 'vip-plus') {
+    iconBox.innerHTML = `<img src="img/vip-badge.png" alt="${product.name}" />`;
+  } else if (product.slug === 'pet-dragon') {
+    iconBox.innerHTML = `<img src="img/dragon-pet.png" alt="${product.name}" />`;
+  } else {
+    iconBox.textContent = product.icon;
+  }
+
   document.getElementById('modal-product-name').textContent = product.name;
   document.getElementById('modal-product-desc').textContent = product.shortDesc;
   document.getElementById('modal-product-price').textContent = `$${product.price.toFixed(2)} USD`;
@@ -468,7 +559,7 @@ function initCheckoutModal() {
     if (e.target === modal) modal.classList.remove('open');
   });
 
-  // Validación de Username contra Mojang / Minotar API
+  // Validación de Username contra Mojang / Ashcon API
   if (validateBtn && mcInput) {
     validateBtn.addEventListener('click', async () => {
       const username = mcInput.value.trim();
@@ -479,7 +570,6 @@ function initCheckoutModal() {
 
       validateBtn.textContent = 'Validando...';
       try {
-        // En navegadores la API de Mojang directa puede tener CORS, usamos Ashcon o Minotar como proxy compatible
         const res = await fetch(`https://api.ashcon.app/mojang/v2/user/${username}`);
         if (!res.ok) {
           throw new Error('Usuario no encontrado en Mojang');

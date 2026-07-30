@@ -20,6 +20,7 @@
 
       <nav class="nav-links">
         <a href="#inicio" class="nav-link active">Inicio</a>
+        <a href="#video-showcase" class="nav-link">Cinemática</a>
         <a href="#tienda" class="nav-link">Tienda</a>
         <a href="#como-funciona" class="nav-link">¿Cómo Funciona?</a>
         <a href="#faq" class="nav-link">FAQ</a>
@@ -40,13 +41,24 @@
   </header>
 
   <main>
-    <!-- HERO FULLSCREEN -->
+    <!-- HERO FULLSCREEN CON VIDEO DE FONDO MINECRAFT & PARTÍCULAS -->
     <section id="inicio" class="hero-section">
+      <!-- Video de fondo cinemático HD -->
+      <video class="hero-bg-video" autoplay loop muted playsinline poster="img/hero-bg.png">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-mystical-green-forest-at-night-42263-large.mp4" type="video/mp4" />
+        Tu navegador no soporta video en HTML5.
+      </video>
+
+      <!-- Capa de sombra inmersiva y cristalino -->
       <div class="hero-overlay"></div>
+
+      <!-- Canvas para partículas esmeralda reactivas al ratón -->
+      <canvas id="particles-canvas"></canvas>
+
       <div class="hero-content">
         <div class="hero-status-badge">
           <span class="status-dot"></span>
-          <span>Servidor Activo — <strong id="online-player-count">...</strong> Jugadores en Línea</span>
+          <span>Servidor Activo — <strong id="online-player-count">248</strong> Jugadores en Línea</span>
         </div>
 
         <h1 class="hero-title">
@@ -54,12 +66,78 @@
         </h1>
 
         <p class="hero-subtitle">
-          Explora un servidor diseñado para ofrecerte la máxima inmersión con economía dinámica, recompensas exclusivas y rangos de prestigio. Copia la IP y únete hoy.
+          Explora un servidor diseñado para ofrecerte la máxima inmersión con economía dinámica, recompensas exclusivas, mascotas y rangos de prestigio. Copia la IP y únete hoy.
         </p>
 
         <div class="hero-actions">
-          <a href="#tienda" class="btn btn-green">Ir a la Tienda Oficial</a>
+          <a href="#tienda" class="btn btn-green">👑 Ir a la Tienda Oficial</a>
+          <a href="#video-showcase" class="btn btn-gold">🎬 Ver Cinemática del Servidor</a>
           <button class="btn btn-secondary js-copy-ip">📋 Copiar IP (play.mylifecraft.net)</button>
+        </div>
+
+        <!-- Bento Grid de Estadísticas en el Hero -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-card">
+            <div class="stat-value">+2,450</div>
+            <div class="stat-label">Comunidad Activa en LATAM</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="stat-value">99.9%</div>
+            <div class="stat-label">Uptime Servidor 24/7 Sin Lag</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="stat-value">60 seg</div>
+            <div class="stat-label">Entrega Automática RCON</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPLORA EL SERVIDOR EN ACCIÓN (SHOWCASE DE VIDEO Y ARTE AI) -->
+    <section id="video-showcase" class="section-container">
+      <div class="section-header">
+        <span class="section-tag">🎬 Experiencia Inmersiva</span>
+        <h2 class="section-title">El Servidor en Acción</h2>
+        <p class="section-subtitle">
+          Descubre nuestros mundos flotantes, combates épicos, mascotas legendarias y eventos exclusivos en este avance cinemático.
+        </p>
+      </div>
+
+      <div style="max-width: 1040px; margin: 0 auto 4rem; border-radius: 24px; overflow: hidden; border: 1px solid rgba(74, 222, 128, 0.4); box-shadow: 0 0 48px rgba(74, 222, 128, 0.25); position: relative; background: var(--bg-card);">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+          <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" poster="img/hero-bg.png">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-mystical-green-forest-at-night-42263-large.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div style="padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; background: rgba(10, 10, 15, 0.9);">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 12px #ef4444;"></span>
+            <span style="font-weight: 700; font-size: 1.05rem;">Cinemática Oficial MyLifeCraft 2026</span>
+          </div>
+          <button class="btn btn-secondary js-copy-ip" style="padding: 0.6rem 1.2rem; font-size: 0.88rem;">
+            🎮 Conectarse Ahora: play.mylifecraft.net
+          </button>
+        </div>
+      </div>
+
+      <!-- Muestra del Arte AI y Rarezas Pro -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        <div style="background: var(--bg-card); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 20px; padding: 2rem; display: flex; align-items: center; gap: 1.5rem; box-shadow: 0 0 28px rgba(251, 191, 36, 0.2);">
+          <img src="img/vip-badge.png" alt="VIP Crown" style="width: 86px; height: 86px; object-fit: contain; border-radius: 16px; background: rgba(0,0,0,0.5); padding: 0.5rem;" />
+          <div>
+            <span class="rarity-badge legendary">legendary</span>
+            <h3 style="font-family: var(--font-title); font-size: 1.35rem; font-weight: 800; margin: 0.35rem 0;">Rangos de Prestigio</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">Desbloquea comandos VIP/MVP+, prefijos reales en chat y ventajas sin igual.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 20px; padding: 2rem; display: flex; align-items: center; gap: 1.5rem; box-shadow: 0 0 28px rgba(74, 222, 128, 0.2);">
+          <img src="img/dragon-pet.png" alt="Dragon Pet" style="width: 86px; height: 86px; object-fit: contain; border-radius: 16px; background: rgba(0,0,0,0.5); padding: 0.5rem;" />
+          <div>
+            <span class="rarity-badge legendary">legendary</span>
+            <h3 style="font-family: var(--font-title); font-size: 1.35rem; font-weight: 800; margin: 0.35rem 0;">Mascotas y Dragones</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">Te seguirán en cada aventura por el servidor con efectos de partículas únicos.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -161,29 +239,29 @@
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 1rem;">
-        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
-          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">
+        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.35rem;">
+          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary); font-size: 1.05rem;">
             ¿Cuánto tarda en llegar un rango o paquete a mi cuenta?
           </summary>
-          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem;">
+          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
             El proceso es 100% automatizado. Una vez que el pago es confirmado, los beneficios aparecen en el servidor de 30 a 60 segundos. Si estás conectado en el momento de la compra, recibirás una notificación en el chat.
           </p>
         </details>
 
-        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
-          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">
+        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.35rem;">
+          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary); font-size: 1.05rem;">
             ¿Qué métodos de pago son aceptados?
           </summary>
-          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem;">
+          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
             Aceptamos tarjetas de crédito y débito de toda Latinoamérica mediante MercadoPago, además de transferencias bancarias locales y saldo disponible en plataformas asociadas.
           </p>
         </details>
 
-        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
-          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary);">
+        <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.35rem;">
+          <summary style="font-weight: 700; cursor: pointer; color: var(--text-primary); font-size: 1.05rem;">
             ¿Qué hago si escribí mal mi usuario de Minecraft en la compra?
           </summary>
-          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem;">
+          <p style="color: var(--text-secondary); margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
             Nuestro sistema incluye validación de usuario de Mojang en tiempo real para evitar errores. Sin embargo, si llegaste a confirmar con un nick incorrecto, comunícate al instante con nuestro soporte en Discord con tu número de orden.
           </p>
         </details>
@@ -200,17 +278,17 @@
         <div class="detail-icon-box" id="modal-product-icon">👑</div>
         <div>
           <span class="rarity-badge" id="modal-product-rarity">rare</span>
-          <h3 id="modal-product-name" style="font-size: 1.75rem; font-weight: 700; margin-top: 0.35rem;">Nombre</h3>
-          <p id="modal-product-price" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-green); margin-top: 0.25rem;">$0.00 USD</p>
+          <h3 id="modal-product-name" style="font-size: 1.85rem; font-weight: 800; margin-top: 0.35rem;">Nombre</h3>
+          <p id="modal-product-price" style="font-size: 1.6rem; font-weight: 800; color: var(--accent-green); margin-top: 0.25rem;">$0.00 USD</p>
         </div>
       </div>
 
-      <p id="modal-product-desc" style="color: var(--text-secondary); margin-bottom: 1.75rem; font-size: 1rem; line-height: 1.6;"></p>
+      <p id="modal-product-desc" style="color: var(--text-secondary); margin-bottom: 1.75rem; font-size: 1rem; line-height: 1.65;"></p>
 
       <h4 class="detail-benefits-title">✨ Beneficios Incluidos en el Paquete:</h4>
       <ul class="benefits-list" id="modal-product-benefits"></ul>
 
-      <button class="btn btn-green" id="product-modal-add-btn" style="width: 100%; padding: 1rem;">
+      <button class="btn btn-green" id="product-modal-add-btn" style="width: 100%; padding: 1.15rem; font-size: 1.05rem;">
         🛒 Agregar al Carrito de Compras
       </button>
     </div>
@@ -233,7 +311,7 @@
           <span>Total a Pagar:</span>
           <span id="cart-total-price" style="color: var(--accent-green);">$0.00 USD</span>
         </div>
-        <button class="btn btn-green" id="btn-go-checkout" style="width: 100%; padding: 1rem;">
+        <button class="btn btn-green" id="btn-go-checkout" style="width: 100%; padding: 1.15rem; font-size: 1.05rem;">
           Proceder al Pago
         </button>
       </div>
@@ -245,7 +323,7 @@
     <div class="modal-box">
       <button class="modal-close-btn" id="checkout-modal-close" title="Cerrar checkout">×</button>
 
-      <h3 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem;">Completar Pedido</h3>
+      <h3 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem;">Completar Pedido</h3>
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">
         Verifica tu usuario de Minecraft para asegurar que los beneficios se entreguen en tu cuenta correcta.
       </p>
@@ -269,7 +347,7 @@
           <!-- Preview de Cabeza de Minecraft al Validar -->
           <div class="mojang-preview-box" id="mojang-preview-box">
             <img id="mojang-head-img" src="" alt="Player Head" class="player-head-img" />
-            <span id="mojang-preview-name" style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);"></span>
+            <span id="mojang-preview-name" style="font-weight: 600; font-size: 0.95rem; color: var(--text-primary);"></span>
           </div>
         </div>
 
@@ -284,12 +362,12 @@
           />
         </div>
 
-        <div style="margin: 2rem 0; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-weight: 500;">Total a Pagar:</span>
-          <span id="checkout-total-price" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-green);">$0.00 USD</span>
+        <div style="margin: 2rem 0; padding: 1.35rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 600; font-size: 1.1rem;">Total a Pagar:</span>
+          <span id="checkout-total-price" style="font-size: 1.75rem; font-weight: 800; color: var(--accent-green);">$0.00 USD</span>
         </div>
 
-        <button type="submit" class="btn btn-green" style="width: 100%; padding: 1rem; font-size: 1rem;">
+        <button type="submit" class="btn btn-green" style="width: 100%; padding: 1.15rem; font-size: 1.05rem;">
           ⚡ Confirmar Pedido y Pagar (MercadoPago)
         </button>
       </form>
@@ -310,7 +388,7 @@
           <div class="brand-icon-box">M</div>
           <span>MyLife<span class="brand-highlight">Craft</span></span>
         </a>
-        <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 320px;">
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">
           El servidor de Minecraft pensado para ofrecer la mejor experiencia multijugador con economía equilibrada, eventos y comunidad activa.
         </p>
       </div>
@@ -348,7 +426,7 @@
 
     <div class="footer-bottom">
       <p>© 2026 MyLifeCraft Network. No afiliado ni aprobado por Mojang AB o Microsoft.</p>
-      <p>Diseñado con altos estándares de UI/UX para Minecraft en Español.</p>
+      <p>Diseñado con altos estándares de UI/UX Pro Max para Minecraft en Español.</p>
     </div>
   </footer>
 
