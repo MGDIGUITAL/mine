@@ -1,4 +1,8 @@
 {
+  "alias": [
+    "mylifecraft.vercel.app",
+    "mylifecraft-storefront.vercel.app"
+  ],
   "buildCommand": null,
   "outputDirectory": ".",
   "framework": null,
