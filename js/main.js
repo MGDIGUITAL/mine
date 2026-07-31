@@ -508,8 +508,8 @@ function renderCartDrawerItems() {
 
   bodyEl.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <div style="display: flex; align-items: center; gap: 0.85rem;">
-        <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">${item.icon}</div>
+      <div style="display: flex; align-items: center; gap: 0.75rem; min-width: 0; flex: 1;">
+        <div class="cart-item-icon">${item.icon}</div>
         <div class="cart-item-info">
           <span class="cart-item-name">${item.name}</span>
           <span class="cart-item-price">$${item.price.toFixed(2)} USD</span>
@@ -517,7 +517,7 @@ function renderCartDrawerItems() {
       </div>
       <div class="cart-item-controls">
         <button class="qty-btn js-qty-dec" data-id="${item.id}">-</button>
-        <span style="min-width: 20px; text-align: center; font-weight: 700;">${item.quantity}</span>
+        <span style="min-width: 18px; text-align: center; font-weight: 700; font-size: 0.9rem;">${item.quantity}</span>
         <button class="qty-btn js-qty-inc" data-id="${item.id}">+</button>
         <button class="cart-item-remove js-remove-item" data-id="${item.id}" title="Eliminar" aria-label="Eliminar ítem">×</button>
       </div>
