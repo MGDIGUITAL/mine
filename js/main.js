@@ -1046,7 +1046,10 @@ function openProfileModal() {
     const titleEl = document.getElementById('profile-modal-title');
     const emailEl = document.getElementById('profile-modal-email');
 
-    if (avatarImg) avatarImg.src = user.avatarUrl || `https://minotar.net/helm/${user.username}/64.png`;
+    if (avatarImg) {
+      avatarImg.src = user.avatarUrl || `https://minotar.net/helm/${user.username}/64.png`;
+      avatarImg.setAttribute('onerror', "this.onerror=null;this.src='https://minotar.net/helm/Steve/64.png';");
+    }
     if (titleEl) titleEl.textContent = user.username;
     if (emailEl) emailEl.textContent = user.email;
 
@@ -1074,7 +1077,7 @@ function updateUserNavUI() {
       navUserBtn.classList.add('logged-in');
       navUserText.textContent = user.username;
       const headUrl = user.avatarUrl || `https://minotar.net/helm/${encodeURIComponent(user.username)}/32.png`;
-      navUserAvatar.innerHTML = `<img src="${headUrl}" alt="${user.username}" class="mc-head-nav" />`;
+      navUserAvatar.innerHTML = `<img src="${headUrl}" alt="${user.username}" class="mc-head-nav" onerror="this.onerror=null;this.src='https://minotar.net/helm/Steve/32.png';" />`;
     } catch (err) {
       navUserBtn.classList.remove('logged-in');
       navUserText.textContent = 'Ingreso';

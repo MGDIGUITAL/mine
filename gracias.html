@@ -222,7 +222,7 @@
         <div class="order-row">
           <span class="order-label">Jugador de Minecraft</span>
           <span class="order-value">
-            <img id="res-player-avatar" src="https://minotar.net/helm/Steve/30.png" alt="Avatar" class="player-avatar-small">
+            <img id="res-player-avatar" src="https://minotar.net/helm/Steve/30.png" alt="Avatar" class="player-avatar-small" onerror="this.onerror=null;this.src='https://minotar.net/helm/Steve/30.png';">
             <span id="res-player-nick">Jugador</span>
           </span>
         </div>
@@ -321,6 +321,7 @@
       setText('res-email-inline', email);
       setText('res-order-inline', '#' + orderId);
       setAttr('res-player-avatar', 'src', `https://minotar.net/helm/${encodeURIComponent(username)}/30.png`);
+      setAttr('res-player-avatar', 'onerror', "this.onerror=null;this.src='https://minotar.net/helm/Steve/30.png';");
 
       const copyBtn = document.getElementById('btn-copy-ip-success');
       if (copyBtn) {
