@@ -20,3 +20,10 @@ dist/
 Thumbs.db
 
 .vercel
+
+# Plugin build output (contains config with secrets)
+plugin/target/
+
+# Local plugin config with real keys (copy from config.yml and fill in)
+plugin/local-config.yml
+

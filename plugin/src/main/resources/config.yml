@@ -5,10 +5,10 @@
 supabase:
   # URL del proyecto Supabase (sin / al final)
   url: "https://yuesvfqiuxnphrqvwkll.supabase.co"
-  # ⚠️ IMPORTANTE: Usar la service_role key (NO la anon key)
-  # La service_role key bypasea el RLS y permite leer/escribir libremente.
-  # Encuéntrala en: Supabase Dashboard → Project Settings → API → service_role
-  service_key: "sb_secret_2DJ10WEjAZ-Bcy4cdDVlLA_hA8-fLNT"
+  # ⚠️ IMPORTANTE: Pegar aquí la service_role key de Supabase.
+  # NO subir este archivo al repo con la clave real.
+  # Obtén la key en: Supabase Dashboard → Project Settings → API → service_role
+  service_key: "CONFIGURAR_AQUI"
 
 delivery:
   # Intervalo (segundos) para consultar pedidos pendientes en Supabase
