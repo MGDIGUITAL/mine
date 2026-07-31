@@ -420,10 +420,16 @@ function addToCart(productId, quantity = 1) {
     cart.push({
       id: product.id,
       name: product.name,
+      slug: product.slug || product.id,
       price: product.price,
       icon: product.icon,
       rarity: product.rarity,
-      quantity: quantity
+      quantity: quantity,
+      // Datos para la entrega automática del plugin
+      commands:       Array.isArray(product.commands)       ? product.commands       : [],
+      revokeCommands: Array.isArray(product.revokeCommands) ? product.revokeCommands : [],
+      durationType:   product.durationType  || 'permanent',
+      durationDays:   product.durationDays  || null
     });
   }
 
@@ -678,15 +684,30 @@ function initCheckoutModal() {
       const orderNumber = 'MLC-' + Math.floor(100000 + Math.random() * 900000);
       const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-      // Guardar orden de compra en localStorage para registro admin
+      // Guardar orden de compra en localStorage
+      // ⚠️ items incluye commands/slug para que gracias.html registre
+      //    las entregas automáticas en Supabase → plugin las recoge.
+      const enrichedItems = cart.map(item => ({
+        id:             item.id,
+        name:           item.name,
+        slug:           item.slug || item.id,
+        price:          item.price,
+        quantity:       item.quantity,
+        commands:       Array.isArray(item.commands)       ? item.commands       : [],
+        revokeCommands: Array.isArray(item.revokeCommands) ? item.revokeCommands : [],
+        durationType:   item.durationType || 'permanent',
+        durationDays:   item.durationDays || null
+      }));
+
       const orderData = {
-        order_number: orderNumber,
+        order_number:       orderNumber,
         minecraft_username: username,
-        customer_email: email,
-        total_amount: totalAmount,
-        status: 'pending_paypal',
-        items: [...cart],
-        created_at: new Date().toISOString()
+        customer_email:     email,
+        total_amount:       totalAmount,
+        status:             'pending_paypal',
+        items:              enrichedItems,
+        created_at:         new Date().toISOString()
+        // db_id se añadirá si se integra Supabase en el checkout (paso futuro)
       };
 
       const history = JSON.parse(localStorage.getItem('mylifecraft_orders') || '[]');

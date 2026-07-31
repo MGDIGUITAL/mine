@@ -301,18 +301,78 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const params  = new URLSearchParams(window.location.search);
-      const orders  = JSON.parse(localStorage.getItem('mylifecraft_orders') || '[]');
-      const last    = orders[0] || null;
+    // ─────────────────────────────────────────────────────────────────
+    // SUPABASE CONFIG (anon key — solo INSERT, lectura pública)
+    // ─────────────────────────────────────────────────────────────────
+    const SUPABASE_URL = 'https://yuesvfqiuxnphrqvwkll.supabase.co';
+    const SUPABASE_ANON_KEY = ''; // ← pegar aquí la anon key de Supabase
 
-      const orderId  = params.get('order')    || (last ? last.order_number       : 'MLC-982341');
-      const username = params.get('username') || (last ? last.minecraft_username : 'Steve');
-      const email    = params.get('email')    || (last ? last.customer_email     : 'cliente@correo.com');
-      const amount   = params.get('amount')   || (last ? parseFloat(last.total_amount).toFixed(2) : '15.00');
+    /**
+     * Crea las filas en pending_deliveries para cada producto del pedido.
+     * El plugin de Minecraft las consume automáticamente cada 30 segundos.
+     */
+    async function registerDeliveriesInSupabase(orderData) {
+      if (!SUPABASE_ANON_KEY) {
+        console.warn('[MyLifeCraft] Supabase anon key no configurada — entrega manual activa.');
+        return;
+      }
 
-      const setText = (id, val)        => { const el = document.getElementById(id); if (el) el.textContent = val; };
-      const setAttr = (id, attr, val)  => { const el = document.getElementById(id); if (el) el[attr] = val; };
+      const { orderId, orderDbId, username, items } = orderData;
+
+      for (const item of items) {
+        const payload = {
+          order_id:            orderDbId,      // UUID de la orden en Supabase
+          order_number:        orderId,         // ej. "MLC-982341"
+          minecraft_username:  username,
+          product_slug:        item.slug || 'unknown',
+          product_name:        item.name,
+          commands:            item.commands || [],
+          revoke_commands:     item.revokeCommands || [],
+          duration_type:       item.durationType || 'permanent',
+          duration_days:       item.durationDays  || null,
+          status:              'pending'
+        };
+
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/pending_deliveries`, {
+            method:  'POST',
+            headers: {
+              'apikey':        SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type':  'application/json',
+              'Prefer':        'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            console.log(`[MyLifeCraft] ✅ Entrega registrada para: ${item.name} → ${username}`);
+          } else {
+            const err = await res.text();
+            console.error(`[MyLifeCraft] ✗ Error al registrar entrega de ${item.name}:`, err);
+          }
+        } catch (e) {
+          console.error('[MyLifeCraft] Error de red al registrar entrega:', e);
+        }
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INICIALIZACIÓN DE LA PÁGINA
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const orders = JSON.parse(localStorage.getItem('mylifecraft_orders') || '[]');
+      const last   = orders[0] || null;
+
+      const orderId    = params.get('order')    || (last ? last.order_number       : 'MLC-982341');
+      const username   = params.get('username') || (last ? last.minecraft_username : 'Steve');
+      const email      = params.get('email')    || (last ? last.customer_email     : 'cliente@correo.com');
+      const amount     = params.get('amount')   || (last ? parseFloat(last.total_amount).toFixed(2) : '15.00');
+      const orderDbId  = last ? last.db_id : null; // UUID de la tabla orders en Supabase
+
+      const setText = (id, val)       => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      const setAttr = (id, attr, val) => { const el = document.getElementById(id); if (el) el[attr] = val; };
 
       setText('res-order-id',     '#' + orderId);
       setText('res-player-nick',  username);
@@ -323,6 +383,7 @@
       setAttr('res-player-avatar', 'src', `https://minotar.net/helm/${encodeURIComponent(username)}/30.png`);
       setAttr('res-player-avatar', 'onerror', "this.onerror=null;this.src='https://minotar.net/helm/Steve/30.png';");
 
+      // Copiar IP
       const copyBtn = document.getElementById('btn-copy-ip-success');
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
@@ -337,6 +398,19 @@
               copyBtn.style.color = '';
             }, 2800);
           });
+        });
+      }
+
+      // ─── Registrar entregas automáticas en Supabase ───
+      // Solo si hay orden válida guardada (evitar doble registro con sessionStorage)
+      const deliveryKey = 'mlc_delivery_registered_' + orderId;
+      if (last && last.items && !sessionStorage.getItem(deliveryKey)) {
+        sessionStorage.setItem(deliveryKey, '1');
+        await registerDeliveriesInSupabase({
+          orderId,
+          orderDbId,
+          username,
+          items: last.items   // array con { name, slug, commands, revokeCommands, durationType, durationDays }
         });
       }
     });

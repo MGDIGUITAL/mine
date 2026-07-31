@@ -1,0 +1,19 @@
+name: MyLifeCraftPlugin
+version: '1.0.0'
+main: net.mylifecraft.plugin.MyLifeCraftPlugin
+api-version: '1.21'
+description: Entrega automática de compras de la tienda MyLifeCraft
+authors: [ MyLifeCraft ]
+website: https://mylifecraft.net
+
+commands:
+  mlc:
+    description: Comandos de administración de MyLifeCraft Plugin
+    usage: /mlc <status|deliver|reload|grants>
+    permission: mylifecraft.admin
+    aliases: [mylifecraft]
+
+permissions:
+  mylifecraft.admin:
+    description: Acceso completo a los comandos de administración del plugin
+    default: op
