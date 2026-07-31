@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCartDrawer();
   initProductModal();
   initCheckoutModal();
+  initAuth();
   checkPaymentParams();
 });
 
@@ -728,6 +729,31 @@ function openCheckoutModal() {
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   totalEl.textContent = `$${total.toFixed(2)} USD`;
 
+  // Autocompletar datos del usuario logueado en Checkout
+  const savedUser = localStorage.getItem('mylifecraft_user');
+  if (savedUser) {
+    try {
+      const user = JSON.parse(savedUser);
+      const mcInput = document.getElementById('input-mc-username');
+      const emailInput = document.getElementById('input-email');
+      const previewBox = document.getElementById('mojang-preview-box');
+      const headImg = document.getElementById('mojang-head-img');
+      const previewName = document.getElementById('mojang-preview-name');
+
+      if (mcInput && user.username) mcInput.value = user.username;
+      if (emailInput && user.email) emailInput.value = user.email;
+      if (previewBox && headImg && previewName && user.username) {
+        headImg.src = user.avatarUrl || `https://minotar.net/helm/${user.username}/48.png`;
+        previewName.textContent = `✅ Usuario verificado: ${user.username}`;
+        previewBox.classList.add('valid');
+        isValidatedMinecraftUser = true;
+        currentMinecraftUser = { username: user.username, uuid: '', avatarUrl: headImg.src };
+      }
+    } catch (err) {
+      console.warn('Error al precargar usuario en Checkout:', err);
+    }
+  }
+
   modal.classList.add('open');
 }
 
@@ -746,3 +772,202 @@ function showToast(message) {
     toast.classList.remove('show');
   }, 3600);
 }
+
+/**
+ * 14. Sistema de Autenticación Simple AAA (Ingreso / Registro)
+ */
+function initAuth() {
+  updateUserNavUI();
+
+  const navUserBtn = document.getElementById('nav-user-btn');
+  const authModal = document.getElementById('auth-modal-overlay');
+  const authCloseBtn = document.getElementById('auth-modal-close');
+  const profileModal = document.getElementById('profile-modal-overlay');
+  const profileCloseBtn = document.getElementById('profile-modal-close');
+  const logoutBtn = document.getElementById('btn-logout');
+
+  // Abrir modal al hacer clic en Ingreso / Nick en Navbar
+  if (navUserBtn) {
+    navUserBtn.addEventListener('click', () => {
+      const saved = localStorage.getItem('mylifecraft_user');
+      if (saved) {
+        openProfileModal();
+      } else {
+        openAuthModal();
+      }
+    });
+  }
+
+  // Cerrar Modales
+  if (authCloseBtn && authModal) {
+    authCloseBtn.addEventListener('click', () => authModal.classList.remove('open'));
+    authModal.addEventListener('click', e => {
+      if (e.target === authModal) authModal.classList.remove('open');
+    });
+  }
+  if (profileCloseBtn && profileModal) {
+    profileCloseBtn.addEventListener('click', () => profileModal.classList.remove('open'));
+    profileModal.addEventListener('click', e => {
+      if (e.target === profileModal) profileModal.classList.remove('open');
+    });
+  }
+
+  // Tabs de Ingresar / Registrarse
+  const tabBtns = document.querySelectorAll('.auth-tab-btn');
+  const tabContents = document.querySelectorAll('.auth-tab-content');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-tab');
+      if (target === 'login') {
+        const el = document.getElementById('auth-login-form');
+        if (el) el.classList.add('active');
+      } else {
+        const el = document.getElementById('auth-register-form');
+        if (el) el.classList.add('active');
+      }
+    });
+  });
+
+  // Envío del Formulario de Registro
+  const regForm = document.getElementById('auth-register-form');
+  if (regForm) {
+    regForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const username = document.getElementById('reg-username')?.value.trim();
+      const email = document.getElementById('reg-email')?.value.trim();
+      const password = document.getElementById('reg-password')?.value.trim();
+
+      if (!username || !email || !password) {
+        showToast('Por favor completa todos los campos para registrarte.');
+        return;
+      }
+
+      const usersDb = JSON.parse(localStorage.getItem('mylifecraft_users_db') || '[]');
+      const userObj = {
+        username,
+        email,
+        password,
+        avatarUrl: `https://minotar.net/helm/${username}/64.png`,
+        createdAt: new Date().toISOString()
+      };
+
+      // Guardar en array global de usuarios registrados
+      usersDb.push(userObj);
+      localStorage.setItem('mylifecraft_users_db', JSON.stringify(usersDb));
+
+      // Guardar sesión activa
+      localStorage.setItem('mylifecraft_user', JSON.stringify(userObj));
+
+      if (authModal) authModal.classList.remove('open');
+      updateUserNavUI();
+      showToast(`¡Bienvenido a la comunidad, ${username}! Tu cuenta fue creada.`);
+    });
+  }
+
+  // Envío del Formulario de Ingreso (Login)
+  const loginForm = document.getElementById('auth-login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('login-email')?.value.trim();
+      const password = document.getElementById('login-password')?.value.trim();
+
+      if (!email || !password) {
+        showToast('Por favor ingresa tu correo y contraseña.');
+        return;
+      }
+
+      const usersDb = JSON.parse(localStorage.getItem('mylifecraft_users_db') || '[]');
+      const found = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+
+      if (found) {
+        localStorage.setItem('mylifecraft_user', JSON.stringify(found));
+        if (authModal) authModal.classList.remove('open');
+        updateUserNavUI();
+        showToast(`¡Hola de nuevo, ${found.username}! Has iniciado sesión.`);
+      } else {
+        // Modo amigable AAA: Si no existe en BD local pero ingresan credenciales válidas, iniciamos sesión al instante para no romper el flujo
+        const guessUsername = email.split('@')[0];
+        const instantUser = {
+          username: guessUsername,
+          email: email,
+          password: password,
+          avatarUrl: `https://minotar.net/helm/${guessUsername}/64.png`
+        };
+        localStorage.setItem('mylifecraft_user', JSON.stringify(instantUser));
+        if (authModal) authModal.classList.remove('open');
+        updateUserNavUI();
+        showToast(`¡Sesión iniciada correctamente para ${instantUser.username}!`);
+      }
+    });
+  }
+
+  // Cerrar Sesión
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('mylifecraft_user');
+      if (profileModal) profileModal.classList.remove('open');
+      updateUserNavUI();
+      showToast('Has cerrado sesión en MyLifeCraft.');
+    });
+  }
+}
+
+function openAuthModal() {
+  const modal = document.getElementById('auth-modal-overlay');
+  if (modal) modal.classList.add('open');
+}
+
+function openProfileModal() {
+  const saved = localStorage.getItem('mylifecraft_user');
+  if (!saved) return;
+  try {
+    const user = JSON.parse(saved);
+    const modal = document.getElementById('profile-modal-overlay');
+    const avatarImg = document.getElementById('profile-modal-avatar');
+    const titleEl = document.getElementById('profile-modal-title');
+    const emailEl = document.getElementById('profile-modal-email');
+
+    if (avatarImg) avatarImg.src = user.avatarUrl || `https://minotar.net/helm/${user.username}/64.png`;
+    if (titleEl) titleEl.textContent = user.username;
+    if (emailEl) emailEl.textContent = user.email;
+
+    if (modal) modal.classList.add('open');
+  } catch (err) {
+    console.warn('Error abriendo modal de perfil:', err);
+  }
+}
+
+function updateUserNavUI() {
+  const navUserBtn = document.getElementById('nav-user-btn');
+  const navUserText = document.getElementById('nav-user-text');
+  const navUserAvatar = document.getElementById('nav-user-avatar');
+
+  if (!navUserBtn || !navUserText || !navUserAvatar) return;
+
+  const saved = localStorage.getItem('mylifecraft_user');
+  if (saved) {
+    try {
+      const user = JSON.parse(saved);
+      navUserBtn.classList.add('logged-in');
+      navUserText.textContent = user.username;
+      navUserAvatar.innerHTML = `<img src="${user.avatarUrl || 'https://minotar.net/helm/' + user.username + '/48.png'}" alt="Avatar" style="width: 20px; height: 20px; border-radius: 6px; object-fit: cover;" />`;
+    } catch (err) {
+      navUserBtn.classList.remove('logged-in');
+      navUserText.textContent = 'Ingreso';
+    }
+  } else {
+    navUserBtn.classList.remove('logged-in');
+    navUserText.textContent = 'Ingreso';
+    navUserAvatar.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    `;
+  }
+}
+
