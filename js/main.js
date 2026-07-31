@@ -787,8 +787,10 @@ function initAuth() {
   const logoutBtn = document.getElementById('btn-logout');
 
   // Abrir modal al hacer clic en Ingreso / Nick en Navbar
-  if (navUserBtn) {
-    navUserBtn.addEventListener('click', () => {
+  const toggleAuthBtns = document.querySelectorAll('.js-toggle-auth, #nav-user-btn');
+  toggleAuthBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
       const saved = localStorage.getItem('mylifecraft_user');
       if (saved) {
         openProfileModal();
@@ -796,7 +798,7 @@ function initAuth() {
         openAuthModal();
       }
     });
-  }
+  });
 
   // Cerrar Modales
   if (authCloseBtn && authModal) {
@@ -831,7 +833,7 @@ function initAuth() {
     });
   });
 
-  // Envío del Formulario de Registro
+  // Envío del Formulario de Registro (SIN VERIFICACIÓN DE CORREO: Registra y pasa a Login)
   const regForm = document.getElementById('auth-register-form');
   if (regForm) {
     regForm.addEventListener('submit', e => {
@@ -846,6 +848,17 @@ function initAuth() {
       }
 
       const usersDb = JSON.parse(localStorage.getItem('mylifecraft_users_db') || '[]');
+      const existingUser = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+      if (existingUser) {
+        showToast('Este correo ya está registrado. Por favor ingresa tu contraseña.');
+        const loginTabBtn = document.querySelector('.auth-tab-btn[data-tab="login"]');
+        if (loginTabBtn) loginTabBtn.click();
+        const loginEmailInput = document.getElementById('login-email');
+        if (loginEmailInput) loginEmailInput.value = email;
+        return;
+      }
+
       const userObj = {
         username,
         email,
@@ -854,16 +867,23 @@ function initAuth() {
         createdAt: new Date().toISOString()
       };
 
-      // Guardar en array global de usuarios registrados
+      // Guardar en array global de usuarios registrados sin verificación de correo
       usersDb.push(userObj);
       localStorage.setItem('mylifecraft_users_db', JSON.stringify(usersDb));
 
-      // Guardar sesión activa
-      localStorage.setItem('mylifecraft_user', JSON.stringify(userObj));
+      // Limpiar formulario de registro
+      regForm.reset();
 
-      if (authModal) authModal.classList.remove('open');
-      updateUserNavUI();
-      showToast(`¡Bienvenido a la comunidad, ${username}! Tu cuenta fue creada.`);
+      // Pasar a la pestaña de login para que ingresen con su correo y clave
+      const loginTabBtn = document.querySelector('.auth-tab-btn[data-tab="login"]');
+      if (loginTabBtn) loginTabBtn.click();
+
+      const loginEmailInput = document.getElementById('login-email');
+      const loginPassInput = document.getElementById('login-password');
+      if (loginEmailInput) loginEmailInput.value = email;
+      if (loginPassInput) loginPassInput.focus();
+
+      showToast('✅ Registro exitoso sin verificación de correo. Ahora ingresa con tu correo y clave.');
     });
   }
 
