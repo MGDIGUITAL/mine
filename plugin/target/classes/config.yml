@@ -8,7 +8,7 @@ supabase:
   # ⚠️ IMPORTANTE: Usar la service_role key (NO la anon key)
   # La service_role key bypasea el RLS y permite leer/escribir libremente.
   # Encuéntrala en: Supabase Dashboard → Project Settings → API → service_role
-  service_key: "sb_publishable_cKRie5DwuxAWNx9gpcK8sA_VrdgX3pf"
+  service_key: "sb_secret_2DJ10WEjAZ-Bcy4cdDVlLA_hA8-fLNT"
 
 delivery:
   # Intervalo (segundos) para consultar pedidos pendientes en Supabase
