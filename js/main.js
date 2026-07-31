@@ -9,6 +9,7 @@ import { CATEGORIES, PRODUCTS } from './data.js';
 // Estado global de la tienda
 let currentCategory = 'todos';
 let searchQuery = '';
+let currentSort = 'price-asc'; // ORDEN POR DEFECTO: MENOR A MAYOR EN PRECIO
 let cart = [];
 let selectedProduct = null;
 let isValidatedMinecraftUser = false;
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCategoryTabs();
   renderStoreProducts();
   initSearch();
+  initSort();
   initCartDrawer();
   initProductModal();
   initCheckoutModal();
@@ -208,7 +210,9 @@ function renderFeaturedProducts() {
   const gridEl = document.getElementById('featured-products-grid');
   if (!gridEl) return;
 
-  const featured = PRODUCTS.filter(p => p.isFeatured).slice(0, 4);
+  const featured = PRODUCTS.filter(p => p.isFeatured)
+    .sort((a, b) => a.price - b.price)
+    .slice(0, 4);
   gridEl.innerHTML = featured.map(createProductCardHTML).join('');
   attachProductCardEvents(gridEl);
 }
@@ -222,7 +226,6 @@ function renderCategoryTabs() {
 
   container.innerHTML = CATEGORIES.map(cat => `
     <button class="category-tab ${cat.slug === currentCategory ? 'active' : ''}" data-category="${cat.slug}">
-      <span>${cat.icon}</span>
       <span>${cat.name}</span>
     </button>
   `).join('');
@@ -251,7 +254,20 @@ function initSearch() {
 }
 
 /**
- * 8. Renderizar catálogo en #tienda
+ * 7.5. Selector de Ordenamiento (Menor a Mayor por defecto)
+ */
+function initSort() {
+  const selectEl = document.getElementById('store-sort-select');
+  if (!selectEl) return;
+
+  selectEl.addEventListener('change', e => {
+    currentSort = e.target.value;
+    renderStoreProducts();
+  });
+}
+
+/**
+ * 8. Renderizar catálogo en #tienda con Ordenamiento Dinámico
  */
 function renderStoreProducts() {
   const gridEl = document.getElementById('store-products-grid');
@@ -263,6 +279,28 @@ function renderStoreProducts() {
       item.name.toLowerCase().includes(searchQuery) ||
       item.shortDesc.toLowerCase().includes(searchQuery);
     return matchesCategory && matchesSearch;
+  });
+
+  // Lógica de ordenamiento profesional (Menor a Mayor de precio por defecto)
+  filtered.sort((a, b) => {
+    if (currentSort === 'price-asc') {
+      return a.price - b.price;
+    } else if (currentSort === 'price-desc') {
+      return b.price - a.price;
+    } else if (currentSort === 'featured') {
+      if (a.isFeatured && !b.isFeatured) return -1;
+      if (!a.isFeatured && b.isFeatured) return 1;
+      return a.price - b.price;
+    } else if (currentSort === 'rarity') {
+      const order = { legendary: 4, epic: 3, rare: 2, common: 1 };
+      const rankA = order[a.rarity] || 0;
+      const rankB = order[b.rarity] || 0;
+      if (rankA !== rankB) return rankB - rankA;
+      return a.price - b.price;
+    } else if (currentSort === 'name') {
+      return a.name.localeCompare(b.name);
+    }
+    return 0;
   });
 
   if (filtered.length === 0) {
@@ -286,13 +324,7 @@ function createProductCardHTML(product) {
   const priceDisplay = `$${product.price.toFixed(2)}`;
   const origPriceDisplay = product.originalPrice ? `$${product.originalPrice.toFixed(2)}` : '';
 
-  // Asignar textura generada por AI para ítems clave si está disponible
-  let iconContent = product.icon;
-  if (product.slug === 'mvp-plus' || product.slug === 'vip-plus') {
-    iconContent = `<img src="img/vip-badge.png" alt="${product.name}" />`;
-  } else if (product.slug === 'pet-dragon') {
-    iconContent = `<img src="img/dragon-pet.png" alt="${product.name}" />`;
-  }
+  const iconContent = product.icon;
 
   return `
     <article class="product-card rarity-${product.rarity}" data-id="${product.id}">
@@ -511,13 +543,7 @@ function openProductModal(productId) {
   if (!modal) return;
 
   const iconBox = document.getElementById('modal-product-icon');
-  if (product.slug === 'mvp-plus' || product.slug === 'vip-plus') {
-    iconBox.innerHTML = `<img src="img/vip-badge.png" alt="${product.name}" />`;
-  } else if (product.slug === 'pet-dragon') {
-    iconBox.innerHTML = `<img src="img/dragon-pet.png" alt="${product.name}" />`;
-  } else {
-    iconBox.innerHTML = product.icon;
-  }
+  iconBox.innerHTML = product.icon;
 
   document.getElementById('modal-product-name').textContent = product.name;
   document.getElementById('modal-product-desc').textContent = product.shortDesc;

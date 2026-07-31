@@ -7,7 +7,7 @@ Bienvenido al repositorio oficial del sitio web de **MyLifeCraft**, el servidor 
 ## 💎 Características del Sitio
 
 - **Diseño Oscuro Inmersivo:** Paleta negra y esmeralda con fondos sutiles de Minecraft, tipografía **Ubuntu** y sistema de rareza visual para ítems (`common`, `rare`, `epic`, `legendary`) con animaciones de brillo y resplandor.
-- **Tienda Completa en Tiempo Real:** Catálogo de 19 productos divididos en 5 categorías (`Rangos VIP`, `Monedas`, `Llaves`, `Kits` y `Cosméticos`), con búsqueda client-side instantánea.
+- **Tienda Completa en Tiempo Real:** Catálogo de 56 productos oficiales y precios exactos en USD sincronizados con la tienda oficial de MyLifeCraft (`mylifecraft.craftingstore.net`), divididos en 10 categorías de Survival (`PELUCHES`, `MYLIFEPASS`, `Rangos Mensuales`, `Rangos permanentes`, `Ascender mi rango`, `Kits`, `Pets`, `Llaves`, `Protecciones` y `Otros`), además de la pestaña `Todos`, con búsqueda client-side instantánea.
 - **Carrito de Compras Persistente:** Cajón interactivo (*Cart Drawer*) con almacenamiento en `localStorage`, controles de cantidad y cálculo de total en vivo.
 - **Verificación Oficial de Mojang / Minotar:** El formulario de *Checkout* valida los nombres de usuario del servidor en tiempo real mostrando el avatar (*player head*) del jugador en Minecraft.
 - **Conexión a Supabase (PostgreSQL):** Incluye esquema y semillas de base de datos preparadas con **Row Level Security (RLS)** y mejores prácticas en `supabase/migrations/0002_mylifecraft_ecommerce_schema.sql`.
