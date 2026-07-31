@@ -16,21 +16,39 @@ let isValidatedMinecraftUser = false;
 let currentMinecraftUser = { username: '', uuid: '', avatarUrl: '' };
 
 document.addEventListener('DOMContentLoaded', () => {
-  initCartFromStorage();
-  initNavbarScroll();
-  initCopyIp();
-  initLiveServerStatus();
-  initHeroParticles();
-  renderFeaturedProducts();
-  renderCategoryTabs();
-  renderStoreProducts();
-  initSearch();
-  initSort();
-  initCartDrawer();
-  initProductModal();
-  initCheckoutModal();
-  initAuth();
-  checkPaymentParams();
+  const safeRun = (fn, name) => {
+    try { fn(); } catch (err) { console.warn(`Advertencia al iniciar [${name}]:`, err); }
+  };
+
+  safeRun(initCartFromStorage, 'initCartFromStorage');
+  safeRun(initNavbarScroll, 'initNavbarScroll');
+  safeRun(initCopyIp, 'initCopyIp');
+  safeRun(initLiveServerStatus, 'initLiveServerStatus');
+  safeRun(initHeroParticles, 'initHeroParticles');
+  safeRun(renderFeaturedProducts, 'renderFeaturedProducts');
+  safeRun(renderCategoryTabs, 'renderCategoryTabs');
+  safeRun(renderStoreProducts, 'renderStoreProducts');
+  safeRun(initSearch, 'initSearch');
+  safeRun(initSort, 'initSort');
+  safeRun(initCartDrawer, 'initCartDrawer');
+  safeRun(initProductModal, 'initProductModal');
+  safeRun(initCheckoutModal, 'initCheckoutModal');
+  safeRun(initAuth, 'initAuth');
+  safeRun(checkPaymentParams, 'checkPaymentParams');
+});
+
+// Delegación global de eventos para garantizar que tocar "Ingreso" (#nav-user-btn o .js-toggle-auth) SIEMPRE abra el modal
+document.addEventListener('click', (e) => {
+  const trigger = e.target.closest('#nav-user-btn, .js-toggle-auth');
+  if (trigger) {
+    e.preventDefault();
+    const saved = localStorage.getItem('mylifecraft_user');
+    if (saved) {
+      openProfileModal();
+    } else {
+      openAuthModal();
+    }
+  }
 });
 
 /**
@@ -801,16 +819,31 @@ function initAuth() {
   });
 
   // Cerrar Modales
+  const closeAuth = () => {
+    if (authModal) {
+      authModal.classList.remove('open');
+      authModal.style.opacity = '';
+      authModal.style.pointerEvents = '';
+    }
+  };
+  const closeProfile = () => {
+    if (profileModal) {
+      profileModal.classList.remove('open');
+      profileModal.style.opacity = '';
+      profileModal.style.pointerEvents = '';
+    }
+  };
+
   if (authCloseBtn && authModal) {
-    authCloseBtn.addEventListener('click', () => authModal.classList.remove('open'));
+    authCloseBtn.addEventListener('click', closeAuth);
     authModal.addEventListener('click', e => {
-      if (e.target === authModal) authModal.classList.remove('open');
+      if (e.target === authModal) closeAuth();
     });
   }
   if (profileCloseBtn && profileModal) {
-    profileCloseBtn.addEventListener('click', () => profileModal.classList.remove('open'));
+    profileCloseBtn.addEventListener('click', closeProfile);
     profileModal.addEventListener('click', e => {
-      if (e.target === profileModal) profileModal.classList.remove('open');
+      if (e.target === profileModal) closeProfile();
     });
   }
 
@@ -984,7 +1017,11 @@ function initAuth() {
 
 function openAuthModal() {
   const modal = document.getElementById('auth-modal-overlay');
-  if (modal) modal.classList.add('open');
+  if (modal) {
+    modal.classList.add('open');
+    modal.style.opacity = '1';
+    modal.style.pointerEvents = 'auto';
+  }
 }
 
 function openProfileModal() {
@@ -1001,7 +1038,11 @@ function openProfileModal() {
     if (titleEl) titleEl.textContent = user.username;
     if (emailEl) emailEl.textContent = user.email;
 
-    if (modal) modal.classList.add('open');
+    if (modal) {
+      modal.classList.add('open');
+      modal.style.opacity = '1';
+      modal.style.pointerEvents = 'auto';
+    }
   } catch (err) {
     console.warn('Error abriendo modal de perfil:', err);
   }
