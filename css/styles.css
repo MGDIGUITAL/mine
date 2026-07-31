@@ -650,10 +650,11 @@ button {
 }
 
 #como-funciona {
-  background: linear-gradient(180deg, rgba(9, 9, 11, 0.15) 0%, rgba(9, 9, 11, 0.05) 50%, rgba(9, 9, 11, 0.20) 100%), url('../img/bg-howitworks.png?v=20260731_force8') center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+  background: #09090b;
   border-top: 1px solid rgba(245, 158, 11, 0.35);
   border-bottom: 1px solid rgba(245, 158, 11, 0.35);
-  background-attachment: fixed;
 }
 
 #featured {
