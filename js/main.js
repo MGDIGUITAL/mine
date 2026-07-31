@@ -29,7 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initCartDrawer();
   initProductModal();
   initCheckoutModal();
+  checkPaymentParams();
 });
+
+/**
+ * Verificar parámetros URL de retorno (ej: ?pago=cancelado)
+ */
+function checkPaymentParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('pago') === 'cancelado') {
+    setTimeout(() => {
+      showToast('⚠️ El pago en PayPal fue cancelado. Tu carrito sigue guardado.');
+    }, 800);
+  }
+}
 
 /**
  * 0. Partículas interactivas estilo Minecraft Shader en el Hero
@@ -652,7 +665,7 @@ function initCheckoutModal() {
         minecraft_username: username,
         customer_email: email,
         total_amount: totalAmount,
-        status: 'paid',
+        status: 'pending_paypal',
         items: [...cart],
         created_at: new Date().toISOString()
       };
@@ -661,13 +674,48 @@ function initCheckoutModal() {
       history.unshift(orderData);
       localStorage.setItem('mylifecraft_orders', JSON.stringify(history));
 
+      const itemNames = cart.map(item => `${item.name} (x${item.quantity})`).join(', ');
+      const itemSummary = `MyLifeCraft — ${itemNames} [Nick: ${username}]`;
+
+      // URLs oficiales para retorno post-pago y cancelación
+      const returnUrl = window.location.origin + `/gracias.html?order=${encodeURIComponent(orderNumber)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&amount=${encodeURIComponent(totalAmount.toFixed(2))}`;
+      const cancelUrl = window.location.origin + `/index.html?pago=cancelado`;
+
+      // Construir URL de PayPal Standard Checkout con el correo oficial: mylifecraftnetwork@gmail.com
+      const paypalUrl = `https://www.paypal.com/cgi-bin/webscr` +
+        `?cmd=_xclick` +
+        `&business=mylifecraftnetwork@gmail.com` +
+        `&item_name=${encodeURIComponent(itemSummary)}` +
+        `&amount=${totalAmount.toFixed(2)}` +
+        `&currency_code=USD` +
+        `&invoice=${encodeURIComponent(orderNumber)}` +
+        `&return=${encodeURIComponent(returnUrl)}` +
+        `&cancel_return=${encodeURIComponent(cancelUrl)}`;
+
       // Limpiar carrito
       cart = [];
       saveCartToStorage();
       modal.classList.remove('open');
 
-      showToast(`🎉 ¡Orden creada! #${orderNumber} — Procesando vía PayPal/Tebex`);
-      alert(`🎉 ORDEN RECIBIDA: #${orderNumber}\n\nJugador: ${username}\nEmail: ${email}\nPasarela: PayPal & Tebex Official\nTotal a pagar: $${totalAmount.toFixed(2)} USD\n\nSerás redirigido a la pasarela segura para completar tu compra y recibir tus beneficios en play.mylifecraft.net.`);
+      showToast(`🔄 Conectando a pasarela de PayPal (${orderNumber})...`);
+
+      // Mostrar confirmación formal al cliente con opción de ir a PayPal o ir a la página de gracias para pruebas
+      const userConfirm = confirm(
+        `🎉 ORDEN DE COMPRA REGISTRADA: #${orderNumber}\n\n` +
+        `• Jugador: ${username}\n` +
+        `• Correo: ${email}\n` +
+        `• Pasarela Oficial: PayPal (mylifecraftnetwork@gmail.com)\n` +
+        `• Total a Pagar: $${totalAmount.toFixed(2)} USD\n\n` +
+        `👉 Al presionar "Aceptar" serás redirigido a PayPal para procesar tu pago de forma segura.\n` +
+        `👉 Una vez confirmado, volverás automáticamente a nuestra página web donde nuestro equipo se pondrá en contacto para entregar tu producto.`
+      );
+
+      if (userConfirm) {
+        window.location.href = paypalUrl;
+      } else {
+        // En caso de cancelar o para verificar localmente la página de éxito de retorno:
+        window.location.href = returnUrl;
+      }
     });
   }
 }
