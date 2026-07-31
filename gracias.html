@@ -3,189 +3,292 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¡Gracias por tu Compra! — MyLifeCraft Network</title>
+  <title>¡Compra Confirmada! — MyLifeCraft Network</title>
+  <meta name="description" content="Tu compra en MyLifeCraft ha sido registrada exitosamente. Revisa los detalles de tu pedido.">
   <link rel="icon" type="image/png" href="img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <style>
+    :root { --gold: #f59e0b; --gold-light: #fbbf24; --green: #22c55e; --blue: #60a5fa; }
+    body { font-family: 'Inter', sans-serif; }
+
     .success-page-container {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 3rem 1.5rem;
-      background: linear-gradient(180deg, rgba(9, 9, 11, 0.82) 0%, rgba(9, 9, 11, 0.70) 50%, rgba(9, 9, 11, 0.90) 100%), url('img/bg-welcome.png') center/cover no-repeat fixed;
+      background:
+        linear-gradient(180deg, rgba(9,9,11,0.88) 0%, rgba(9,9,11,0.76) 50%, rgba(9,9,11,0.95) 100%),
+        url('img/bg-welcome.png') center/cover no-repeat fixed;
       position: relative;
     }
+
+    .confetti-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #22c55e, #f59e0b, #60a5fa, #22c55e);
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+      z-index: 100;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+
     .success-card {
-      background: rgba(18, 18, 24, 0.88);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(245, 158, 11, 0.35);
+      background: rgba(18,18,24,0.92);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(34,197,94,0.4);
       border-radius: 28px;
-      max-width: 680px;
+      max-width: 700px;
       width: 100%;
-      padding: 3.5rem 2.5rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(245, 158, 11, 0.15);
+      padding: 3.5rem 2.75rem;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.85), 0 0 60px rgba(34,197,94,0.12);
       text-align: center;
       position: relative;
       overflow: hidden;
     }
+
+    .success-glow {
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 200px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
     .success-icon-wrap {
-      width: 86px;
-      height: 86px;
+      width: 90px; height: 90px;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.05) 100%);
-      border: 2px solid #22c55e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.05) 100%);
+      border: 2px solid var(--green);
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 1.75rem;
-      box-shadow: 0 0 32px rgba(34, 197, 94, 0.4);
+      box-shadow: 0 0 40px rgba(34,197,94,0.45);
+      animation: pulse-green 2s ease-in-out infinite;
     }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 30px rgba(34,197,94,0.4); }
+      50%       { box-shadow: 0 0 55px rgba(34,197,94,0.7); }
+    }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.4);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.85rem; font-weight: 700; color: var(--green);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .status-dot-animated {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0.2; } }
+
     .success-title {
-      font-family: var(--font-title);
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.03em;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 900; color: #fff;
+      margin-bottom: 0.65rem; letter-spacing: -0.03em;
     }
+
     .success-subtitle {
-      color: var(--color-text-secondary);
-      font-size: 1.1rem;
-      line-height: 1.6;
+      color: #a1a1aa; font-size: 1.05rem; line-height: 1.65;
       margin-bottom: 2.25rem;
+      max-width: 520px; margin-left: auto; margin-right: auto;
     }
+
+    /* Detalles del pedido */
     .order-details-box {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      padding: 1.75rem;
-      margin-bottom: 2rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px;
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 1.75rem;
       text-align: left;
+    }
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800; font-size: 0.82rem;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: #71717a; margin-bottom: 1rem;
     }
     .order-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .order-row:last-child {
-      border-bottom: none;
-    }
-    .order-label {
-      color: var(--color-text-secondary);
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
+    .order-row:last-child { border-bottom: none; }
+    .order-label { color: #71717a; font-size: 0.93rem; font-weight: 500; }
     .order-value {
-      color: #fff;
-      font-weight: 800;
-      font-size: 1.05rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      color: #fff; font-weight: 700; font-size: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
     .player-avatar-small {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 1px solid rgba(245, 158, 11, 0.4);
+      width: 30px; height: 30px; border-radius: 6px;
+      border: 1px solid rgba(245,158,11,0.45);
     }
+
+    /* Pasos */
+    .steps-list {
+      display: flex; flex-direction: column;
+      margin-bottom: 1.75rem; text-align: left;
+    }
+    .step-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-num.done { background: rgba(34,197,94,0.18); border: 1.5px solid var(--green); color: var(--green); }
+    .step-num.pending { background: rgba(245,158,11,0.12); border: 1.5px solid var(--gold); color: var(--gold); }
+    .step-body h4 {
+      font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+      color: #fff; margin-bottom: 0.2rem;
+    }
+    .step-body p { font-size: 0.9rem; color: #a1a1aa; line-height: 1.55; margin: 0; }
+    .step-body p strong { color: #e4e4e7; }
+
+    /* Aviso soporte */
     .support-notice {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid rgba(245, 158, 11, 0.35);
+      background: rgba(96,165,250,0.08);
+      border: 1px solid rgba(96,165,250,0.28);
       border-radius: 16px;
-      padding: 1.35rem;
-      margin-bottom: 2.5rem;
-      text-align: left;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+      display: flex; gap: 0.9rem; align-items: flex-start; text-align: left;
     }
-    .support-notice-icon {
-      color: #f59e0b;
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-    .support-notice-text {
-      font-size: 0.95rem;
-      color: #e4e4e7;
-      line-height: 1.6;
-    }
-    .support-notice-text strong {
-      color: #fbbf24;
-    }
+    .support-notice-icon { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+    .support-notice-text { font-size: 0.93rem; color: #d4d4d8; line-height: 1.6; }
+    .support-notice-text strong { color: var(--blue); }
+
     .success-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
     }
+
     @media (max-width: 640px) {
-      .success-card {
-        padding: 2.25rem 1.5rem;
-      }
-      .success-actions {
-        flex-direction: column;
-      }
-      .success-actions .btn {
-        width: 100%;
-      }
+      .success-card { padding: 2.25rem 1.4rem; }
+      .success-actions { flex-direction: column; }
+      .success-actions .btn { width: 100%; }
     }
   </style>
 </head>
 <body class="dark-theme">
+  <div class="confetti-bar"></div>
   <div class="success-page-container">
     <div class="success-card">
+      <div class="success-glow"></div>
+
+      <!-- ÍCONO -->
       <div class="success-icon-wrap">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
 
-      <h1 class="success-title">¡Gracias por tu Compra!</h1>
+      <div class="status-badge">
+        <span class="status-dot-animated"></span>
+        Pago Confirmado
+      </div>
+
+      <h1 class="success-title">¡Compra Exitosa! 🎉</h1>
       <p class="success-subtitle">
-        Hemos registrado tu transacción de forma segura en nuestra pasarela de <strong>PayPal</strong> (<span style="color: #60a5fa;">mylifecraftnetwork@gmail.com</span>).
+        Tu pago fue registrado correctamente a través de <strong style="color:#fbbf24;">PayPal</strong>
+        (<span style="color:var(--blue);">mylifecraftnetwork@gmail.com</span>).
+        Guarda tu número de orden por cualquier consulta.
       </p>
 
+      <!-- RESUMEN DEL PEDIDO -->
       <div class="order-details-box">
+        <div class="section-label">📦 Resumen del Pedido</div>
         <div class="order-row">
-          <span class="order-label">Número de Orden:</span>
-          <span class="order-value" id="res-order-id" style="color: var(--color-primary);">#MLC-000000</span>
+          <span class="order-label">Número de Orden</span>
+          <span class="order-value" id="res-order-id" style="color:var(--gold);font-size:1.1rem;">#MLC-000000</span>
         </div>
         <div class="order-row">
-          <span class="order-label">Jugador de Minecraft:</span>
+          <span class="order-label">Jugador de Minecraft</span>
           <span class="order-value">
-            <img id="res-player-avatar" src="https://minotar.net/helm/Steve/28.png" alt="Avatar" class="player-avatar-small" />
+            <img id="res-player-avatar" src="https://minotar.net/helm/Steve/30.png" alt="Avatar" class="player-avatar-small">
             <span id="res-player-nick">Jugador</span>
           </span>
         </div>
         <div class="order-row">
-          <span class="order-label">Correo Registrado:</span>
-          <span class="order-value" id="res-email">cliente@correo.com</span>
+          <span class="order-label">Correo de Contacto</span>
+          <span class="order-value" id="res-email" style="color:var(--blue);">cliente@correo.com</span>
         </div>
         <div class="order-row">
-          <span class="order-label">Pasarela de Pago:</span>
-          <span class="order-value" style="color: #22c55e;">PayPal Oficial</span>
+          <span class="order-label">Pasarela de Pago</span>
+          <span class="order-value" style="color:var(--green);">✅ PayPal Oficial</span>
         </div>
         <div class="order-row">
-          <span class="order-label">Total Pagado:</span>
-          <span class="order-value" id="res-total" style="font-size: 1.25rem;">$0.00 USD</span>
+          <span class="order-label">Total Pagado</span>
+          <span class="order-value" id="res-total" style="font-size:1.3rem;color:var(--gold);">$0.00 USD</span>
         </div>
       </div>
 
+      <!-- ¿QUÉ PASA AHORA? -->
+      <div class="section-label">⚙️ ¿Qué pasa ahora?</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num done">✓</div>
+          <div class="step-body">
+            <h4>Pago registrado</h4>
+            <p>Tu transacción fue capturada en nuestra pasarela de PayPal con éxito.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num pending">2</div>
+          <div class="step-body">
+            <h4>Verificación del equipo</h4>
+            <p>Nuestro equipo verifica tu pago y asigna el producto a tu cuenta en <strong>play.mylifecraft.net</strong>. Tiempo estimado: <strong>5 - 30 minutos</strong>.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num pending">3</div>
+          <div class="step-body">
+            <h4>Entrega en el servidor</h4>
+            <p>Recibirás el ítem, rango o paquete directamente al conectarte a <strong>play.mylifecraft.net</strong>. Si no estás en línea, lo encontrarás al ingresar.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num pending">4</div>
+          <div class="step-body">
+            <h4>Confirmación por correo</h4>
+            <p>Recibirás un resumen de tu compra en <strong id="res-email-inline">tu correo</strong>. Si no lo ves, revisa la carpeta de spam.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOPORTE -->
       <div class="support-notice">
-        <svg class="support-notice-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <svg class="support-notice-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"></path>
+        </svg>
         <div class="support-notice-text">
-          <strong>Entrega y Coordinación:</strong> Nuestro equipo de soporte verificará tu transacción y <strong>se comunicará contigo</strong> a tu correo electrónico y dentro de <strong>play.mylifecraft.net</strong> para realizar la entrega de tu producto y asegurar que disfrutes de tu compra al 100%.
+          ¿Tienes dudas sobre tu pedido? Contáctanos en <strong>Discord</strong> o escríbenos a
+          <strong>mylifecraftnetwork@gmail.com</strong> con tu número de orden
+          <strong id="res-order-inline">#MLC-000000</strong>.
         </div>
       </div>
 
+      <!-- ACCIONES -->
       <div class="success-actions">
         <button id="btn-copy-ip-success" class="btn btn-gold">
-          🎮 Copiar IP: play.mylifecraft.net
+          🎮 Conectar: play.mylifecraft.net
         </button>
         <a href="https://discord.gg/dM5dAtsaCx" target="_blank" rel="noopener" class="btn btn-secondary">
           💬 Soporte en Discord
@@ -198,42 +301,41 @@
   </div>
 
   <script>
-    // Recuperar parámetros de la URL o último pedido del localStorage
     document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const orders = JSON.parse(localStorage.getItem('mylifecraft_orders') || '[]');
-      const lastOrder = orders[0] || null;
+      const params  = new URLSearchParams(window.location.search);
+      const orders  = JSON.parse(localStorage.getItem('mylifecraft_orders') || '[]');
+      const last    = orders[0] || null;
 
-      const orderId = params.get('order') || (lastOrder ? lastOrder.order_number : 'MLC-982341');
-      const username = params.get('username') || (lastOrder ? lastOrder.minecraft_username : 'Steve');
-      const email = params.get('email') || (lastOrder ? lastOrder.customer_email : 'cliente@correo.com');
-      const amount = params.get('amount') || (lastOrder ? lastOrder.total_amount.toFixed(2) : '15.00');
+      const orderId  = params.get('order')    || (last ? last.order_number       : 'MLC-982341');
+      const username = params.get('username') || (last ? last.minecraft_username : 'Steve');
+      const email    = params.get('email')    || (last ? last.customer_email     : 'cliente@correo.com');
+      const amount   = params.get('amount')   || (last ? parseFloat(last.total_amount).toFixed(2) : '15.00');
 
-      const elOrderId = document.getElementById('res-order-id');
-      const elPlayerNick = document.getElementById('res-player-nick');
-      const elPlayerAvatar = document.getElementById('res-player-avatar');
-      const elEmail = document.getElementById('res-email');
-      const elTotal = document.getElementById('res-total');
+      const setText = (id, val)        => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      const setAttr = (id, attr, val)  => { const el = document.getElementById(id); if (el) el[attr] = val; };
 
-      if (elOrderId) elOrderId.textContent = '#' + orderId;
-      if (elPlayerNick) elPlayerNick.textContent = username;
-      if (elPlayerAvatar) elPlayerAvatar.src = `https://minotar.net/helm/${encodeURIComponent(username)}/28.png`;
-      if (elEmail) elEmail.textContent = email;
-      if (elTotal) elTotal.textContent = `$${amount} USD`;
+      setText('res-order-id',     '#' + orderId);
+      setText('res-player-nick',  username);
+      setText('res-email',        email);
+      setText('res-total',        '$' + amount + ' USD');
+      setText('res-email-inline', email);
+      setText('res-order-inline', '#' + orderId);
+      setAttr('res-player-avatar', 'src', `https://minotar.net/helm/${encodeURIComponent(username)}/30.png`);
 
       const copyBtn = document.getElementById('btn-copy-ip-success');
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
-          navigator.clipboard.writeText('play.mylifecraft.net');
-          const originalText = copyBtn.textContent;
-          copyBtn.textContent = '✅ ¡IP COPIADA AL PORTAPAPELES!';
-          copyBtn.style.background = '#22c55e';
-          copyBtn.style.color = '#000';
-          setTimeout(() => {
-            copyBtn.textContent = originalText;
-            copyBtn.style.background = '';
-            copyBtn.style.color = '';
-          }, 2500);
+          navigator.clipboard.writeText('play.mylifecraft.net').then(() => {
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '✅ ¡IP copiada al portapapeles!';
+            copyBtn.style.background = '#22c55e';
+            copyBtn.style.color = '#000';
+            setTimeout(() => {
+              copyBtn.innerHTML = original;
+              copyBtn.style.background = '';
+              copyBtn.style.color = '';
+            }, 2800);
+          });
         });
       }
     });

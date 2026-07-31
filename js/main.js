@@ -994,7 +994,13 @@ function initAuth() {
     }
 
     localStorage.setItem('mylifecraft_user', JSON.stringify(foundUser));
-    if (authModal) authModal.classList.remove('open');
+    // Cerrar el modal de auth completamente (clase + inline styles)
+    const authModalEl = document.getElementById('auth-modal-overlay');
+    if (authModalEl) {
+      authModalEl.classList.remove('open');
+      authModalEl.style.opacity = '';
+      authModalEl.style.pointerEvents = '';
+    }
     updateUserNavUI();
     showToast(`🎮 ¡Bienvenido a MyLifeCraft, ${foundUser.username}! Has iniciado sesión.`);
   };
@@ -1008,7 +1014,13 @@ function initAuth() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('mylifecraft_user');
-      if (profileModal) profileModal.classList.remove('open');
+      // Cerrar el modal de perfil completamente (clase + inline styles)
+      const profileModalEl = document.getElementById('profile-modal-overlay');
+      if (profileModalEl) {
+        profileModalEl.classList.remove('open');
+        profileModalEl.style.opacity = '';
+        profileModalEl.style.pointerEvents = '';
+      }
       updateUserNavUI();
       showToast('Has cerrado sesión en MyLifeCraft.');
     });
