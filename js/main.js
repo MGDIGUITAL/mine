@@ -666,8 +666,8 @@ function initCheckoutModal() {
       saveCartToStorage();
       modal.classList.remove('open');
 
-      showToast(`🎉 ¡Compra confirmada! Orden #${orderNumber}`);
-      alert(`🎉 ORDEN RECIBIDA: #${orderNumber}\n\nJugador: ${username}\nEmail: ${email}\nTotal pagado: $${totalAmount.toFixed(2)} USD\n\nTus beneficios han sido enviados automáticamente a play.mylifecraft.net.`);
+      showToast(`🎉 ¡Orden creada! #${orderNumber} — Procesando vía PayPal/Tebex`);
+      alert(`🎉 ORDEN RECIBIDA: #${orderNumber}\n\nJugador: ${username}\nEmail: ${email}\nPasarela: PayPal & Tebex Official\nTotal a pagar: $${totalAmount.toFixed(2)} USD\n\nSerás redirigido a la pasarela segura para completar tu compra y recibir tus beneficios en play.mylifecraft.net.`);
     });
   }
 }

@@ -18,3 +18,5 @@ dist/
 .env.test.local
 .env.production.local
 Thumbs.db
+
+.vercel
