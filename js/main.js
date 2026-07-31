@@ -833,97 +833,143 @@ function initAuth() {
     });
   });
 
-  // Envío del Formulario de Registro (SIN VERIFICACIÓN DE CORREO: Registra y pasa a Login)
-  const regForm = document.getElementById('auth-register-form');
-  if (regForm) {
-    regForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const username = document.getElementById('reg-username')?.value.trim();
-      const email = document.getElementById('reg-email')?.value.trim();
-      const password = document.getElementById('reg-password')?.value.trim();
+  // Función auxiliar de Registro (SIN VERIFICACIÓN DE CORREO: Registra y pasa a Login)
+  const handleRegisterAction = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const username = document.getElementById('reg-username')?.value.trim();
+    const email = document.getElementById('reg-email')?.value.trim();
+    const password = document.getElementById('reg-password')?.value.trim();
 
-      if (!username || !email || !password) {
-        showToast('Por favor completa todos los campos para registrarte.');
-        return;
+    if (!username || !email || !password) {
+      showToast('Por favor completa todos los campos para registrarte.');
+      return;
+    }
+
+    const avatarUrl = `https://minotar.net/helm/${username}/64.png`;
+    const userObj = {
+      username,
+      email,
+      password,
+      avatarUrl,
+      createdAt: new Date().toISOString()
+    };
+
+    // 1. Guardar o sincronizar en Supabase si está disponible (tabla user_profiles)
+    if (window.supabaseClient) {
+      try {
+        await window.supabaseClient.from('user_profiles').insert([{
+          username,
+          email,
+          password_hash: password,
+          avatar_url: avatarUrl
+        }]);
+      } catch (err) {
+        console.warn('Nota: Sincronización con Supabase user_profiles en proceso.', err);
       }
+    }
 
-      const usersDb = JSON.parse(localStorage.getItem('mylifecraft_users_db') || '[]');
-      const existingUser = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase());
+    // 2. Guardar en array global de usuarios en localStorage (sin verificación de correo)
+    const usersDb = JSON.parse(localStorage.getItem('mylifecraft_users_db') || '[]');
+    const existingUser = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase());
 
-      if (existingUser) {
-        showToast('Este correo ya está registrado. Por favor ingresa tu contraseña.');
-        const loginTabBtn = document.querySelector('.auth-tab-btn[data-tab="login"]');
-        if (loginTabBtn) loginTabBtn.click();
-        const loginEmailInput = document.getElementById('login-email');
-        if (loginEmailInput) loginEmailInput.value = email;
-        return;
-      }
-
-      const userObj = {
-        username,
-        email,
-        password,
-        avatarUrl: `https://minotar.net/helm/${username}/64.png`,
-        createdAt: new Date().toISOString()
-      };
-
-      // Guardar en array global de usuarios registrados sin verificación de correo
-      usersDb.push(userObj);
-      localStorage.setItem('mylifecraft_users_db', JSON.stringify(usersDb));
-
-      // Limpiar formulario de registro
-      regForm.reset();
-
-      // Pasar a la pestaña de login para que ingresen con su correo y clave
+    if (existingUser) {
+      showToast('Este correo ya está registrado. Por favor ingresa tu contraseña.');
       const loginTabBtn = document.querySelector('.auth-tab-btn[data-tab="login"]');
       if (loginTabBtn) loginTabBtn.click();
-
       const loginEmailInput = document.getElementById('login-email');
-      const loginPassInput = document.getElementById('login-password');
       if (loginEmailInput) loginEmailInput.value = email;
-      if (loginPassInput) loginPassInput.focus();
+      return;
+    }
 
-      showToast('✅ Registro exitoso sin verificación de correo. Ahora ingresa con tu correo y clave.');
-    });
-  }
+    usersDb.push(userObj);
+    localStorage.setItem('mylifecraft_users_db', JSON.stringify(usersDb));
 
-  // Envío del Formulario de Ingreso (Login)
-  const loginForm = document.getElementById('auth-login-form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('login-email')?.value.trim();
-      const password = document.getElementById('login-password')?.value.trim();
+    // Limpiar formulario de registro
+    const regFormEl = document.getElementById('auth-register-form');
+    if (regFormEl) regFormEl.reset();
 
-      if (!email || !password) {
-        showToast('Por favor ingresa tu correo y contraseña.');
-        return;
+    // Pasar a la pestaña de login para que ingresen con su correo y clave
+    const loginTabBtn = document.querySelector('.auth-tab-btn[data-tab="login"]');
+    if (loginTabBtn) loginTabBtn.click();
+
+    const loginEmailInput = document.getElementById('login-email');
+    const loginPassInput = document.getElementById('login-password');
+    if (loginEmailInput) loginEmailInput.value = email;
+    if (loginPassInput) loginPassInput.focus();
+
+    showToast('✅ Registro exitoso sin verificación de correo. Ahora ingresa con tu correo y clave.');
+  };
+
+  const regForm = document.getElementById('auth-register-form');
+  const btnRegisterSubmit = document.getElementById('btn-auth-register-submit');
+  if (regForm) regForm.addEventListener('submit', handleRegisterAction);
+  if (btnRegisterSubmit) btnRegisterSubmit.addEventListener('click', handleRegisterAction);
+
+  // Función auxiliar de Ingreso (Login)
+  const handleLoginAction = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const email = document.getElementById('login-email')?.value.trim();
+    const password = document.getElementById('login-password')?.value.trim();
+
+    if (!email || !password) {
+      showToast('Por favor ingresa tu correo y contraseña.');
+      return;
+    }
+
+    let foundUser = null;
+
+    // 1. Intentar validar en Supabase si está disponible
+    if (window.supabaseClient) {
+      try {
+        const { data, error } = await window.supabaseClient
+          .from('user_profiles')
+          .select('*')
+          .ilike('email', email)
+          .eq('password_hash', password)
+          .maybeSingle();
+        if (data) {
+          foundUser = {
+            username: data.username,
+            email: data.email,
+            password: data.password_hash,
+            avatarUrl: data.avatar_url || `https://minotar.net/helm/${data.username}/64.png`
+          };
+        }
+      } catch (err) {
+        console.warn('Nota: Validando con base local de MyLifeCraft.', err);
       }
+    }
 
+    // 2. Si no retornó de Supabase, validar en la BD de usuarios locales (mylifecraft_users_db)
+    if (!foundUser) {
       const usersDb = JSON.parse(localStorage.getItem('mylifecraft_users_db') || '[]');
-      const found = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-
-      if (found) {
-        localStorage.setItem('mylifecraft_user', JSON.stringify(found));
-        if (authModal) authModal.classList.remove('open');
-        updateUserNavUI();
-        showToast(`¡Hola de nuevo, ${found.username}! Has iniciado sesión.`);
-      } else {
-        // Modo amigable AAA: Si no existe en BD local pero ingresan credenciales válidas, iniciamos sesión al instante para no romper el flujo
-        const guessUsername = email.split('@')[0];
-        const instantUser = {
-          username: guessUsername,
-          email: email,
-          password: password,
-          avatarUrl: `https://minotar.net/helm/${guessUsername}/64.png`
-        };
-        localStorage.setItem('mylifecraft_user', JSON.stringify(instantUser));
-        if (authModal) authModal.classList.remove('open');
-        updateUserNavUI();
-        showToast(`¡Sesión iniciada correctamente para ${instantUser.username}!`);
+      const localMatch = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+      if (localMatch) {
+        foundUser = localMatch;
       }
-    });
-  }
+    }
+
+    // 3. Modo amigable AAA: Si no existe en BD pero ingresaron correo/clave válidos, iniciamos sesión al instante
+    if (!foundUser) {
+      const guessUsername = email.split('@')[0];
+      foundUser = {
+        username: guessUsername,
+        email: email,
+        password: password,
+        avatarUrl: `https://minotar.net/helm/${guessUsername}/64.png`
+      };
+    }
+
+    localStorage.setItem('mylifecraft_user', JSON.stringify(foundUser));
+    if (authModal) authModal.classList.remove('open');
+    updateUserNavUI();
+    showToast(`🎮 ¡Bienvenido a MyLifeCraft, ${foundUser.username}! Has iniciado sesión.`);
+  };
+
+  const loginForm = document.getElementById('auth-login-form');
+  const btnLoginSubmit = document.getElementById('btn-auth-login-submit');
+  if (loginForm) loginForm.addEventListener('submit', handleLoginAction);
+  if (btnLoginSubmit) btnLoginSubmit.addEventListener('click', handleLoginAction);
 
   // Cerrar Sesión
   if (logoutBtn) {
