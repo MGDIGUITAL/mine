@@ -363,7 +363,7 @@ button {
   padding: 8.5rem 1.5rem 6rem;
   text-align: center;
   overflow: hidden;
-  background: #000 url('../img/hero-bg.png') center/cover no-repeat;
+  background: #000 url('../img/bg-hero-hub.png?v=20260731_7') center/cover no-repeat;
 }
 
 .hero-bg-video {
@@ -632,7 +632,7 @@ button {
 }
 
 #video-showcase {
-  background: linear-gradient(180deg, rgba(9, 9, 11, 0.10) 0%, rgba(9, 9, 11, 0.0) 50%, rgba(9, 9, 11, 0.15) 100%), url('../img/bg-hero-hub.png') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(9, 9, 11, 0.10) 0%, rgba(9, 9, 11, 0.0) 50%, rgba(9, 9, 11, 0.15) 100%), url('../img/bg-hero-hub.png?v=20260731_7') center/cover no-repeat;
   border-top: 1px solid rgba(245, 158, 11, 0.35);
   background-attachment: fixed;
 }
