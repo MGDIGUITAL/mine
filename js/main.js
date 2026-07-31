@@ -1073,7 +1073,8 @@ function updateUserNavUI() {
       const user = JSON.parse(saved);
       navUserBtn.classList.add('logged-in');
       navUserText.textContent = user.username;
-      navUserAvatar.innerHTML = `<img src="${user.avatarUrl || 'https://minotar.net/helm/' + user.username + '/48.png'}" alt="Avatar" style="width: 20px; height: 20px; border-radius: 6px; object-fit: cover;" />`;
+      const headUrl = user.avatarUrl || `https://minotar.net/helm/${encodeURIComponent(user.username)}/32.png`;
+      navUserAvatar.innerHTML = `<img src="${headUrl}" alt="${user.username}" class="mc-head-nav" />`;
     } catch (err) {
       navUserBtn.classList.remove('logged-in');
       navUserText.textContent = 'Ingreso';
@@ -1081,12 +1082,7 @@ function updateUserNavUI() {
   } else {
     navUserBtn.classList.remove('logged-in');
     navUserText.textContent = 'Ingreso';
-    navUserAvatar.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-    `;
+    navUserAvatar.innerHTML = `<img src="https://minotar.net/helm/Steve/32.png" alt="Minecraft" class="mc-head-nav" />`;
   }
 }
 
