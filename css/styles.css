@@ -632,7 +632,7 @@ button {
 }
 
 #video-showcase {
-  background: linear-gradient(180deg, rgba(9, 9, 11, 0.72) 0%, rgba(9, 9, 11, 0.40) 50%, rgba(9, 9, 11, 0.78) 100%), url('../img/bg-servidor-oficial.jpg') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(9, 9, 11, 0.70) 0%, rgba(9, 9, 11, 0.45) 50%, rgba(9, 9, 11, 0.85) 100%), url('../img/bg-hero-hub.png') center/cover no-repeat;
   border-top: 1px solid rgba(245, 158, 11, 0.25);
   background-attachment: fixed;
 }

@@ -121,32 +121,47 @@
       </div>
     </section>
 
-    <!-- BIENVENIDO AL SERVIDOR -->
-    <section id="video-showcase" class="section-container">
-      <div class="section-header">
-        <span class="section-tag">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          <span>Servidor Oficial</span>
-        </span>
-        <h2 class="section-title">Bienvenido a MyLifeCraft</h2>
-        <p class="section-subtitle">
-          Descubre la experiencia definitiva en nuestros servidores independientes de <strong>Survival Vanilla</strong>. Progresión sin límites, economía equilibrada, eventos dinámicos y mascotas legendarias en un entorno sin lag.
-        </p>
-      </div>
+    <!-- TIENDA OFICIAL & LOGO SHOWCASE (SIN RECUADRO, FONDO 16:9 INMERSIVO) -->
+    <section id="video-showcase" class="section-container" style="text-align: center; padding: 7.5rem 1.5rem 8.5rem;">
+      <div style="max-width: 1060px; margin: 0 auto; position: relative; z-index: 2;">
+        
+        <!-- Badge institucional superior -->
+        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.45); padding: 0.45rem 1.35rem; border-radius: 99px; margin-bottom: 2.25rem; box-shadow: 0 0 24px rgba(245, 158, 11, 0.25); backdrop-filter: blur(10px);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.08em;">Servidor Oficial & Red de LATAM</span>
+        </div>
 
-      <div style="max-width: 1040px; margin: 0 auto 4rem; border-radius: 24px; overflow: hidden; border: 1px solid rgba(245, 158, 11, 0.45); box-shadow: 0 0 48px rgba(245, 158, 11, 0.25); position: relative; background: var(--color-surface-card);">
-        <div style="position: relative; padding: 6rem 2rem; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(9, 9, 11, 0.65) 0%, rgba(9, 9, 11, 0.45) 50%, rgba(9, 9, 11, 0.85) 100%), url('img/bg-servidor-oficial.jpg') center/cover no-repeat;">
-          <img src="LOGO.png" alt="MyLifeCraft Network Logo Oficial" style="max-width: 420px; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 0 36px rgba(245, 158, 11, 0.7)); position: relative; z-index: 2;" />
+        <!-- Logo flotante SIN RECUADRO encima del fondo de Minecraft -->
+        <div style="margin: 0 auto 2.5rem; display: flex; justify-content: center; align-items: center;">
+          <img src="LOGO.png" alt="MyLifeCraft Network — Tienda Oficial del Servidor" style="max-width: 460px; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 0 45px rgba(245, 158, 11, 0.75)) drop-shadow(0 20px 30px rgba(0, 0, 0, 0.85)); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.transform='scale(1.03) translateY(-4px)'" onmouseout="this.style.transform='scale(1) translateY(0)'" />
         </div>
-        <div style="padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; background: rgba(9, 9, 11, 0.95); border-top: 1px solid rgba(245, 158, 11, 0.2);">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 12px #22c55e;"></span>
-            <span style="font-weight: 700; font-size: 1.05rem; color: #fff;">Servidor Oficial MyLifeCraft Network (1.20+)</span>
-          </div>
-          <button class="btn btn-gold js-copy-ip" style="padding: 0.7rem 1.4rem; font-size: 0.9rem;">
-            Conectarse Ahora: play.mylifecraft.net
+
+        <!-- Título principal con tipografía mejorada y separada del logo -->
+        <h2 style="font-family: var(--font-title); font-size: clamp(2.3rem, 4.8vw, 3.8rem); font-weight: 900; color: #fff; text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95); margin-bottom: 1.25rem; letter-spacing: -0.025em; line-height: 1.15;">
+          Tienda Oficial de Nuestro Servidor
+        </h2>
+
+        <!-- Subtítulo profesional institucional bien redactado -->
+        <p style="max-width: 780px; margin: 0 auto 3rem; font-size: clamp(1.08rem, 2vw, 1.25rem); line-height: 1.75; color: #e4e4e7; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9); font-weight: 400;">
+          Bienvenido al portal corporativo de mejoras de <strong>MyLifeCraft Network</strong>. Aquí podrás adquirir rangos exclusivos, beneficios para <strong>Survival Vanilla</strong> y pases de progreso en una economía 100% equilibrada. Cada donación y compra contribuye directamente a mantener nuestros servidores en línea, financiar mejoras técnicas e impulsar un entorno sin lag y con soporte dedicado para toda la comunidad.
+        </p>
+
+        <!-- Botonera institucional interactiva -->
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.25rem;">
+          <button class="btn btn-gold js-copy-ip" style="padding: 1.15rem 2.5rem; font-size: 1.05rem; box-shadow: 0 0 35px rgba(245, 158, 11, 0.45); font-weight: 800;">
+            🎮 Conectarse Ahora: play.mylifecraft.net
           </button>
+          <a href="#tienda" class="btn btn-secondary" style="padding: 1.15rem 2.2rem; font-size: 1.05rem; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); backdrop-filter: blur(12px); color: #fff;">
+            🛍️ Explorar el Catálogo
+          </a>
         </div>
+
+        <!-- Indicador de estado en vivo del servidor -->
+        <div style="margin-top: 3rem; display: inline-flex; align-items: center; gap: 0.65rem; background: rgba(9, 9, 11, 0.75); padding: 0.6rem 1.4rem; border-radius: 99px; border: 1px solid rgba(34, 197, 94, 0.35); backdrop-filter: blur(10px);">
+          <span style="width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 12px #22c55e;"></span>
+          <span style="color: #d4d4d8; font-size: 0.92rem; font-weight: 600;">Servidor Oficial Java 1.20+ • Progresión Continua & Sin Lag</span>
+        </div>
+
       </div>
     </section>
 
