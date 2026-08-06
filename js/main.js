@@ -714,47 +714,23 @@ function initCheckoutModal() {
       history.unshift(orderData);
       localStorage.setItem('mylifecraft_orders', JSON.stringify(history));
 
-      const itemNames = cart.map(item => `${item.name} (x${item.quantity})`).join(', ');
-      const itemSummary = `MyLifeCraft — ${itemNames} [Nick: ${username}]`;
-
-      // URLs oficiales para retorno post-pago y cancelación
-      const returnUrl = window.location.origin + `/gracias.html?order=${encodeURIComponent(orderNumber)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&amount=${encodeURIComponent(totalAmount.toFixed(2))}`;
-      const cancelUrl = window.location.origin + `/index.html?pago=cancelado`;
-
-      // Construir URL de PayPal Standard Checkout con el correo oficial: mylifecraftnetwork@gmail.com
-      const paypalUrl = `https://www.paypal.com/cgi-bin/webscr` +
-        `?cmd=_xclick` +
-        `&business=mylifecraftnetwork@gmail.com` +
-        `&item_name=${encodeURIComponent(itemSummary)}` +
-        `&amount=${totalAmount.toFixed(2)}` +
-        `&currency_code=USD` +
-        `&invoice=${encodeURIComponent(orderNumber)}` +
-        `&return=${encodeURIComponent(returnUrl)}` +
-        `&cancel_return=${encodeURIComponent(cancelUrl)}`;
-
       // Limpiar carrito
       cart = [];
       saveCartToStorage();
       modal.classList.remove('open');
 
-      showToast(`🔄 Conectando a pasarela de PayPal (${orderNumber})...`);
-
-      // Mostrar confirmación formal al cliente con opción de ir a PayPal o ir a la página de gracias para pruebas
-      const userConfirm = confirm(
-        `🎉 ORDEN DE COMPRA REGISTRADA: #${orderNumber}\n\n` +
-        `• Jugador: ${username}\n` +
-        `• Correo: ${email}\n` +
-        `• Pasarela Oficial: PayPal (mylifecraftnetwork@gmail.com)\n` +
-        `• Total a Pagar: $${totalAmount.toFixed(2)} USD\n\n` +
-        `👉 Al presionar "Aceptar" serás redirigido a PayPal para procesar tu pago de forma segura.\n` +
-        `👉 Una vez confirmado, volverás automáticamente a nuestra página web donde nuestro equipo se pondrá en contacto para entregar tu producto.`
-      );
-
-      if (userConfirm) {
-        window.location.href = paypalUrl;
+      if (enrichedItems.length === 1 && enrichedItems[0].tebexId) {
+        showToast(`🔄 Conectando con Tebex Store...`);
+        window.location.href = `https://tienda.mylifecraft.net/checkout/packages/add/${enrichedItems[0].tebexId}/single`;
       } else {
-        // En caso de cancelar o para verificar localmente la página de éxito de retorno:
-        window.location.href = returnUrl;
+        const userConfirm = confirm(
+          `Has añadido múltiples ítems al carrito.\n\n` +
+          `Para procesar tu pago de forma segura y aplicar todos los descuentos, serás redirigido a la tienda oficial de Tebex.\n` +
+          `Por favor, selecciona tus paquetes allí para completar la compra.`
+        );
+        if (userConfirm) {
+          window.location.href = 'https://tienda.mylifecraft.net';
+        }
       }
     });
   }

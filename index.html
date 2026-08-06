@@ -5,7 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MyLifeCraft — Tienda Oficial & Comunidad del Servidor de Minecraft</title>
   <meta name="description" content="Bienvenido a MyLifeCraft: Survive • Build • Explore • Together. Explora nuestra tienda oficial con rangos VIP, MVP, monedas, llaves, kits y cosméticos con entrega automática al instante." />
-  <meta name="keywords" content="Minecraft, MyLifeCraft, Servidor Minecraft, Tienda Minecraft, Rangos VIP, MVP, Cosméticos Minecraft" />
+  <meta name="keywords" content="Minecraft, MyLifeCraft, Servidor Minecraft, Tienda Minecraft, Rangos VIP, MVP, Cosméticos Minecraft, Survival Vanilla, One Block, Servidor LATAM" />
+  <meta name="author" content="MyLifeCraft Network" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#f59e0b" />
+  <link rel="canonical" href="https://mylifecraft.net/" />
+  <link rel="icon" type="image/png" href="LOGO.png" />
+
+  <!-- Open Graph / Redes Sociales (Discord, WhatsApp, Facebook) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mylifecraft.net/" />
+  <meta property="og:title" content="MyLifeCraft — Tienda Oficial & Comunidad del Servidor de Minecraft" />
+  <meta property="og:description" content="Bienvenido a MyLifeCraft: Survive • Build • Explore • Together. Explora nuestra tienda oficial con rangos VIP, MVP, monedas, llaves, kits y cosméticos con entrega automática al instante." />
+  <meta property="og:image" content="https://mylifecraft.net/LOGO.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="MyLifeCraft Network" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://mylifecraft.net/" />
+  <meta name="twitter:title" content="MyLifeCraft — Tienda Oficial & Comunidad del Servidor de Minecraft" />
+  <meta name="twitter:description" content="Adquiere rangos VIP, MVP, monedas y beneficios para Minecraft Survival en nuestra tienda oficial con entrega automática instantánea." />
+  <meta name="twitter:image" content="https://mylifecraft.net/LOGO.png" />
+
+  <!-- Schema.org JSON-LD Estructurado para Motores de Búsqueda -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://mylifecraft.net/#website",
+        "url": "https://mylifecraft.net/",
+        "name": "MyLifeCraft Network",
+        "description": "Tienda Oficial & Comunidad del Servidor de Minecraft MyLifeCraft",
+        "publisher": {
+          "@id": "https://mylifecraft.net/#organization"
+        },
+        "inLanguage": "es-ES"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://mylifecraft.net/#organization",
+        "name": "MyLifeCraft Network",
+        "url": "https://mylifecraft.net/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mylifecraft.net/LOGO.png"
+        },
+        "sameAs": [
+          "https://discord.gg/dM5dAtsaCx",
+          "https://www.youtube.com/channel/UClXUopR3WCocCpZipYJuqJg",
+          "https://www.tiktok.com/@mylifecraftserver"
+        ]
+      },
+      {
+        "@type": "Store",
+        "@id": "https://mylifecraft.net/#store",
+        "name": "Tienda Oficial MyLifeCraft",
+        "url": "https://mylifecraft.net/#tienda",
+        "image": "https://mylifecraft.net/LOGO.png",
+        "description": "Tienda oficial de rangos VIP, monedas, llaves y beneficios del servidor de Minecraft MyLifeCraft",
+        "priceRange": "$$"
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="css/styles.css?v=20260731_force7" />
 </head>
 <body>
@@ -22,9 +88,11 @@
 
       <nav class="nav-links" aria-label="Navegación principal">
         <a href="#inicio" class="nav-link active">Inicio</a>
-        <a href="#info-rangos" class="nav-link">Información Rangos</a>
+        <a href="#info-rangos" class="nav-link">Rangos</a>
         <a href="#tienda" class="nav-link">Tienda</a>
-        <a href="#como-funciona" class="nav-link">¿Cómo Funciona?</a>
+        <a href="estado.html" class="nav-link" title="Consultar Estado de Mis Compras">Estado</a>
+        <a href="https://mylifecraft.net/#world:0:0:0:1500:0:0:0:1:flat" target="_blank" rel="noopener" class="nav-link" title="Ver Mapa Dinámico del Servidor">Mapa</a>
+        <a href="saas.html" class="nav-link nav-staff-link" title="Ingreso Exclusivo para Staff y Administración">STAFF</a>
       </nav>
 
       <div class="nav-actions">
@@ -189,192 +257,7 @@
       </div>
 
       <div class="ranks-table-wrapper">
-        <table class="ranks-comparison-table">
-          <thead>
-            <tr>
-              <th class="col-feature">BENEFICIO / CARACTERÍSTICA</th>
-              <th class="col-rank col-vip">VIP</th>
-              <th class="col-rank col-elite">ELITE</th>
-              <th class="col-rank col-ultra">ULTRA</th>
-              <th class="col-rank col-omega">OMEGA</th>
-              <th class="col-rank col-supremo">SUPREMO</th>
-              <th class="col-rank col-leyenda">LEYENDA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 1. DINERO -->
-            <tr>
-              <td class="cell-feature">DINERO</td>
-              <td>5K</td>
-              <td>10K</td>
-              <td>15K</td>
-              <td>20K</td>
-              <td>25K</td>
-              <td class="cell-highlight">30K</td>
-            </tr>
-            <!-- 2. HOMES -->
-            <tr>
-              <td class="cell-feature">HOMES</td>
-              <td>3</td>
-              <td>5</td>
-              <td>7</td>
-              <td>9</td>
-              <td>10</td>
-              <td class="cell-highlight">20</td>
-            </tr>
-            <!-- 3. COMANDOS -->
-            <tr>
-              <td class="cell-feature">COMANDOS</td>
-              <td><code>/ec /wb /hat</code></td>
-              <td><code>/ec /wb /hat</code></td>
-              <td><code>/ec /wb /hat</code></td>
-              <td><code>/ec /wb /hat</code></td>
-              <td><code>/ec /wb /hat</code></td>
-              <td class="cell-highlight"><code>/ec /wb /hat</code></td>
-            </tr>
-            <!-- 4. XP -->
-            <tr>
-              <td class="cell-feature">XP</td>
-              <td>30 niveles</td>
-              <td>40 niveles</td>
-              <td>45 niveles</td>
-              <td>55 niveles</td>
-              <td>60 niveles</td>
-              <td class="cell-highlight">74 niveles</td>
-            </tr>
-            <!-- 5. ACTION HOUSE -->
-            <tr>
-              <td class="cell-feature">ACTION HOUSE</td>
-              <td>15</td>
-              <td>20</td>
-              <td>25</td>
-              <td>30</td>
-              <td>35</td>
-              <td class="cell-highlight">40</td>
-            </tr>
-            <!-- 6. MOCHILAS -->
-            <tr>
-              <td class="cell-feature">MOCHILAS</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>7</td>
-              <td>9</td>
-              <td class="cell-highlight">11</td>
-            </tr>
-            <!-- 7. PWAPS -->
-            <tr>
-              <td class="cell-feature">PWAPS</td>
-              <td>15</td>
-              <td>20</td>
-              <td>25</td>
-              <td>30</td>
-              <td>35</td>
-              <td class="cell-highlight">40</td>
-            </tr>
-            <!-- 8. HEAL / FEED -->
-            <tr>
-              <td class="cell-feature">HEAL / FEED</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td class="cell-highlight"><span class="icon-yes">✓</span></td>
-            </tr>
-            <!-- 9. TUMBA -->
-            <tr>
-              <td class="cell-feature">TUMBA</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td>ANTIRROBO (10mins)</td>
-              <td>ANTIRROBO (20mins)</td>
-              <td>ANTIRROBO (30mins)</td>
-              <td class="cell-highlight">ANTIRROBO (eterno)</td>
-            </tr>
-            <!-- 10. AUTOPICKUP -->
-            <tr>
-              <td class="cell-feature">AUTOPICKUP</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><code>/auto</code></td>
-              <td><code>/auto /autodrops /autosmelt</code></td>
-              <td><code>/auto /autodrops /autosmelt</code></td>
-              <td class="cell-highlight"><code>/auto /autodrops /autosmelt</code></td>
-            </tr>
-            <!-- 11. LLAVES -->
-            <tr>
-              <td class="cell-feature">LLAVES</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td>x5 INFIERNO</td>
-              <td>x10 INFIERNO</td>
-              <td>x15 INFIERNO</td>
-              <td class="cell-highlight">x20 INFIERNO</td>
-            </tr>
-            <!-- 12. PROTECCIÓN -->
-            <tr>
-              <td class="cell-feature">PROTECCIÓN</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td>16x16</td>
-              <td>32x32</td>
-              <td>64x64</td>
-              <td class="cell-highlight">100x100</td>
-            </tr>
-            <!-- 13. FLY -->
-            <tr>
-              <td class="cell-feature">FLY</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td class="cell-highlight"><span class="icon-yes">✓</span></td>
-            </tr>
-            <!-- 14. AURA -->
-            <tr>
-              <td class="cell-feature">AURA</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><code>/aura</code></td>
-              <td><code>/aura</code></td>
-              <td class="cell-highlight"><code>/aura</code></td>
-            </tr>
-            <!-- 15. INVENTORY -->
-            <tr>
-              <td class="cell-feature">INVENTORY</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-yes">✓</span></td>
-              <td class="cell-highlight"><span class="icon-yes">✓</span></td>
-            </tr>
-            <!-- 16. MODO DIOS -->
-            <tr>
-              <td class="cell-feature">MODO DIOS</td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td><span class="icon-no">✕</span></td>
-              <td class="cell-highlight"><span class="badge-godmode">/godmode</span></td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td class="cell-feature">OBTENER RANGO</td>
-              <td><a href="#tienda" class="btn-table-buy col-vip">Comprar</a></td>
-              <td><a href="#tienda" class="btn-table-buy col-elite">Comprar</a></td>
-              <td><a href="#tienda" class="btn-table-buy col-ultra">Comprar</a></td>
-              <td><a href="#tienda" class="btn-table-buy col-omega">Comprar</a></td>
-              <td><a href="#tienda" class="btn-table-buy col-supremo">Comprar</a></td>
-              <td class="cell-highlight"><a href="#tienda" class="btn-table-buy col-leyenda">Comprar</a></td>
-            </tr>
-          </tfoot>
-        </table>
+        <img src="img/TABLA_RANGOS.jpg" alt="Tabla de Rangos Oficial" style="width: 100%; max-width: 1000px; margin: 0 auto; display: block; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: pointer;" onclick="window.open(this.src, '_blank')" />
       </div>
     </section>
 
@@ -639,7 +522,7 @@
         </div>
 
         <button type="submit" class="btn btn-gold" id="btn-submit-paypal" style="width: 100%; padding: 1.15rem; font-size: 1.05rem;">
-          Confirmar Pedido y Pagar con PayPal
+          Confirmar Pedido y Pagar en Tebex
         </button>
       </form>
     </div>
@@ -789,7 +672,9 @@
           <li><a href="#inicio">→ Inicio & Bienvenida</a></li>
           <li><a href="#info-rangos">→ Información de Rangos</a></li>
           <li><a href="#tienda">→ Catálogo General</a></li>
-          <li><a href="#como-funciona">→ Proceso de Compra</a></li>
+          <li><a href="estado.html">→ Estado de Pedido</a></li>
+          <li><a href="https://mylifecraft.net/#world:0:0:0:1500:0:0:0:1:flat" target="_blank" rel="noopener">→ Mapa del Servidor</a></li>
+          <li><a href="saas.html" style="color: #fbbf24; font-weight: 700;">→ 🔒 Panel SaaS (Staff)</a></li>
         </ul>
       </div>
 
@@ -848,6 +733,93 @@
       </div>
     </div>
   </footer>
+
+  <!-- MODAL DE INGRESO DE SEGURIDAD STAFF (DESDE NAVBAR) -->
+  <div id="modal-staff-auth" style="display: none; position: fixed; inset: 0; background: rgba(9, 9, 11, 0.88); backdrop-filter: blur(14px); z-index: 99999; align-items: center; justify-content: center; padding: 1.5rem;">
+    <div style="background: #ffffff; border-radius: 24px; max-width: 420px; width: 100%; padding: 2.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.65); text-align: left; position: relative;">
+      <button id="btn-close-staff-modal" style="position: absolute; top: 1.25rem; right: 1.25rem; background: transparent; border: none; font-size: 1.6rem; cursor: pointer; color: #6b7280; line-height: 1;">&times;</button>
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+        <img src="LOGO.png" alt="MyLifeCraft" style="width: 34px; height: 34px;" />
+        <span style="font-size: 1.25rem; font-weight: 800; color: #111827;">MyLifeCraft <span style="color: #15803d;">Staff</span></span>
+      </div>
+      <h3 style="font-size: 1.5rem; font-weight: 800; color: #111827; margin-bottom: 0.35rem;">Control de Seguridad</h3>
+      <p style="color: #6b7280; font-size: 0.9rem; margin-bottom: 1.75rem;">Ingresa tus credenciales para acceder al Dashboard Operativo del servidor.</p>
+      
+      <form id="form-staff-navbar-auth" autocomplete="off" onsubmit="return false;">
+        <div style="margin-bottom: 1.15rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #374151; margin-bottom: 0.4rem;">USUARIO / CORREO CORPORATIVO</label>
+          <input type="text" id="staff-auth-user" name="auth_staff_user_token" autocomplete="new-password" spellcheck="false" placeholder="Usuario corporativo..." style="width: 100%; padding: 0.8rem 1rem; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 12px; color: #111827; font-size: 0.94rem;" required />
+        </div>
+        <div style="margin-bottom: 1.75rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #374151; margin-bottom: 0.4rem;">CONTRASEÑA DE ACCESO</label>
+          <input type="password" id="staff-auth-pass" name="auth_staff_pass_token" autocomplete="new-password" placeholder="••••••••" style="width: 100%; padding: 0.8rem 1rem; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 12px; color: #111827; font-size: 0.94rem;" required />
+        </div>
+        <div id="staff-auth-msg" style="display: none; margin-bottom: 1rem; padding: 0.75rem; border-radius: 10px; font-size: 0.88rem; font-weight: 600; text-align: center;"></div>
+        <button type="submit" style="width: 100%; background: #15803d; color: #fff; border: none; border-radius: 12px; padding: 0.95rem; font-size: 0.98rem; font-weight: 700; cursor: pointer; transition: background 0.2s; box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);">
+          🚀 Ingresar al Panel SaaS
+        </button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const staffLinks = document.querySelectorAll('.nav-staff-link, a[href="saas.html"], a[href="/saas"]');
+      const staffModal = document.getElementById('modal-staff-auth');
+      const btnCloseStaff = document.getElementById('btn-close-staff-modal');
+      const formStaffAuth = document.getElementById('form-staff-navbar-auth');
+      const inputU = document.getElementById('staff-auth-user');
+      const inputP = document.getElementById('staff-auth-pass');
+      const msgEl = document.getElementById('staff-auth-msg');
+
+      staffLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (sessionStorage.getItem('mylifecraft_staff_session') === 'true') {
+            window.location.href = 'saas.html';
+            return;
+          }
+          if (staffModal) {
+            staffModal.style.display = 'flex';
+            inputU.value = '';
+            inputP.value = '';
+            if (msgEl) msgEl.style.display = 'none';
+            setTimeout(() => inputU.focus(), 100);
+          }
+        });
+      });
+
+      if (btnCloseStaff) {
+        btnCloseStaff.addEventListener('click', () => {
+          if (staffModal) staffModal.style.display = 'none';
+        });
+      }
+
+      if (formStaffAuth) {
+        formStaffAuth.addEventListener('submit', () => {
+          const user = (inputU.value || '').trim().toLowerCase();
+          const pass = (inputP.value || '').trim();
+
+          if ((user === 'staff@mylifecraft.net' && pass === 'staff123') ||
+              (user === 'admin@mylifecraft.net' && pass === 'admin123') ||
+              (user === 'staffadmin' && pass === 'staff123')) {
+            sessionStorage.setItem('mylifecraft_staff_session', 'true');
+            msgEl.style.display = 'block';
+            msgEl.style.background = '#dcfce7';
+            msgEl.style.color = '#15803d';
+            msgEl.textContent = '✅ Acceso Autorizado. Abriendo Dashboard...';
+            setTimeout(() => {
+              window.location.href = 'saas.html';
+            }, 550);
+          } else {
+            msgEl.style.display = 'block';
+            msgEl.style.background = '#fee2e2';
+            msgEl.style.color = '#dc2626';
+            msgEl.textContent = '❌ Credenciales incorrectas. Intenta nuevamente.';
+          }
+        });
+      }
+    });
+  </script>
 
   <!-- Módulos Javascript -->
   <script type="module" src="js/main.js?v=20260731_force7"></script>
