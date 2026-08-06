@@ -860,10 +860,10 @@ button {
 }
 
 .product-card {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(9, 9, 11, 0.95) 100%), url('../img/fondo-productos.png') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(9, 9, 11, 0.95) 100%), url('../img/fondo-productos.png') center/100% 100% no-repeat;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
-  padding: 2rem;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -875,7 +875,8 @@ button {
 
 .product-card:hover {
   transform: translateY(-8px) scale(1.015);
-  background: var(--color-surface-card-hover);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(9, 9, 11, 0.90) 100%), url('../img/fondo-productos.png') center/100% 100% no-repeat;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
 }
 
 .product-card.rarity-common:hover {
