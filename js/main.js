@@ -357,6 +357,8 @@ function createProductCardHTML(product) {
   const origPriceDisplay = product.originalPrice ? `$${product.originalPrice.toFixed(2)}` : '';
 
   const iconContent = product.icon;
+  const rarityNames = { common: 'Común', rare: 'Raro', epic: 'Épico', legendary: 'Legendario' };
+  const rarityText = rarityNames[product.rarity] || product.rarity;
 
   return `
     <article class="product-card rarity-${product.rarity}" data-id="${product.id}">
@@ -364,7 +366,7 @@ function createProductCardHTML(product) {
         <div class="item-icon-wrap" title="${product.name}">
           ${iconContent}
         </div>
-        <span class="rarity-badge ${product.rarity}">${product.rarity}</span>
+        <span class="rarity-badge ${product.rarity}">${rarityText}</span>
       </div>
 
       <h3 class="product-title">${product.name}</h3>
@@ -588,8 +590,9 @@ function openProductModal(productId) {
   document.getElementById('modal-product-price').textContent = `$${product.price.toFixed(2)} USD`;
 
   const badgeEl = document.getElementById('modal-product-rarity');
+  const rarityNames = { common: 'Común', rare: 'Raro', epic: 'Épico', legendary: 'Legendario' };
   badgeEl.className = `rarity-badge ${product.rarity}`;
-  badgeEl.textContent = product.rarity;
+  badgeEl.textContent = rarityNames[product.rarity] || product.rarity;
 
   const benefitsEl = document.getElementById('modal-product-benefits');
   benefitsEl.innerHTML = product.benefits.map(benefit => `
