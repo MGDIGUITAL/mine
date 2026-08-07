@@ -1092,18 +1092,17 @@ function updateUserNavUI() {
 
 // --- EFECTO DE SONIDO GLOBAL ---
 // Reproducir sonido al hacer click en botones e interacciones
-const uiClickSound = new Audio('audio/click.mp4');
+const uiClickSound = new Audio('audio/click.mp3');
 uiClickSound.volume = 0.6; // Nivel cómodo
 
 document.addEventListener('click', (e) => {
   // Verificamos si se hizo click en un botón, enlace, o elemento interactivo
-  const isInteractive = e.target.closest('a, button, input[type="submit"], .clickable, .nav-link, .add-to-cart-btn, .product-card');
+  const isInteractive = e.target.closest('a, button, input[type="submit"], .clickable, .nav-link, .add-to-cart-btn, .product-card, .brand-logo, .footer-link');
   
   if (isInteractive) {
     uiClickSound.currentTime = 0; // Reiniciar por si se hace click rápido
     uiClickSound.play().catch(err => {
-      // Algunos navegadores bloquean el audio si el usuario no ha interactuado antes,
-      // pero como esto ocurre *en un click*, suele funcionar sin problemas.
+      console.warn("Audio bloqueado por el navegador:", err);
     });
   }
 });
