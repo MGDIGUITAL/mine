@@ -3,7 +3,7 @@
    Paleta Basada en Logo Oficial: Voxel Amber Gold, Emerald Forest & Obsidian Nether
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=Unbounded:wght@700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Pixelify+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=Unbounded:wght@700;800;900&display=swap');
 
 :root {
   /* Tokens Semánticos Oficiales (/diseño SKILL COMPLIANT) */
@@ -40,9 +40,9 @@
   --rarity-legendary: #fbbf24;
   --rarity-legendary-glow: 0 0 40px rgba(251, 191, 36, 0.7);
 
-  /* Tipografía Editorial Display Pro (/diseño: Plus Jakarta Sans + Inter + Unbounded + Syne) */
+  /* Tipografía Editorial Display Pro (/diseño: Pixelify Sans + Plus Jakarta Sans) */
   --font-body: 'Plus Jakarta Sans', 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
-  --font-title: 'Unbounded', 'Outfit', 'Syne', sans-serif;
+  --font-title: 'Pixelify Sans', 'Unbounded', 'Syne', sans-serif;
 
   /* Elevaciones & Transiciones (Microinteracciones 150-300ms) */
   --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -202,9 +202,9 @@ button {
 }
 
 .nav-link {
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 0.9rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
   color: #a3a3a3;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -431,7 +431,8 @@ button {
   min-height: 48px;
   border-radius: 12px;
   font-weight: 700;
-  font-size: 1rem;
+  font-family: var(--font-title);
+  font-size: 1.15rem;
   transition: all var(--transition-fast);
   cursor: pointer;
   letter-spacing: 0.01em;
@@ -1024,9 +1025,9 @@ button {
   border-top-color: #4a4d4f;
   border-left-color: #4a4d4f;
   color: #e4e4e7;
-  font-weight: 800;
-  font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: var(--font-title);
+  font-size: 1.15rem;
   letter-spacing: 0.05em;
   transition: all var(--transition-fast);
   min-height: 44px;
@@ -1058,9 +1059,9 @@ button {
   border-top-color: #fde68a;
   border-left-color: #fde68a;
   color: #451a03;
-  font-weight: 900;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font-title);
+  font-size: 1.25rem;
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
