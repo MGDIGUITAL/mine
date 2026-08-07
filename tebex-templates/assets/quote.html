@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container quote-page flex-center">
+  
+  <main class="store-quote store-form glass-panel login-modal" data-popup>
+    
+    {# Encabezado llamativo para la actualización de rango #}
+    <header class="quote-header text-center mb-4">
+      <div class="quote-icon-placeholder pulse-glow mb-2" style="font-size: 3rem; color: #f59e0b;">
+        <i class="fas fa-level-up-alt"></i>
+      </div>
+      <h2 class="text-glow">{{ __("Update Tier") }}</h2>
+    </header>
+
+    {# Descripción de los cambios #}
+    <div class="text-content quote-description mb-4 text-center">
+      {{ description|raw }}
+    </div>
+
+    {# Formulario invisible y botones de confirmación #}
+    <form method="post" action="/tier/update" class="quote-form">
+      <input type="hidden" name="category_id" value="{{ category }}">
+      <input type="hidden" name="package_id" value="{{ package }}">
+
+      {% for k, v in options %}
+        <input type="hidden" name="options[{{ k }}]" value="{{ v }}">
+      {% endfor %}
+
+      <div class="actions quote-actions flex-group mt-4 gap-3">
+        <a href="/category/{{category}}" class="btn-secondary w-50 text-center">
+          <i class="fas fa-arrow-left"></i> {{ __("Back") }}
+        </a>
+        <button type="submit" class="btn-primary pulse-glow confirm w-50">
+          <i class="fas fa-check"></i> {{ __("Confirm") }}
+        </button>
+      </div>
+    </form>
+    
+  </main>
+  
+</div>
+{% endblock %}

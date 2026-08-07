@@ -1,0 +1,19 @@
+{% if module.display %}
+<div class="widget widget-featured glass-panel featured-glow">
+  
+  <header class="widget-header">
+    <h3 class="widget-title text-glow">
+      <i class="fas fa-star highlight-icon"></i> {{ module.header }}
+    </h3>
+  </header>
+
+  <div class="widget-content featured-package-wrapper">
+    {# El contenido en sí (la caja del paquete) se carga desde package-entry.twig #}
+    {% include 'package-entry.twig' with {
+      package: module.package,
+      currency: module.package.currency
+    } %}
+  </div>
+  
+</div>
+{% endif %}

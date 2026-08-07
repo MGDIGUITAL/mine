@@ -1,0 +1,65 @@
+{# Popup mode (only render .site container when true) #}
+{% set isPopup = query('popup') != null %}
+
+{% set toastText = page.message.display ? page.message.text : '' %}
+
+{% set packageImageDefault = '/assets/img/empty.png' %}
+
+{% set isNavigationVertical = config('nav-style') == 'Vertical Nav in Sidebar' %}
+{% set navClass = isNavigationVertical ? 'is-navigation-vertical ' : 'is-navigation-horizontal ' %}
+{% set sidebarClass = config('sidebar-position') == 'Right' ? 'is-sidebar-right ' : '' %}
+{% set homeCategoriesClass = config('home-categories') == 'On' ? 'home-categories-enabled ' : '' %}
+
+{# Clases premium agregadas para aplicar los estilos AAA #}
+{% set bodyClassStr = navClass ~ sidebarClass ~ homeCategoriesClass ~ 'premium-theme mylifecraft-theme ' %}
+
+{% if isPopup == false %}
+  {% include "head.twig" %}
+  <body class="{{ bodyClassStr }}{{ block('bodyClass') }}">
+    
+    {# Contenedor base para efectos de fondo (cristal, partículas, etc.) #}
+    <div class="background-effects"></div>
+
+    <div class="site mylifecraft-wrapper" data-toast="{{ toastText }}">
+      
+      {# Barra superior global (IP, Redes Sociales) optimizada para usar las variables de Tebex #}
+      <div class="top-announcement-bar" style="background: rgba(0,0,0,0.8); border-bottom: 1px solid rgba(245, 158, 11, 0.3); padding: 6px 0; font-size: 0.85rem;">
+        <div class="mylifecraft-container bar-content flex-group" style="justify-content: space-between; align-items: center; padding: 0 1.5rem;">
+           
+           {% if config('server-url') %}
+           <div class="server-ip pulse-hover" style="cursor: pointer; color: #cbd5e1;" title="Haz clic para copiar IP" onclick="navigator.clipboard.writeText('{{ config('server-url') }}'); alert('¡IP Copiada!');">
+             <i class="fas fa-gamepad" style="color: #f59e0b;"></i> Juega con nosotros: <span class="ip-text text-glow" style="color: #fff; font-weight: 800; font-family: 'Unbounded', sans-serif;">{{ config('server-text') ? config('server-text') : config('server-url') }}</span> <i class="far fa-copy copy-icon" style="margin-left: 5px;"></i>
+           </div>
+           {% else %}
+           <div></div>
+           {% endif %}
+
+           <div class="social-links">
+             {% if config('discord-link') %}
+               <a href="{{ config('discord-link') }}" target="_blank" class="discord-link pulse-hover text-glow" style="color: #5865F2; text-decoration: none; font-weight: 800;"><i class="fab fa-discord"></i> Únete al Discord</a>
+             {% endif %}
+           </div>
+           
+        </div>
+      </div>
+
+      {% include "header.twig" %}
+
+      {# Envoltorio principal que contiene las páginas (index, category, etc.) #}
+      <div class="store-main-wrapper" style="min-height: 60vh;">
+        {{ block('content') }}
+      </div>
+
+      {% include "footer.twig" %}
+    </div>
+
+  </body>
+  </html>
+{% else %}
+  {# Modal / Popup mode (Ej: cuando haces clic en comprar desde la home) #}
+  <div class="site mylifecraft-wrapper popup-mode" data-toast="{{ toastText }}">
+    <div class="popup-glass-container glass-panel" style="background: rgba(18, 19, 24, 0.95) !important;">
+      {{ block('content') }}
+    </div>
+  </div>
+{% endif %}

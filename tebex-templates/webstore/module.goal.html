@@ -1,0 +1,42 @@
+<div class="widget widget-goal glass-panel">
+  
+  <header class="widget-header">
+    <h4 class="widget-title text-glow">
+      <i class="fas fa-chart-line"></i> {{ module.header }}
+    </h4>
+  </header>
+
+  <div class="widget-content text-content">
+    
+    {# Barra de progreso moderna y estilizada #}
+    <div class="modern-progress-container">
+      
+      <div class="progress custom-progress-track">
+        <div
+          class="
+            progress-bar custom-progress-bar pulse-glow
+            {% if module.bar.style == "striped" %}striped{% endif %}
+            {% if module.bar.animated %}animated-stripes{% endif %}
+          "
+          role="progressbar"
+          style="width:{{ module.percentage }}%;"
+        >
+          <div class="progress-glow"></div>
+        </div>
+      </div>
+      
+      <div class="goal-stats mt-2">
+        {% if module.displayAmount %}
+          <span class="goal-amounts">
+            <strong class="text-glow">{{ module.total }}</strong> / {{ module.target }} {{ store.currency }}
+          </span>
+        {% else %}
+          <span class="goal-amounts">{{ __(":goal_percent completed", { 'goal_percent': "#{module.percentage}%" }) }}</span>
+        {% endif %}
+        <span class="progress-percentage text-glow">{{ module.percentage }}%</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>

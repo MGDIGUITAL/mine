@@ -1,0 +1,73 @@
+<footer class="site-footer premium-footer mt-5">
+  <div class="mylifecraft-container">
+    
+    <div class="footer-content flex-group" style="justify-content: space-between; align-items: center; padding: 3rem 0 2rem 0; border-top: 1px solid rgba(245, 158, 11, 0.2);">
+      
+      {# Logo e Información del Servidor #}
+      <div class="footer-info">
+        <h3 class="footer-logo text-glow" style="font-family: 'Unbounded', sans-serif; margin-bottom: 0.5rem; color: #fff;">
+          {% if store.logo %}
+            <img src="{{ store.logo }}" alt="{{ store.name }}" style="max-height: 45px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));"/>
+          {% else %}
+            {{ store.name }}
+          {% endif %}
+        </h3>
+        
+        <p class="copyright text-muted" style="font-size: 0.85rem; max-width: 400px; line-height: 1.5; margin-bottom: 0;">
+          {{ __("© :year :store_name. Todos los derechos reservados.", { 'year': 'now'|date('Y'), 'store_name': store.name }) }}<br>
+          <span style="font-size: 0.75rem; opacity: 0.5;">No estamos afiliados a Mojang AB. Minecraft es una marca comercial de Mojang Synergies AB.</span>
+        </p>
+      </div>
+
+      {# Métodos de Pago Seguros #}
+      <div class="footer-payments text-right">
+        <h5 class="mb-3 text-glow" style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;"><i class="fas fa-lock"></i> {{ __("Pagos Seguros") }}</h5>
+        
+        <ul class="we-accept premium-we-accept" style="list-style: none; padding: 0; margin: 0; display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-end;">
+          <li class="payment-icon"><img src="https://template-assets.tebex.io/images/we-accept/apple.svg" alt="Apple Pay" title="Apple Pay"></li>
+          <li class="payment-icon"><img src="https://template-assets.tebex.io/images/we-accept/google.png" alt="Google Pay" title="Google Pay"></li>
+          <li class="payment-icon"><img src="https://template-assets.tebex.io/images/we-accept/mastercard.png" alt="Mastercard" title="Mastercard"></li>
+          <li class="payment-icon"><img src="https://template-assets.tebex.io/images/we-accept/visa.png" alt="Visa" title="Visa"></li>
+          <li class="payment-icon"><img src="https://template-assets.tebex.io/images/we-accept/amex.png" alt="American Express" title="American Express"></li>
+        </ul>
+      </div>
+
+    </div>
+    
+  </div>
+  
+  {# CSS Rápido y localizado para los íconos de pago (Efecto AAA) #}
+  <style>
+    .premium-footer {
+      background: linear-gradient(to top, #000000 0%, transparent 100%);
+    }
+    .payment-icon img {
+      height: 32px;
+      filter: grayscale(100%) opacity(0.4);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .payment-icon img:hover {
+      filter: grayscale(0%) opacity(1);
+      transform: scale(1.15) translateY(-3px);
+    }
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+      }
+      .premium-we-accept {
+        justify-content: center !important;
+      }
+      .footer-payments.text-right {
+        text-align: center;
+      }
+      .footer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</footer>

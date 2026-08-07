@@ -1,0 +1,43 @@
+{% if module.display %}
+  <div class="widget widget-server-status glass-panel">
+    
+    <header class="widget-header">
+      <h4 class="widget-title text-glow">
+        <i class="fas fa-server"></i> {{ module.header }}
+        
+        {# Indicador de estado (Online/Offline) #}
+        {% if module.online %}
+          <span class="status-badge status-online pulse-glow"><i class="fas fa-signal"></i> {{ __("Online") }}</span>
+        {% else %}
+          <span class="status-badge status-offline"><i class="fas fa-times-circle"></i> {{ __("Offline") }}</span>
+        {% endif %}
+      </h4>
+    </header>
+    
+    <div class="widget-content">
+      
+      {# Caja de IP Click-to-copy #}
+      <div class="server-ip-box glass-input-group flex-group pulse-hover" 
+           title="Click para copiar IP" 
+           onclick="navigator.clipboard.writeText('{{ module.ip }}{% if module.port != 25565 %}:{{ module.port }}{% endif %}'); alert('¡IP Copiada!');">
+        <i class="fas fa-gamepad icon-left"></i>
+        <span class="ip-address text-glow">
+          {{ module.ip }}{% if module.port != 25565 %}:{{ module.port }}{% endif %}
+        </span>
+        <i class="far fa-copy copy-icon"></i>
+      </div>
+
+      {# Contador de Jugadores #}
+      <div class="player-count mt-3">
+        <i class="fas fa-users"></i>
+        {% if module.online %}
+          <strong class="text-glow">{{ module.players.online }}</strong> / {{ module.players.max }}
+        {% else %}
+          <strong class="text-glow">0</strong> / 0
+        {% endif %}
+        <span class="players-text">{{ __("players online") }}</span>
+      </div>
+      
+    </div>
+  </div>
+{% endif %}

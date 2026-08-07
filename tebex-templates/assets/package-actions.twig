@@ -1,0 +1,122 @@
+<div
+  class="actions product-actions premium-actions"
+  data-package="{{ package.id }}"
+  data-package-type="{{ package.type }}"
+  {% if package.purchasable == false %}
+    title="{{ package.reason }}"
+  {% endif %}
+>
+  
+  {# Contenedor del Precio Destacado #}
+  <div class="price-tag-container mb-3 text-center">
+    {% if package.customPrice %}
+      <p class="custom-price-text"><i class="fas fa-hand-holding-usd"></i> {{ __("You decide how much to pay.") }}</p>
+    {% elseif package.price == 0.00 %}
+      <p class="free-item-text text-glow"><i class="fas fa-gift"></i> <strong>{{ __("This item is free.") }}</strong></p>
+    {% else %}
+      {% if package.discount.applied %}
+        <del class="discount text-muted" style="margin-right: 5px;">
+          {% include 'discount.twig' with {
+            price: package.discount.original,
+            currency
+          } %}
+        </del>
+      {% endif %}
+
+      <span class="price-amount text-glow" style="font-size: 1.5rem; font-weight: 800;">
+        {% include 'price.twig' with {
+          price: package.price,
+          currency
+        } %}
+      </span>
+    {% endif %}
+  </div>
+
+  {# Botones de Compra / Regalar #}
+  <div class="action-buttons-wrapper flex-column gap-2">
+    
+    <div class="buy-buttons flex-group gap-2 w-100">
+      {% if package.type != "single" %}
+        <a
+          href="/checkout/packages/add/{{ packageIdentifier }}/subscribe"
+          class="btn-primary subscribe pulse-glow flex-1 text-center"
+          {% if package.purchasable == false %}disabled{% endif %}
+          {% if package.basket %}hidden{% endif %}
+        >
+          <i class="fas fa-star"></i>
+          {{
+            package.trialDays > 0
+              ? __("Free :days days trial", { days: package.trialDays })
+              : __("Subscribe")
+          }}
+        </a>
+      {% endif %}
+
+      {% if package.type != "subscription" %}
+        <a
+          href="/checkout/packages/add/{{ packageIdentifier }}/single"
+          class="add pulse-glow flex-1 text-center
+            {{- package.type == 'both' ? ' btn-secondary' : ' btn-primary' -}}
+          "
+          {% if package.purchasable == false %}disabled{% endif %}
+          {% if package.basket %}hidden{% endif %}
+        >
+          <i class="fas fa-shopping-cart"></i> {{ __("Add to Basket") }}
+        </a>
+      {% endif %}
+      
+      {# Botón de Regalar (Solo el ícono para no desordenar) #}
+      {% if package.disable_gifting == false and package.storeGiftingEnabled %}
+        <button
+          class="btn-secondary gift pulse-hover"
+          title="{{ __("Gift this package") }}"
+          style="padding: 0.6rem 1rem;"
+        >
+          <i class="fas fa-gift"></i>
+        </button>
+      {% endif %}
+    </div>
+
+    {# Controles cuando el ítem ya está en el carrito #}
+    <div class="in-basket-wrapper w-100 mt-2">
+      {% if package.price == 0.00 or package.disableQuantity %}
+        <button
+          class="btn-secondary w-100 open-basket open-basket-cta"
+          {% if package.basket == false %}hidden{% endif %}
+        >
+          <i class="fas fa-check"></i> {{ __("Added to Basket") }}
+        </button>
+      {% else %}
+        
+        {# Selector de Cantidad Estilo Cristal #}
+        <div
+          class="quantity-field glass-input-group flex-group with-open-basket w-100"
+          {% if package.basket == false %}hidden{% endif %}
+        >
+          <button class="btn-tertiary btn-glyph adjust decrease px-3" style="border-radius: 8px 0 0 8px;">
+            <i class="fas fa-minus"></i>
+          </button>
+          
+          <button class="open-basket btn-secondary flex-1" style="border-radius: 0; border-left: none; border-right: none;" title="Abrir Carrito">
+            <i class="fas fa-shopping-basket"></i> {{ __("in Basket") }}
+          </button>
+
+          <input
+            type="number"
+            inputmode="numeric"
+            class="quantity glass-input text-center"
+            name="quantity[{{ package.id }}]"
+            max="50"
+            value="{{ package.quantity ? package.quantity : 0 }}"
+            style="border-radius: 0; min-width: 50px; max-width: 60px;"
+          />
+          
+          <button class="btn-tertiary btn-glyph adjust increase px-3" style="border-radius: 0 8px 8px 0;">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>

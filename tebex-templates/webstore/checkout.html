@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container checkout-page">
+  <form class="basket glass-panel checkout-panel" method="post" action="/checkout/item/update" data-popup>
+    
+    {# Checkout Header #}
+    <header class="checkout-header" data-ident="{{ basket.ident }}">
+      <div class="header-left">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        <h2 class="basket-title text-glow">
+          {{ basket.ign != '' ? basket.ign :  __("Basket") }}
+        </h2>
+      </div>
+      <div class="header-right">
+        <span class="item-count badge">{{ basket.packages|length }} {{ __("Items") }}</span>
+      </div>
+    </header>
+
+    <div class="checkout-divider"></div>
+
+    {# Basket Items #}
+    <div class="basket-content">
+      <div class="basket-items-list">
+        {% for package in basket.packages %}
+          <div class="basket-item-card glass-panel-inner"
+            data-package="{{ package.id }}"
+            data-expiry="{{ package.expiryPeriod|slice(0, 1) }}"
+            data-type="{{ package.type }}"
+          >
+            <div class="item-details">
+              <h4 class="item-title text-glow">
+                <a href="/package/{{ package.identifier }}">
+                  {{ package.name }}
+                </a>
+              </h4>
+
+              {% if package.trialDays > 0 %}
+                <div class="trial-badge"><i class="fas fa-clock"></i> {{ __(":days-day free trial", { days: package.trialDays }) }}</div>
+              {% endif %}
+
+              <ul class="item-options">
+                {% if package.expiryPeriod|slice(0, 1) != '0' %}
+                  <li><i class="fas fa-calendar-alt"></i> {{ package.expiryPeriod }}</li>
+                {% endif %}
+
+                {% for option in package.options %}
+                  <li>{{ option.name }}: <strong class="text-glow">{{ option.value|raw }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="item-actions">
+              <div class="price-tag">
+                {% include 'price.twig' with {
+                  price: package.price,
+                  currency: basket.currency
+                } %}
+              </div>
+
+              <div class="quantity-control glass-input">
+                <button
+                  type="button"
+                  class="btn-quantity adjust decrease"
+                  {% if package.price == 0.00 or package.disableQuantity %}disabled{% endif %}
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+
+                <input
+                  type="number"
+                  inputmode="numeric"
+                  class="quantity-input"
+                  name="quantity[{{ package.id }}]"
+                  value="{{ package.quantity }}"
+                  min="1"
+                  max="50"
+                  {% if package.price == 0.00 or package.disableQuantity %}readonly{% endif %}
+                />
+
+                <button
+                  type="button"
+                  class="btn-quantity adjust increase"
+                  {% if package.price == 0.00 or package.disableQuantity %}disabled{% endif %}
+                >
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+
+              <a href="/checkout/packages/remove/{{ package.id }}" class="btn-remove" title="{{ __("Remove") }}">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# Checkout Footer / Action #}
+    <div class="checkout-footer">
+      <div class="checkout-total">
+        <span class="total-label">{{ __("Total") }}:</span>
+        <span class="total-price text-glow">
+          {% include 'price.twig' with {
+            price: basket.price,
+            currency: basket.currency
+          } %}
+        </span>
+      </div>
+
+      <button type="submit" class="btn-primary btn-checkout pulse-glow checkout">
+        <i class="fas fa-lock"></i> {{ __("Proceed to checkout") }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

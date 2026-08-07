@@ -1,0 +1,45 @@
+<div class="widget widget-gift-card glass-panel">
+  
+  <header class="widget-header">
+    <h3 class="widget-title text-glow">
+      <i class="fas fa-gift"></i> {{ module.header }}
+    </h3>
+  </header>
+
+  <form class="widget-content gift-card-form" action="#giftcardbalance" method='post'>
+    
+    {# Grupo de input moderno (cristal) #}
+    <div class="glass-input-group flex-group">
+      <input
+        type="text"
+        class="gift-card-input glass-input"
+        name="card_number"
+        placeholder="Enter gift card number"
+        value="{{ search }}"
+      >
+      <button class="btn-secondary check pulse-hover" title="{{ __("Check") }}">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    {# Área de resultados #}
+    <div class="gift-card-results mt-2">
+      {% if search %}
+        {% if giftcard == false or giftcard.card_number == false %}
+          <div class='alert alert-danger glass-alert'>
+            <i class="fas fa-exclamation-triangle"></i> {{ __("No card found") }}
+          </div>
+        {% elseif giftcard.void == 1 %}
+          <div class='alert alert-warning glass-alert'>
+            <i class="fas fa-ban"></i> {{ __("This gift card has been marked as void") }}
+          </div>
+        {% else %}
+          <div class='alert alert-success glass-alert'>
+            <i class="fas fa-check-circle"></i> <strong>{{ __("Card balance: :giftcard_remaining_balance :store_currency", { 'giftcard_remaining_balance': giftcard.remaining_balance, 'store_currency': store.currency }) }}</strong>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </form>
+  
+</div>

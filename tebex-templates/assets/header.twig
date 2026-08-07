@@ -1,0 +1,220 @@
+<!-- Cargar Fuentes e Iconos -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* Ocultar elementos viejos pero mantener la estructura para no romper la navegación */
+.site-header-inner { display: none !important; }
+
+/* ÁREA DE USUARIO Y CARRITO FLOTANTE */
+.top-nav-bar {
+    background: rgba(9, 9, 11, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    z-index: 1000;
+    position: relative;
+}
+.btn-login, .btn-basket {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+.btn-basket {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #000 !important;
+    border: none;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+.btn-login:hover { background: rgba(255,255,255,0.1); }
+.btn-basket:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(245, 158, 11, 0.5); }
+.mc-avatar { width: 24px; height: 24px; border-radius: 4px; }
+
+/* HERO BANNER GIGANTE (Tipo DiosesMC) */
+.hero-header {
+    position: relative;
+    width: 100%;
+    padding: 3rem 0;
+    background: radial-gradient(circle at center, rgba(245,158,11,0.15) 0%, #09090b 100%);
+    border-bottom: 2px solid #f59e0b;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* 🟢 CORRECCIÓN CLAVE: Hacer el Hero más pequeño en páginas interiores */
+body:not(.page-index) .hero-widgets {
+    display: none !important; /* Oculta botones gigantes de IP/Discord en Checkout/Categorías */
+}
+body:not(.page-index) .hero-header {
+    padding: 1.5rem 0; /* Menos altura si no es la portada */
+    min-height: auto;
+}
+body:not(.page-index) .main-logo {
+    max-width: 220px; /* Logo más pequeño para dejar espacio a los productos */
+    animation: none; /* Desactiva flotación en interiores para no distraer */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    max-width: 1200px;
+}
+.main-logo {
+    max-width: 380px;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.9));
+    animation: float 4s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}
+
+/* WIDGETS DE IP Y DISCORD */
+.hero-widgets {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+.widget-btn {
+    background: rgba(18, 19, 24, 0.85);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-left: 4px solid #f59e0b;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    min-width: 250px;
+}
+.widget-btn.widget-discord { border-left-color: #5865F2; }
+.widget-btn i { font-size: 2.5rem; color: #f59e0b; }
+.widget-btn.widget-discord i { color: #5865F2; }
+.widget-text { text-align: left; display: flex; flex-direction: column; }
+.widget-text .title { font-family: 'Unbounded', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
+.widget-text .subtitle { font-size: 0.85rem; color: #94a3b8; }
+.widget-btn:hover {
+    transform: translateY(-5px);
+    background: rgba(26, 27, 36, 0.95);
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* BANNER DE OFERTA GLOBAL */
+.sale-alert {
+    background: linear-gradient(90deg, #d97706, #fbbf24);
+    color: #000;
+    text-align: center;
+    padding: 0.8rem;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    margin: 0;
+}
+</style>
+
+<!-- Botones Superiores (Carrito / Login) -->
+<div class="top-nav-bar">
+    {% if basket.username %}
+      <a class="btn-login" href="/checkout/logout">
+        <img src="https://minotar.net/helm/{{ basket.ign }}/32.png" alt="Avatar" class="mc-avatar"> 
+        {{ basket.ign }} (Salir)
+      </a>
+      <button class="btn-basket open-basket">
+          <i class="fas fa-shopping-cart"></i> {{ __("Basket") }}
+      </button>
+    {% elseif store.noLogin == false %}
+      <a class="btn-login" href="/login">
+          <i class="fas fa-user"></i> {{ __("Login") }}
+      </a>
+    {% elseif store.noLogin == true %}
+      <button class="btn-basket open-basket">
+          <i class="fas fa-shopping-cart"></i> {{ __("Basket") }}
+      </button>
+    {% endif %}
+</div>
+
+<!-- HERO BANNER -->
+<div class="hero-header">
+    <div class="hero-content">
+        <!-- Logo Central -->
+        <h1 class="hero-title">
+          <a href="/">
+            {% if store.logo %}
+              <img src="{{ store.logo }}" alt="{{ store.name }}" class="main-logo" />
+            {% else %}
+              <span class="text-logo" style="font-family: 'Unbounded'; font-size: 3.5rem; color: #fff;">{{ store.name }}</span>
+            {% endif %}
+          </a>
+        </h1>
+
+        <!-- Botones Hero (IP y Discord) -->
+        <div class="hero-widgets">
+            {% if config('server-url') %}
+              <!-- 🟢 CORRECCIÓN CLAVE: Botón de copiar IP a prueba de fallos -->
+              <button class="widget-btn widget-ip" onclick="navigator.clipboard.writeText('{{ config('server-url') }}'); alert('¡IP Copiada exitosamente!');" title="Haz clic para copiar">
+                  <i class="fas fa-server"></i>
+                  <div class="widget-text">
+                      <span class="title">{{ config('server-text') ? config('server-text') : config('server-url') }}</span>
+                      <span class="subtitle">{{ __("Click to Copy") }}</span>
+                  </div>
+              </button>
+            {% endif %}
+
+            {% if config('discord-link') %}
+              <a href="{{ config('discord-link') }}" target="_blank" class="widget-btn widget-discord">
+                  <i class="fab fa-discord"></i>
+                  <div class="widget-text">
+                      <span class="title">Discord Oficial</span>
+                      <span class="subtitle">Únete a la comunidad</span>
+                  </div>
+              </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Estructura Original de Exo para no romper el Menu de Categorias -->
+<header id="header" class="site-header">
+  <div class="site-header-inner">
+     <!-- Oculto por CSS, no tocar -->
+  </div>
+
+  {% if config('sale-banner-text') %}
+    <!-- 🟢 CORRECCIÓN: Agregado ícono al banner de oferta -->
+    <p class="site-sale-banner sale-alert">
+      <i class="fas fa-tag"></i> {{ config('sale-banner-text') }}
+    </p>
+  {% endif %}
+
+  {% if isNavigationVertical == false %}
+    {% include "navigation.twig" %}
+  {% endif %}
+</header>

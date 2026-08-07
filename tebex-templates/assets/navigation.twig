@@ -1,0 +1,77 @@
+<nav
+  class="site-navigation premium-nav {% if isNavigationVertical %}widget navigation-vertical glass-panel{% else %}navigation-horizontal{% endif %}"
+  id="site-navigation"
+>
+  <ul class="menu navigation-list flex-group">
+    
+    {# Enlace a Inicio #}
+    <li class="nav-item {% if page.category == 'index' %}active{% endif %}">
+      <a class="nav-link pulse-hover {% if page.category == 'index' %}link-active text-glow{% endif %}" href="/">
+        <i class="fas fa-home"></i> {{ __("Home") }}
+      </a>
+    </li>
+
+    {# Enlaces de Categorías Dinámicas #}
+    {% for category in store.categories %}
+      <li class="nav-item 
+        {% if category.active %}
+          active
+          {% if category.subcategories|length > 0 %}
+            expanded
+          {% endif %}
+        {% endif %}
+        {% if category.subcategories|length > 0 %}
+          has-children
+        {% endif %}
+      ">
+        <a
+          class="nav-link pulse-hover {% if category.active %}link-active text-glow{% endif %}"
+          href="/category/{{ category.slug ? category.slug : category.id }}"
+        >
+          <i class="fas fa-shopping-bag"></i> {{ category.name }}
+        </a>
+
+        {# Subcategorías (Desplegable) #}
+        {% if category.subcategories|length > 0 %}
+          <button class="btn-tertiary btn-glyph toggle"><i class="fas fa-chevron-down"></i></button>
+
+          <ul class="submenu glass-panel">
+            {% for subcategory in category.subcategories %}
+              <li class="sub-item {% if subcategory.active %}active{% endif %}">
+                <a
+                  class="nav-link pulse-hover {% if subcategory.active %}link-active text-glow{% endif %}"
+                  href="/category/{{ subcategory.slug ? subcategory.slug : subcategory.id }}"
+                >
+                  <i class="fas fa-angle-right"></i> {{ subcategory.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+
+    {# Enlaces de Páginas Extra (Reglas, Términos, etc) #}
+    {% for page in store.pages %}
+      <li class="nav-item {% if page.active %}active expanded{% endif %}">
+        <a class="nav-link pulse-hover {% if page.active %}link-active text-glow{% endif %}" href="/{{ page.slug }}">
+          <i class="fas fa-file-alt"></i> {{ page.title }}
+        </a>
+      </li>
+    {% endfor %}
+
+    {# Botón Logout en Móvil #}
+    {% if basket.username and store.noLogin == false %}
+      <li class="nav-item log-out mobile-only">
+        <a class="nav-link pulse-hover" href="/checkout/logout" style="color: #ef4444;">
+          <i class="fas fa-sign-out-alt"></i> {{ __("Log out") }}
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+
+  {# Botón cerrar menú (Sólo móviles) #}
+  <button class="btn-tertiary btn-glyph close-navigation mobile-only" title="Cerrar Menú">
+    <i class="fas fa-times"></i>
+  </button>
+</nav>

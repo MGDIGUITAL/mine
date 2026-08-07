@@ -3,13 +3,29 @@
     "mylifecraft.vercel.app",
     "mylifecraft-storefront.vercel.app"
   ],
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/store", "destination": "/tienda.html" },
+    { "source": "/tienda", "destination": "/tienda.html" },
+    { "source": "/saas", "destination": "/saas.html" },
+    { "source": "/admin", "destination": "/saas.html" },
+    { "source": "/staff", "destination": "/saas.html" },
+    { "source": "/estado", "destination": "/estado.html" },
+    { "source": "/pedidos", "destination": "/estado.html" },
+    { "source": "/cliente", "destination": "/estado.html" },
+    { "source": "/gracias", "destination": "/gracias.html" }
   ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
     {
       "source": "/img/(.*)",
       "headers": [

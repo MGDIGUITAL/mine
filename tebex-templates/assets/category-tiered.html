@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container category-page">
+  
+  <div class="category-layout">
+    
+    <main class="store-main store-category-tiered">
+      
+      {# Encabezado de la Categoría de Suscripciones #}
+      <header class="category-hero glass-panel mb-4 text-center">
+        <h2 class="category-title text-glow"><i class="fas fa-crown"></i> {{ category.name }}</h2>
+
+        {% if category.description != "" %}
+          <div class="category-description mt-2">
+            {{ category.description|raw }}
+          </div>
+        {% endif %}
+      </header>
+
+      {% if category.packages|length > 0 %}
+        {# Grid de Suscripciones #}
+        <div class="packages-grid">
+          {% for package in category.packages %}
+            
+            <article class="package-card glass-panel flex-column pulse-hover {{ (tier and tier.package_id == package.id) ? 'subscribed-tier top-donator-glow' : '' }}" style="position: relative;">
+              
+              {# Etiqueta de Activo si ya lo tiene #}
+              {% if tier and tier.package_id == package.id %}
+                <div class="subscribed-badge sale-alert" style="position: absolute; top: -10px; right: -10px; border-radius: 8px; font-size: 0.8rem; z-index: 10;">
+                  <i class="fas fa-check-circle"></i> {{ __("Current Tier") }}
+                </div>
+              {% endif %}
+
+              <div class="package-image-wrapper text-center mt-3">
+                <img class="package-image" src="{{ package.image.url }}" alt="{{ package.name }}" style="max-height: 150px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));"/>
+              </div>
+
+              <div class="package-info flex-1 text-center mt-3">
+                <h3 class="package-name text-glow">
+                  {{ package.name }}
+                </h3>
+                
+                {% if package.countdownEnds %}
+                  <span class="countdown badge badge-danger pulse-glow mt-1 mb-2 d-inline-block" data-countdown="{{ package.countdownEnds }}">
+                    <i class="fas fa-clock"></i> {{__("Ending Soon!") }}
+                  </span>
+                {% endif %}
+
+                <div class="package-description text-content mt-3">
+                  {{ package.description|raw }}
+                </div>
+              </div>
+
+              <div class="package-footer mt-auto pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                {% include 'tiered-actions.twig' with {
+                  package,
+                  currency: basket.currency
+                } %}
+              </div>
+            </article>
+            
+          {% endfor %}
+        </div>
+      {% else %}
+        
+        {# Estado Vacío #}
+        <div class="empty-state glass-panel text-center" style="padding: 4rem 2rem;">
+          <i class="fas fa-box-open empty-icon" style="font-size: 4rem; color: #475569; margin-bottom: 1rem;"></i>
+          <h3>{{ __("No packages to display in this category.") }}</h3>
+        </div>
+        
+      {% endif %}
+    </main>
+
+    <aside class="store-sidebar">
+      {% include "sidebar.twig" %}
+    </aside>
+
+  </div>
+</div>
+{% endblock %}

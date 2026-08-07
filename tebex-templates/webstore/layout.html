@@ -1,0 +1,56 @@
+{# Popup mode (only render .site container when true) #}
+{% set isPopup = query('popup') != null %}
+
+{% set toastText = page.message.display ? page.message.text : '' %}
+
+{% set packageImageDefault = '/assets/img/empty.png' %}
+
+{% set isNavigationVertical = config('nav-style') == 'Vertical Nav in Sidebar' %}
+{% set navClass = isNavigationVertical ? 'is-navigation-vertical ' : 'is-navigation-horizontal ' %}
+{% set sidebarClass = config('sidebar-position') == 'Right' ? 'is-sidebar-right ' : '' %}
+{% set homeCategoriesClass = config('home-categories') == 'On' ? 'home-categories-enabled ' : '' %}
+
+{# Clases premium agregadas para aplicar los estilos AAA #}
+{% set bodyClassStr = navClass ~ sidebarClass ~ homeCategoriesClass ~ 'premium-theme mylifecraft-theme ' %}
+
+{% if isPopup == false %}
+  {% include "head.twig" %}
+  <body class="{{ bodyClassStr }}{{ block('bodyClass') }}">
+    
+    {# Contenedor base para efectos de fondo (cristal, partículas, etc.) #}
+    <div class="background-effects"></div>
+
+    <div class="site mylifecraft-wrapper" data-toast="{{ toastText }}">
+      
+      {# Barra superior global (IP, Redes Sociales) - ¡Toque muy profesional! #}
+      <div class="top-announcement-bar">
+        <div class="mylifecraft-container bar-content">
+           <div class="server-ip pulse-hover" title="Haz clic para copiar IP" onclick="navigator.clipboard.writeText('play.tuservidor.com'); alert('¡IP Copiada!');">
+             <i class="fas fa-gamepad"></i> Juega con nosotros: <span class="ip-text text-glow">play.tuservidor.com</span> <i class="far fa-copy copy-icon"></i>
+           </div>
+           <div class="social-links">
+             <a href="#" target="_blank" class="discord-link"><i class="fab fa-discord"></i> Únete al Discord</a>
+           </div>
+        </div>
+      </div>
+
+      {% include "header.twig" %}
+
+      {# Envoltorio principal que contiene las páginas (index, category, etc.) #}
+      <div class="store-main-wrapper">
+        {{ block('content') }}
+      </div>
+
+      {% include "footer.twig" %}
+    </div>
+
+  </body>
+  </html>
+{% else %}
+  {# Modal / Popup mode (Ej: cuando haces clic en comprar desde la home) #}
+  <div class="site mylifecraft-wrapper popup-mode" data-toast="{{ toastText }}">
+    <div class="popup-glass-container glass-panel">
+      {{ block('content') }}
+    </div>
+  </div>
+{% endif %}

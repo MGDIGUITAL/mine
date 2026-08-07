@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container username-page flex-center">
+  <main class="store-text store-form text-content glass-panel login-modal" data-popup>
+    
+    <header class="login-header text-center mb-4">
+      <div class="login-avatar-placeholder pulse-glow mb-2">
+        {# Usamos una API gratuita para mostrar la cabeza de Steve por defecto #}
+        <img src="https://mc-heads.net/avatar/Steve/64" alt="Minecraft Avatar" id="mc-avatar-preview" class="avatar">
+      </div>
+      <h2 class="text-glow"><i class="fas fa-sign-in-alt"></i> {{ __("Please log in") }}</h2>
+    </header>
+
+    {% if external %}
+      <div class="field text-center">
+        <a href="{{ url }}" class="btn-primary pulse-glow btn-external-login">
+          <i class="fas fa-external-link-alt"></i> Login via {{ provider }}
+        </a>
+      </div>
+    {% else %}
+      <form method="post" class="field login-form">
+        
+        <div class="glass-input-group username-input-group flex-group mb-3">
+          <i class="fas fa-user icon-left"></i>
+          <input
+            type="text"
+            class="glass-input flex-1"
+            name="ign"
+            placeholder="Introduce tu nombre de Minecraft"
+            required
+            id="ign-input"
+            autocomplete="off"
+          />
+        </div>
+        
+        <button type="submit" class="btn-primary pulse-glow btn-login w-100">
+          {{ __("Login") }} <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+    {% endif %}
+  </main>
+</div>
+
+{# ¡Detalle AAA! Este script hace que la cabeza del avatar cambie en vivo mientras escriben su nombre #}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var ignInput = document.getElementById('ign-input');
+    var avatarPreview = document.getElementById('mc-avatar-preview');
+    var timeout = null;
+
+    if (ignInput && avatarPreview) {
+      ignInput.addEventListener('keyup', function() {
+        clearTimeout(timeout);
+        // Esperamos medio segundo antes de actualizar para no saturar
+        timeout = setTimeout(function() {
+          var username = ignInput.value.trim();
+          if (username.length > 2) {
+            avatarPreview.src = 'https://mc-heads.net/avatar/' + username + '/64';
+          } else {
+            avatarPreview.src = 'https://mc-heads.net/avatar/Steve/64';
+          }
+        }, 500);
+      });
+    }
+  });
+</script>
+{% endblock %}

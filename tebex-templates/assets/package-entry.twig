@@ -1,0 +1,50 @@
+{% set packageIdentifier = package.identifier ? package.identifier : package.id %}
+{% set hasImage = package.media|length > 0 and package.media[0].url != packageImageDefault %}
+
+<article class="store-product package-card glass-panel flex-column pulse-hover" style="position: relative;">
+  
+  {# Zona de la Imagen del Producto #}
+  <div class="package-image-wrapper text-center mt-3">
+    <a
+      class="image-link d-inline-block"
+      href="/package/{{ packageIdentifier }}"
+      title="{{ __("Click for more details.") }}"
+    >
+      {% if hasImage %}
+        <img
+          class="package-image"
+          src="{{ package.media[0].url }}"
+          alt="{{ package.name }}"
+          style="max-height: 150px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5)); transition: transform 0.3s ease;"
+          onmouseover="this.style.transform='scale(1.1)'"
+          onmouseout="this.style.transform='scale(1)'"
+        />
+      {% else %}
+        <div class="image image-default package-main-image text-center pulse-glow" style="font-size: 4rem; color: #f59e0b; padding: 2rem 0;">
+          <i class="fas fa-gem"></i>
+        </div>
+      {% endif %}
+    </a>
+  </div>
+
+  {# Nombre e Información del Producto #}
+  <div class="package-info flex-1 text-center mt-3 px-3">
+    <h4 class="package-name text-glow" style="margin-bottom: 0.5rem;">
+      <a href="/package/{{ packageIdentifier }}" style="color: inherit; text-decoration: none;">
+        {{ package.name }}
+      </a>
+    </h4>
+    
+    {% if package.countdownEnds %}
+      <span class="countdown badge badge-danger pulse-glow mt-1 mb-2 d-inline-block" data-countdown="{{ package.countdownEnds }}">
+        <i class="fas fa-clock"></i> {{__("Ending Soon!") }}
+      </span>
+    {% endif %}
+  </div>
+
+  {# Zona Inferior: Precios y Botones (Integra package-actions) #}
+  <div class="package-footer mt-auto pt-3 px-3 pb-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
+    {% include 'package-actions.twig' with { package, currency } %}
+  </div>
+  
+</article>

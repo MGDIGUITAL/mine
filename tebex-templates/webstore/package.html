@@ -1,0 +1,67 @@
+{% set packageIdentifier = package.identifier ? package.identifier : package.id %}
+
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container package-view-container">
+  
+  <div class="category-layout">
+    
+    {# Contenedor Principal del Producto #}
+    <main class="store-main store-product store-product-full glass-panel" data-popup>
+      
+      {# Encabezado del Producto #}
+      <header class="package-header">
+        <h2 class="product-title text-glow">
+          <i class="fas fa-box-open"></i> {{ package.name }}
+          
+          {% if package.countdownEnds %}
+            <span class="countdown pulse-glow badge badge-danger" data-countdown="{{ package.countdownEnds }}">
+              <i class="fas fa-clock"></i> {{__("Ending Soon!") }}
+            </span>
+          {% endif %}
+        </h2>
+      </header>
+
+      <div class="package-content-wrapper">
+        
+        {# Sección de Imagen del Producto #}
+        <div class="package-media-section text-center mb-4">
+          {%- set hasImage = package.media|length > 0 and package.media[0].url != packageImageDefault -%}
+
+          {% if package.media|length > 1 %}
+            {%- include "package-media.twig" -%}
+          {% elseif hasImage %}
+            <div class="package-image-glow-wrapper pulse-hover">
+              <img class="image package-main-image" src="{{ package.media[0].url }}" alt="{{ package.name }}"/>
+            </div>
+          {% else %}
+            <div class="image image-default package-main-image"><i class="fas fa-gem"></i></div>
+          {% endif %}
+        </div>
+        
+        {# Descripción del Producto #}
+        <div class="package-info-section">
+          <div class="descr text-content">
+            {{ package.description|raw }}
+          </div>
+
+          {# Acciones de Compra (Precio, Agregar al Carrito, Regalar) #}
+          <div class="package-buy-actions mt-4">
+            {% include 'package-actions.twig' with { package, currency: basket.currency } %}
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    {# Sidebar (Solo se muestra si estamos viendo la página completa, no en Popup) #}
+    {% if isPopup == false %}
+      <aside class="store-sidebar">
+        {% include "sidebar.twig" %}
+      </aside>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

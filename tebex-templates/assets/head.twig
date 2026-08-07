@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="{{ store.locale|replace({'_': '-'}) }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, shrink-to-fit=no">
+
+  <title>{{ store.name }} · {{ __(page.title) }}</title>
+
+  <link rel="shortcut icon" href="{{ store.favicon }}">
+
+  {# --- FUENTES E ICONOS PREMIUM (MyLifeCraft Theme) --- #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  {% include "constants.twig" %}
+  <script src="{{ asset('swiper-element-bundle.min.js') }}"></script>
+  <script defer src="https://js.tebex.io/v/1.js"></script>
+  <script defer src="{{ asset('main.js') }}"></script>
+
+  <link href="{{ asset('shared.css') }}" rel="stylesheet">
+
+  {# Si hay un Custom CSS guardado en Tebex, úsalo, sino usa el genérico #}
+  {% if store.css != '' -%}
+    <style>{{ store.css|raw }}</style>
+  {%- else -%}
+    <link href="{{ asset('generic.css') }}" rel="stylesheet">
+  {%- endif %}
+
+  <style>
+    /* Variables Base Dinámicas de Tebex adaptadas a MyLifeCraft */
+    :root {
+      {%- if config('primary-colour') != '#000000' -%}
+        --color-primary: {{ config('primary-colour') }};
+      {%- else -%}
+        --color-primary: #f59e0b; /* Naranja Premium por defecto */
+      {%- endif -%}
+
+      {%- if config('primary-colour-hover') != '#000000' -%}
+        --color-primary-hover: {{ config('primary-colour-hover') }};
+      {%- else -%}
+        --color-primary-hover: #d97706; 
+      {%- endif -%}
+
+      {%- if config('primary-text-colour') != '#000000' -%}
+        --color-primary-text: {{ config('primary-text-colour') }};
+      {%- else -%}
+        --color-primary-text: #ffffff;
+      {%- endif -%}
+
+      {%- if config('primary-text-colour-hover') != '#000000' -%}
+        --color-primary-text-hover: {{ config('primary-text-colour-hover') }};
+      {%- else -%}
+        --color-primary-text-hover: #000000;
+      {%- endif -%}
+
+      {%- if config('sale-banner-colour-text') != '#000000' -%}
+        --color-sale-banner-text: {{ config('sale-banner-colour-text') }};
+      {%- else -%}
+        --color-sale-banner-text: #000000;
+      {%- endif -%}
+
+      {%- if config('sale-banner-colour-bg') != '#000000' -%}
+        --color-sale-banner-bg: {{ config('sale-banner-colour-bg') }};
+      {%- else -%}
+        --color-sale-banner-bg: #fbbf24;
+      {%- endif -%}
+
+      {%- if config('bg-image') != '' -%}
+        --bg-image: url({{ config('bg-image') }});
+      {%- endif -%}
+
+      --text-price: "{{ __("Price") }}";
+    }
+
+    /* ==========================================
+       MOTOR GRÁFICO MYLIFECRAFT (GLASSMORPHISM)
+       ========================================== */
+    /* 1. RESET Y FONDO GLOBAL */
+    body, html {
+      background-color: #09090b !important;
+      color: #f8fafc !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      min-height: 100vh;
+    }
+    body::before {
+      content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 45%), radial-gradient(circle at 85% 75%, rgba(34, 197, 94, 0.07) 0%, transparent 45%);
+      pointer-events: none; z-index: -1;
+    }
+
+    /* 2. PANELES DE CRISTAL (Glassmorphism) */
+    .glass-panel {
+      background: rgba(18, 19, 24, 0.65) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+      transition: all 0.3s ease !important;
+    }
+    .glass-panel:hover {
+      background: rgba(26, 27, 36, 0.8) !important;
+      border-color: rgba(245, 158, 11, 0.3) !important;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 20px rgba(245, 158, 11, 0.15) !important;
+    }
+    .glass-panel-inner {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border-radius: 12px !important;
+      border: 1px solid rgba(255,255,255,0.05) !important;
+    }
+
+    /* 3. BOTONES Y BRILLOS */
+    .btn-primary, .btn-info, .btn-success {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      color: #000 !important;
+      font-weight: 800 !important;
+      border-radius: 12px !important;
+      padding: 0.8rem 1.5rem !important;
+      text-transform: uppercase !important;
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.35) !important;
+      transition: all 0.3s ease !important;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.6) !important;
+      background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%) !important;
+    }
+    .text-glow { text-shadow: 0 0 15px rgba(245, 158, 11, 0.6) !important; color: #fff !important; }
+    .pulse-glow { animation: pulse-glow-anim 2s infinite !important; }
+    @keyframes pulse-glow-anim {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+    }
+    .pulse-hover:hover { transform: translateY(-5px) !important; }
+
+    /* 4. INPUTS Y CANTIDAD */
+    .glass-input-group { background: rgba(0, 0, 0, 0.3) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 10px !important; display: flex !important; align-items: center !important; padding: 5px !important; }
+    .glass-input { background: transparent !important; border: none !important; color: #fff !important; text-align: center !important; width: 50px !important; font-family: 'Unbounded', sans-serif !important; }
+    .glass-btn { background: rgba(255, 255, 255, 0.05) !important; color: #f59e0b !important; border: none !important; border-radius: 8px !important; width: 35px !important; height: 35px !important; display: flex !important; justify-content: center !important; align-items: center !important; transition: all 0.2s !important; }
+    .glass-btn:hover { background: rgba(245, 158, 11, 0.2) !important; color: #fff !important; }
+
+    /* 5. ESTRUCTURA (GRID) Y RESPONSIVIDAD */
+    .packages-grid { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important; gap: 2rem !important; width: 100% !important; }
+    .flex-group { display: flex !important; gap: 1rem !important; }
+    .flex-column { display: flex !important; flex-direction: column !important; gap: 1rem !important; }
+    .flex-center { display: flex !important; justify-content: center !important; align-items: center !important; }
+    .mt-3 { margin-top: 1rem !important; } .mb-2 { margin-bottom: 0.5rem !important; } .mb-3 { margin-bottom: 1rem !important; } .mb-4 { margin-bottom: 1.5rem !important; } .px-3 { padding-left: 1rem !important; padding-right: 1rem !important; } .pb-3 { padding-bottom: 1rem !important; } .pt-3 { padding-top: 1rem !important; } .text-center { text-align: center !important; } .text-danger { color: #ef4444 !important; } .flex-1 { flex: 1 !important; } .w-100 { width: 100% !important; } .h-100 { height: 100% !important; }
+    
+    @media (max-width: 768px) {
+      .packages-grid { grid-template-columns: 1fr !important; }
+      .mobile-only { display: block !important; }
+      .desktop-only { display: none !important; }
+    }
+
+    /* 6. SCROLLBAR PERSONALIZADO */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #09090b; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f59e0b 0%, #22c55e 100%); border-radius: 5px; }
+  </style>
+</head>

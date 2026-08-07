@@ -1094,7 +1094,6 @@ function updateUserNavUI() {
     navUserAvatar.innerHTML = `<img src="https://minotar.net/helm/Steve/32.png" alt="Minecraft" class="mc-head-nav" />`;
   }
 }
-}
 
 // --- EFECTO DE SONIDO GLOBAL ---
 // Reproducir sonido al hacer click en botones e interacciones

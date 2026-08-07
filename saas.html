@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyLifeCraft SaaS — Panel Operativo Staff (Donezo Style)</title>
+  <meta name="description" content="Panel Operativo Light Mode minimalista de MyLifeCraft Network para gestión de pedidos, clientes y rangos." />
+  <meta name="author" content="MyLifeCraft Network" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#15803d" />
+  <link rel="icon" type="image/png" href="LOGO.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DONEZO-INSPIRED LIGHT MODE SAAS DESIGN SYSTEM
+       CLEAN LAYOUTS • ELEGANT HUMANIST TYPOGRAPHY • EMERALD ACCENTS
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-page: #f3f4f6;
+      --bg-surface: #ffffff;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafafa;
+      --bg-table-head: #f9fafb;
+
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+
+      --border-light: #e5e7eb;
+      --border-subtle: #f3f4f6;
+
+      --color-primary: #15803d;        /* Donezo Forest Green */
+      --color-primary-dark: #166534;
+      --color-primary-light: #f0fdf4;
+      --color-primary-border: #bbf7d0;
+
+      --color-amber: #d97706;
+      --color-amber-light: #fffbeb;
+      --color-amber-border: #fde68a;
+
+      --color-red: #dc2626;
+      --color-red-light: #fef2f2;
+      --color-red-border: #fecaca;
+
+      --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+      --shadow-xl: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* FULL SCREEN APP SHELL */
+    .app-shell {
+      width: 100%;
+      min-height: 100vh;
+      background: var(--bg-surface);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 1024px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SIDEBAR (DONEZO STYLE) */
+    .sidebar {
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.75rem 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+      }
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0 0.5rem 1.75rem;
+    }
+
+    .brand-logo-img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 0.75rem;
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .nav-item-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item-btn:hover {
+      background: var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .nav-item-btn.active {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .nav-badge-count {
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 99px;
+    }
+
+    /* DONEZO PROMOTIONAL GREEN CARD (BOTTOM OF SIDEBAR) */
+    .sidebar-promo-card {
+      background: linear-gradient(135deg, #15803d 0%, #064e3b 100%);
+      border-radius: 18px;
+      padding: 1.35rem 1.25rem;
+      color: #fff;
+      margin-top: 2rem;
+      box-shadow: 0 12px 24px -6px rgba(21, 128, 61, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promo-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .promo-card-desc {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1rem;
+    }
+
+    .btn-promo-action {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+    }
+
+    .btn-promo-action:hover {
+      background: #fff;
+      color: #15803d;
+    }
+
+    /* MAIN CONTENT AREA */
+    .main-content {
+      background: var(--bg-surface);
+      padding: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      overflow-y: auto;
+      max-height: 100vh;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1.5rem;
+      }
+    }
+
+    /* TOP BAR (SEARCH & USER CHIP) */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--bg-page);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 0.65rem 1.15rem;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .search-input-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      width: 100%;
+    }
+
+    .shortcut-chip {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .user-profile-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-page);
+      border: 1px solid var(--border-light);
+      border-radius: 99px;
+      padding: 0.4rem 1.1rem 0.4rem 0.5rem;
+      cursor: pointer;
+    }
+
+    .user-avatar-small {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--color-primary);
+    }
+
+    /* HERO DASHBOARD HEADER (DONEZO TITLE ROW) */
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .dashboard-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.2rem;
+    }
+
+    .dashboard-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-donezo-primary {
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.7rem 1.4rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-donezo-primary:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-donezo-secondary {
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.7rem 1.3rem;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-donezo-secondary:hover {
+      background: var(--bg-page);
+      border-color: #d1d5db;
+    }
+
+    /* 4 DONEZO KPI CARDS GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1200px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .kpi-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    /* DONEZO FIRST CARD: SOLID GREEN */
+    .kpi-card.kpi-card-featured {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+
+    .kpi-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .kpi-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .kpi-card-featured .kpi-label {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .kpi-icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-page);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .kpi-card-featured .kpi-icon-circle {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    .kpi-value {
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.1;
+      margin-bottom: 0.85rem;
+    }
+
+    .kpi-card-featured .kpi-value {
+      color: #fff;
+    }
+
+    .kpi-trend-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      width: fit-content;
+    }
+
+    .kpi-card-featured .kpi-trend-pill {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    /* SECTION PANELS / TABLES */
+    .section-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel-top-bar {
+      padding: 1.4rem 1.75rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .panel-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .panel-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      table-layout: auto;
+    }
+
+    .panel-table th {
+      padding: 1rem 1.15rem;
+      background: var(--bg-table-head);
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--border-light);
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .panel-table td {
+      padding: 1rem 1.15rem;
+      font-size: 0.92rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      white-space: nowrap;
+      vertical-align: middle;
+      height: 62px;
+    }
+
+    .panel-table th:first-child,
+    .panel-table td:first-child {
+      padding-left: 1.75rem;
+    }
+
+    .panel-table th:last-child,
+    .panel-table td:last-child {
+      padding-right: 1.75rem;
+    }
+
+    .panel-table tr:hover td {
+      background: #f9fafb;
+    }
+
+    /* STATUS PILL BADGES */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.32rem 0.85rem;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-delivered {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-pending {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-permanent {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-action-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      height: 36px;
+      padding: 0 0.95rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      color: var(--text-main);
+      transition: all 0.2s;
+      line-height: 1;
+    }
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .btn-action-pill:hover {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-color: var(--color-primary-border);
+    }
+
+    .btn-action-danger {
+      color: var(--color-red);
+      border-color: var(--color-red-border);
+      background: var(--color-red-light);
+    }
+
+    .btn-action-danger:hover {
+      background: #fef2f2;
+      border-color: #f87171;
+    }
+
+    /* MODAL DE LOGIN STAFF (LIGHT CLEAN STYLE) */
+    #staff-login-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    #staff-login-modal.hidden {
+      display: none;
+    }
+
+    .login-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MODAL DE LOGIN STAFF OBLIGATORIO (LIGHT MODE CLEAN) -->
+  <div id="staff-login-modal">
+    <div class="login-card">
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <img src="LOGO.png" alt="MyLifeCraft" style="width: 36px; height: 36px;" />
+        <span style="font-size: 1.25rem; font-weight: 800; color: #111827;">MyLifeCraft <span style="color: #15803d;">Staff</span></span>
+      </div>
+
+      <h2 style="font-size: 1.75rem; font-weight: 800; color: #111827; margin-bottom: 0.4rem; letter-spacing: -0.02em;">
+        Ingreso Operativo
+      </h2>
+      <p style="color: #6b7280; font-size: 0.94rem; margin-bottom: 2rem;">
+        Ingresa con tus credenciales de administración para acceder al panel en tiempo real.
+      </p>
+
+      <form id="form-staff-login" autocomplete="off" onsubmit="return false;">
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #374151; margin-bottom: 0.4rem;">CORREO / USUARIO STAFF</label>
+          <input 
+            type="text" 
+            id="input-staff-user" 
+            name="sec_usr_token_no_fill"
+            autocomplete="new-password"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Usuario corporativo..." 
+            style="width: 100%; padding: 0.85rem 1rem; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 12px; color: #111827; font-size: 0.95rem;" 
+            required 
+          />
+        </div>
+
+        <div style="margin-bottom: 2.25rem;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #374151; margin-bottom: 0.4rem;">CONTRASEÑA DE ACCESO</label>
+          <input 
+            type="password" 
+            id="input-staff-pass" 
+            name="sec_pwd_token_no_fill"
+            autocomplete="new-password"
+            placeholder="••••••••" 
+            style="width: 100%; padding: 0.85rem 1rem; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 12px; color: #111827; font-size: 0.95rem;" 
+            required 
+          />
+        </div>
+
+        <button type="submit" id="btn-do-staff-login" class="btn-donezo-primary" style="width: 100%; justify-content: center; padding: 1rem; font-size: 1rem;">
+          🚀 Entrar al Panel Dashboard
+        </button>
+      </form>
+
+      <div style="margin-top: 1.75rem; text-align: center;">
+        <a href="index.html" style="color: #6b7280; font-size: 0.88rem; text-decoration: underline;">← Regresar a la Tienda Pública</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTER WHITE CONTAINER SHELL (DONEZO STYLE) -->
+  <div class="app-shell">
+    
+    <!-- SIDEBAR (DONEZO CLEAN MENU) -->
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-header">
+          <img src="LOGO.png" alt="Logo" class="brand-logo-img" />
+          <span class="brand-title">MyLifeCraft</span>
+        </div>
+
+        <div class="sidebar-section-title">MENU OPERATIVO</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-item-btn active" data-target="panel-overview">
+              <span>📊 Dashboard</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="panel-deliveries">
+              <span>📦 Entregas en Cola</span>
+              <span class="nav-badge-count">4</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="panel-grants">
+              <span>👑 Rangos Activos</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="panel-catalog">
+              <span>🛍️ Catálogo Tienda</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="panel-players">
+              <span>👥 Directorio Jugadores</span>
+            </button>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title">GENERAL</div>
+        <ul class="nav-list">
+          <li>
+            <a href="estado.html" target="_blank" class="nav-item-btn" style="text-decoration: none;">
+              <span>👁️ Portal del Cliente</span>
+              <span>↗</span>
+            </a>
+          </li>
+          <li>
+            <button id="btn-staff-logout" class="nav-item-btn" style="color: #dc2626;">
+              <span>🚪 Cerrar Sesión</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- DONEZO PROMO GREEN CARD -->
+      <div class="sidebar-promo-card">
+        <div class="promo-card-title">Servidor Java 1.21</div>
+        <div class="promo-card-desc">Conexión activa en play.mylifecraft.net</div>
+        <a href="index.html" class="btn-promo-action">
+          🏠 Volver a Inicio
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <main class="main-content">
+      
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="search-input-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" placeholder="Buscar jugador, orden o comando..." />
+          <span class="shortcut-chip">⌘F</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 700; color: #15803d; background: #f0fdf4; padding: 0.4rem 0.9rem; border-radius: 99px;">
+            ● Servidor en Línea
+          </div>
+
+          <div class="user-profile-chip">
+            <img src="https://minotar.net/helm/Steve/64.png" alt="Staff" class="user-avatar-small" />
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 700; color: #111827; line-height: 1.1;">Staff Admin</div>
+              <div style="font-size: 0.75rem; color: #6b7280;">Operador del Servidor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO DASHBOARD HEADER -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Dashboard</h1>
+          <p class="dashboard-subtitle">Planifica, monitorea y administra las entregas automáticas y rangos de Minecraft con facilidad.</p>
+        </div>
+
+        <div class="header-actions">
+          <button id="btn-sync-supabase" class="btn-donezo-primary">
+            <span>+ Sincronizar Base de Datos</span>
+          </button>
+          <a href="estado.html" target="_blank" class="btn-donezo-secondary">
+            <span>Ver Portal Clientes</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4 KPI CARDS (DONEZO STYLE) -->
+      <section class="kpi-grid">
+        <!-- CARD 1: SOLID GREEN -->
+        <div class="kpi-card kpi-card-featured">
+          <div class="kpi-header">
+            <span class="kpi-label">Ingresos Totales (USD)</span>
+            <div class="kpi-icon-circle">↗</div>
+          </div>
+          <div class="kpi-value">$1,420.50</div>
+          <div class="kpi-trend-pill">
+            <span>↗ 5%</span>
+            <span>Incremento este mes</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: WHITE -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Entregas en Cola</span>
+            <div class="kpi-icon-circle">↗</div>
+          </div>
+          <div class="kpi-value" style="color: #d97706;">4</div>
+          <div class="kpi-trend-pill">
+            <span>↗ +12%</span>
+            <span>Pendientes de entrega</span>
+          </div>
+        </div>
+
+        <!-- CARD 3: WHITE -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Pedidos Entregados</span>
+            <div class="kpi-icon-circle">↗</div>
+          </div>
+          <div class="kpi-value">142</div>
+          <div class="kpi-trend-pill">
+            <span>↗ +8%</span>
+            <span>Completados en servidor</span>
+          </div>
+        </div>
+
+        <!-- CARD 4: WHITE -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Rangos VIP/MVP Activos</span>
+            <div class="kpi-icon-circle">↗</div>
+          </div>
+          <div class="kpi-value">38</div>
+          <div class="kpi-trend-pill">
+            <span>↗ +16%</span>
+            <span>Jugadores con membresía</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 01: PENDING DELIVERIES TABLE -->
+      <section id="panel-overview" class="section-panel">
+        <div class="panel-top-bar">
+          <div>
+            <h3 class="panel-title">Cola de Entregas en Tiempo Real (`pending_deliveries`)</h3>
+            <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0.15rem;">El plugin revisa esta cola y ejecuta el comando automáticamente cuando el jugador ingresa.</p>
+          </div>
+          <span style="background: #f3f4f6; color: #4b5563; font-size: 0.78rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 8px;">6 Registros</span>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="panel-table">
+            <thead>
+              <tr>
+                <th style="width: 10%;"># ORDEN</th>
+                <th style="width: 14%;">JUGADOR (NICK)</th>
+                <th style="width: 20%;">PRODUCTO ADQUIRIDO</th>
+                <th style="width: 20%;">COMANDO CONFIGURADO</th>
+                <th style="width: 12%; text-align: center;">DURACIÓN</th>
+                <th style="width: 12%; text-align: center;">ESTADO</th>
+                <th style="width: 12%; text-align: center;">ACCIÓN</th>
+              </tr>
+            </thead>
+            <tbody id="saas-deliveries-tbody">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 02: ACTIVE GRANTS -->
+      <section id="panel-grants" class="section-panel" style="display: none;">
+        <div class="panel-top-bar">
+          <div>
+            <h3 class="panel-title">Rangos y Membresías Activas (`active_grants`)</h3>
+            <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0.15rem;">Monitoreo de vencimiento de rangos VIP y MVP del servidor.</p>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="panel-table">
+            <thead>
+              <tr>
+                <th style="width: 15%;">JUGADOR (NICK)</th>
+                <th style="width: 18%;">BENEFICIO ACTIVO</th>
+                <th style="width: 12%; text-align: center;">TIPO</th>
+                <th style="width: 22%;">EXPIRACIÓN / TIEMPO RESTANTE</th>
+                <th style="width: 21%;">COMANDO DE REVOCACIÓN</th>
+                <th style="width: 12%; text-align: center;">CONTROLES</th>
+              </tr>
+            </thead>
+            <tbody id="saas-grants-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 03: STORE CATALOG -->
+      <section id="panel-catalog" class="section-panel" style="display: none;">
+        <div class="panel-top-bar">
+          <div>
+            <h3 class="panel-title">Catálogo Comercial de la Tienda (`data.js`)</h3>
+            <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0.15rem;">Desglose de precios en USD, categorías y comandos de entrega automáticos.</p>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="panel-table">
+            <thead>
+              <tr>
+                <th style="width: 8%;">ID</th>
+                <th style="width: 14%;">CATEGORÍA</th>
+                <th style="width: 24%;">NOMBRE DEL PAQUETE</th>
+                <th style="width: 14%; text-align: center;">RAREZA</th>
+                <th style="width: 15%; text-align: right;">PRECIO EN USD</th>
+                <th style="width: 25%;">COMANDO CONFIGURADO</th>
+              </tr>
+            </thead>
+            <tbody id="saas-catalog-tbody">
+              <!-- Loaded from data.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 04: PLAYER DIRECTORY -->
+      <section id="panel-players" class="section-panel" style="display: none;">
+        <div class="panel-top-bar">
+          <div>
+            <h3 class="panel-title">Directorio de Jugadores y Cuentas</h3>
+            <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0.15rem;">Cuentas registradas con su Nick de Minecraft y nivel de acceso.</p>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="panel-table">
+            <thead>
+              <tr>
+                <th style="width: 10%; text-align: center;">AVATAR</th>
+                <th style="width: 18%;">NICK DE MINECRAFT</th>
+                <th style="width: 25%;">CORREO ELECTRÓNICO</th>
+                <th style="width: 17%; text-align: center;">ROL EN PLATAFORMA</th>
+                <th style="width: 15%;">FECHA REGISTRO</th>
+                <th style="width: 15%; text-align: center;">PERFIL</th>
+              </tr>
+            </thead>
+            <tbody id="saas-customers-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginModal = document.getElementById('staff-login-modal');
+      const formLogin = document.getElementById('form-staff-login');
+      const inputUser = document.getElementById('input-staff-user');
+      const inputPass = document.getElementById('input-staff-pass');
+      const btnLogout = document.getElementById('btn-staff-logout');
+      const btnSync = document.getElementById('btn-sync-supabase');
+
+      // 1. SESSION CHECK
+      const isStaffLogged = sessionStorage.getItem('mylifecraft_staff_session');
+      if (isStaffLogged === 'true') {
+        loginModal.classList.add('hidden');
+        initDonezoDashboard();
+      }
+
+      formLogin.addEventListener('submit', () => {
+        const user = inputUser.value.trim().toLowerCase();
+        const pass = inputPass.value.trim();
+
+        if ((user === 'staff@mylifecraft.net' && pass === 'staff123') || 
+            (user === 'admin@mylifecraft.net' && pass === 'admin123') ||
+            (user === 'staffadmin' && pass === 'staff123')) {
+          sessionStorage.setItem('mylifecraft_staff_session', 'true');
+          loginModal.classList.add('hidden');
+          initDonezoDashboard();
+        } else {
+          alert('❌ Credenciales Staff Incorrectas. Verifica el usuario o contraseña.');
+        }
+      });
+
+      document.getElementById('btn-do-staff-login').addEventListener('click', () => {
+        formLogin.dispatchEvent(new Event('submit'));
+      });
+
+      btnLogout.addEventListener('click', () => {
+        sessionStorage.removeItem('mylifecraft_staff_session');
+        window.location.reload();
+      });
+
+      // 2. SIDEBAR NAVIGATION SWITCHER
+      const sidebarBtns = document.querySelectorAll('.nav-item-btn');
+      const sections = document.querySelectorAll('.section-panel');
+
+      sidebarBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-target');
+          if (!target) return;
+
+          sidebarBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          sections.forEach(s => s.style.display = 'none');
+          if (target === 'panel-overview' || target === 'panel-deliveries') {
+            document.getElementById('panel-overview').style.display = 'block';
+          } else if (target === 'panel-grants') {
+            document.getElementById('panel-grants').style.display = 'block';
+          } else if (target === 'panel-catalog') {
+            document.getElementById('panel-catalog').style.display = 'block';
+          } else if (target === 'panel-players') {
+            document.getElementById('panel-players').style.display = 'block';
+          }
+        });
+      });
+
+      // 3. INITIALIZE DASHBOARD DATA
+      function initDonezoDashboard() {
+        renderDeliveries();
+        renderGrants();
+        renderCatalog();
+        renderCustomers();
+      }
+
+      btnSync.addEventListener('click', () => {
+        btnSync.innerHTML = '<span>🔄 Sincronizando...</span>';
+        initDonezoDashboard();
+        setTimeout(() => {
+          btnSync.innerHTML = '<span>✅ ¡Sincronizado!</span>';
+          setTimeout(() => {
+            btnSync.innerHTML = '<span>+ Sincronizar Base de Datos</span>';
+          }, 2000);
+        }, 600);
+      });
+
+      // RENDER 1: DELIVERIES QUEUE
+      function renderDeliveries() {
+        const tbody = document.getElementById('saas-deliveries-tbody');
+        const orders = [
+          { id: '1', order: 'ORD-99540', nick: 'Steve', prod: '20,000 Monedas Economy', cmd: '/eco give Steve 20000', dur: 'Permanente', status: 'pending' },
+          { id: '2', order: 'ORD-99541', nick: 'Notch', prod: 'Rango VIP (Permanente)', cmd: '/lp user Notch parent set vip', dur: 'Permanente', status: 'pending' },
+          { id: '3', order: 'ORD-99542', nick: 'Alex_Gamer', prod: 'Rango ELITE (30 Días)', cmd: '/lp user Alex_Gamer parent set elite', dur: '30 Días', status: 'pending' },
+          { id: '4', order: 'ORD-99543', nick: 'ProCraft_99', prod: 'Pack x10 Llaves Infierno', cmd: '/crate key give ProCraft_99 infierno 10', dur: 'Permanente', status: 'pending' },
+          { id: '5', order: 'ORD-98214', nick: 'Steve', prod: 'Rango VIP (Permanente)', cmd: '/lp user Steve parent set vip', dur: 'Permanente', status: 'delivered' },
+          { id: '6', order: 'ORD-98110', nick: 'Carlos_LATAM', prod: 'Rango LEYENDA (Permanente)', cmd: '/lp user Carlos_LATAM parent set leyenda', dur: 'Permanente', status: 'delivered' }
+        ];
+
+        tbody.innerHTML = orders.map(o => {
+          const badge = o.status === 'delivered'
+            ? `<span class="badge-pill badge-delivered">● Entregado</span>`
+            : `<span class="badge-pill badge-pending">● Pendiente</span>`;
+
+          return `
+            <tr>
+              <td style="font-weight: 800; color: #111827;">${o.order}</td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                  <img src="https://minotar.net/helm/${o.nick}/24.png" style="width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0;" />
+                  <span style="font-weight: 700; color: #111827;">${o.nick}</span>
+                </div>
+              </td>
+              <td style="color: #4b5563; font-weight: 600;">${o.prod}</td>
+              <td><code style="display: inline-block; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis; background: #f3f4f6; padding: 0.38rem 0.8rem; border: 1px solid #e5e7eb; border-radius: 8px; color: #15803d; font-family: monospace; font-size: 0.84rem; font-weight: 600; vertical-align: middle;">${o.cmd}</code></td>
+              <td style="text-align: center;"><span class="badge-pill badge-permanent">${o.dur}</span></td>
+              <td style="text-align: center;">${badge}</td>
+              <td style="text-align: center;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                  ${o.status === 'pending' ? `<button class="btn-action-pill js-mark-delivered" data-order="${o.order}"><span>✓</span><span>Entregar</span></button>` : `<button class="btn-action-pill" style="opacity: 0.5;" disabled>Completado</button>`}
+                  <button class="btn-action-pill btn-action-danger js-retry-order" data-order="${o.order}"><span>🔄</span><span>Reintentar</span></button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.js-mark-delivered').forEach(b => {
+          b.addEventListener('click', () => {
+            const ord = b.getAttribute('data-order');
+            alert(`✅ Orden "${ord}" marcada como ENTREGADA exitosamente en el servidor.`);
+            b.parentElement.parentElement.previousElementSibling.innerHTML = `<span class="badge-pill badge-delivered">● Entregado</span>`;
+            b.style.display = 'none';
+          });
+        });
+      }
+
+      // RENDER 2: ACTIVE GRANTS
+      function renderGrants() {
+        const tbody = document.getElementById('saas-grants-tbody');
+        const grants = [
+          { nick: 'Steve', rank: 'VIP (Survival)', type: 'Permanente', exp: '👑 Membresía Permanente', revoke: 'Ninguno' },
+          { nick: 'Carlos_LATAM', rank: 'LEYENDA (Survival)', type: 'Permanente', exp: '👑 Membresía Permanente', revoke: 'Ninguno' },
+          { nick: 'Alex_Gamer', rank: 'ELITE (Mensual)', type: '30 Días', exp: '⏳ Vence en 28 días (30-Ago)', revoke: '/lp user Alex_Gamer parent remove elite' },
+          { nick: 'Sofia_Gamer', rank: 'ULTRA (Mensual)', type: '30 Días', exp: '⏳ Vence en 14 días (14-Ago)', revoke: '/lp user Sofia_Gamer parent remove ultra' }
+        ];
+
+        tbody.innerHTML = grants.map(g => `
+          <tr>
+            <td>
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <img src="https://minotar.net/helm/${g.nick}/24.png" style="width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0;" />
+                <span style="font-weight: 700; color: #111827;">${g.nick}</span>
+              </div>
+            </td>
+            <td style="font-weight: 800; color: #15803d;">${g.rank}</td>
+            <td style="text-align: center;"><span class="badge-pill badge-permanent">${g.type}</span></td>
+            <td style="color: #065f46; font-weight: 600;">${g.exp}</td>
+            <td><code style="display: inline-block; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis; background: #fef2f2; padding: 0.38rem 0.8rem; border: 1px solid #fecaca; border-radius: 8px; color: #dc2626; font-family: monospace; font-size: 0.84rem; font-weight: 600; vertical-align: middle;">${g.revoke}</code></td>
+            <td style="text-align: center;">
+              <div style="display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                <button class="btn-action-pill"><span>+30 Días</span></button>
+                <button class="btn-action-pill btn-action-danger"><span>🗑️ Revocar</span></button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // RENDER 3: CATALOG
+      function renderCatalog() {
+        const tbody = document.getElementById('saas-catalog-tbody');
+        if (window.PRODUCTS_CATALOG) {
+          tbody.innerHTML = window.PRODUCTS_CATALOG.map(p => `
+            <tr>
+              <td style="font-weight: 800; color: #6b7280;">#${p.id}</td>
+              <td style="font-weight: 700; color: #111827; text-transform: uppercase;">${p.category}</td>
+              <td style="font-weight: 800; color: #111827;">${p.name}</td>
+              <td style="text-align: center;"><span class="badge-pill badge-pending">${p.rarity}</span></td>
+              <td style="font-weight: 800; color: #15803d; font-size: 1.05rem; text-align: right;">$${p.price.toFixed(2)} USD</td>
+              <td><code style="display: inline-block; white-space: nowrap; background: #f3f4f6; padding: 0.38rem 0.8rem; border: 1px solid #e5e7eb; border-radius: 8px; color: #374151; font-family: monospace; font-size: 0.84rem; font-weight: 600;">${p.command || '/lp user {player} parent set ' + p.id}</code></td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      // RENDER 4: PLAYERS
+      function renderCustomers() {
+        const tbody = document.getElementById('saas-customers-tbody');
+        const users = [
+          { nick: 'Steve', email: 'steve@mylifecraft.net', role: 'player', created: '25 Jul 2026' },
+          { nick: 'Notch', email: 'notch@mylifecraft.net', role: 'player', created: '26 Jul 2026' },
+          { nick: 'Carlos_LATAM', email: 'carlos@gmail.com', role: 'player', created: '28 Jul 2026' },
+          { nick: 'Alex_Gamer', email: 'alex@outlook.com', role: 'player', created: '30 Jul 2026' },
+          { nick: 'StaffAdmin', email: 'staff@mylifecraft.net', role: 'staff', created: '01 Jul 2026' },
+          { nick: 'AdminGeneral', email: 'admin@mylifecraft.net', role: 'admin', created: '01 Jul 2026' }
+        ];
+
+        tbody.innerHTML = users.map(u => {
+          let badge = '';
+          if (u.role === 'admin') {
+            badge = `<span class="badge-pill" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;">Administrador</span>`;
+          } else if (u.role === 'staff') {
+            badge = `<span class="badge-pill" style="background: #fffbeb; color: #d97706; border: 1px solid #fde68a;">Staff Operador</span>`;
+          } else {
+            badge = `<span class="badge-pill badge-delivered">Jugador</span>`;
+          }
+
+          return `
+            <tr>
+              <td style="text-align: center;"><img src="https://minotar.net/helm/${u.nick}/32.png" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid #e5e7eb; vertical-align: middle;" /></td>
+              <td style="font-weight: 800; color: #111827; font-size: 1.02rem;">${u.nick}</td>
+              <td style="color: #6b7280;">${u.email}</td>
+              <td style="text-align: center;">${badge}</td>
+              <td style="color: #9ca3af;">${u.created}</td>
+              <td style="text-align: center;"><a href="estado.html" target="_blank" class="btn-action-pill"><span>Ver Entregas ↗</span></a></td>
+            </tr>
+          `;
+        }).join('');
+      }
+    });
+  </script>
+</body>
+</html>

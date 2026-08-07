@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container category-page">
+  
+  {# Cabecera de la Categoría con estilo Premium (Glassmorphism) #}
+  <header class="category-hero glass-panel">
+    <div class="category-hero-content">
+      <h1 class="category-title text-glow">{{ category.name }}</h1>
+      {% if category.description != "" %}
+        <div class="category-description">
+          {{ category.description|raw }}
+        </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="category-layout">
+    {# Sección Principal de Productos #}
+    <main class="store-main">
+      {% if category.packages|length == 0 %}
+        <div class="empty-state glass-panel">
+          <i class="fas fa-box-open empty-icon"></i>
+          <h2>¡Vaya!</h2>
+          <p>{{ __("No packages to display in this category.") }}</p>
+        </div>
+      {% else %}
+        <div class="products-grid products-{{ category.displayType }}">
+          {% for package in category.packages %}
+            {% include 'package-entry.twig' with {
+              package,
+              currency: basket.currency
+            } %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </main>
+
+    {# Sidebar Profesional #}
+    <aside class="store-sidebar">
+      {% include "sidebar.twig" %}
+    </aside>
+  </div>
+</div>
+{% endblock %}

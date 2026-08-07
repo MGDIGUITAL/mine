@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block bodyClass %}page-index{% endblock %}
+
+{% block content %}
+<div class="mylifecraft-container home-page">
+
+  {# Tarjetas de Categorías (Si están activadas en Tebex) #}
+  {% if config('home-categories') == 'On' %}
+    <div class="home-categories-grid">
+      {% for category in store.categories %}
+        <a class="category-card glass-panel pulse-hover" href="/category/{{ category.slug ? category.slug : category.id }}">
+          <div class="category-image-wrapper">
+            {% if category.image != packageImageDefault %}
+              <img class="category-image" src="{{ category.image }}" alt="{{ category.name }}"/>
+            {% else %}
+              <div class="category-image image-default">
+                <i class="fas fa-gem"></i>
+              </div>
+            {% endif %}
+          </div>
+          <div class="category-info">
+            <h3 class="category-name text-glow">{{ category.name }}</h3>
+            <div class="view-btn">{{ __("Ver Categoría") }} <i class="fas fa-arrow-right"></i></div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="category-layout home-content-layout">
+    
+    {# Texto de Bienvenida / Contenido principal de Inicio #}
+    <main class="store-main {% if config('home-sidebar') == 'Off' %}full-width{% endif %}">
+      <div class="store-text text-content glass-panel welcome-panel">
+        {{ index.description|raw }}
+      </div>
+    </main>
+
+    {# Sidebar de Inicio (Si está activada en Tebex) #}
+    {% if config('home-sidebar') == 'On' %}
+      <aside class="store-sidebar">
+        {% include "sidebar.twig" %}
+      </aside>
+    {% endif %}
+    
+  </div>
+
+</div>
+{% endblock %}

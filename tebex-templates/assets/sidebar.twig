@@ -1,0 +1,15 @@
+<aside class="store-sidebar premium-sidebar flex-column">
+  
+  {# Menú de Navegación Vertical (Si el usuario eligió ese diseño en Tebex) #}
+  {% if isNavigationVertical %}
+    <div class="sidebar-nav-container glass-panel mb-4">
+      {% include "navigation.twig" %}
+    </div>
+  {% endif %}
+
+  {# Aquí se inyectan automáticamente todos los módulos/widgets que rediseñamos (Top Donador, Meta, IP, etc.) #}
+  <div class="sidebar-modules-wrapper flex-column" style="gap: 1.5rem; display: flex;">
+    {{ modules|raw }}
+  </div>
+
+</aside>

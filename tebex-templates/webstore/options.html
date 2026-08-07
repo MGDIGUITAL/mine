@@ -1,0 +1,148 @@
+{% set discordLoginRequired = false %}
+{% set discordLogin = null %}
+
+{% for variable in options.variables %}
+  {% if variable.id == "discord_id" %}
+    {% set discordLogin = variable %}
+    {% if variable.required and variable.value == false %}
+      {% set discordLoginRequired = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mylifecraft-container options-page">
+  <main class="store-product-options glass-panel" data-popup>
+    
+    <header class="options-header">
+      <h2 class="product-title text-glow">
+        <i class="fas fa-cogs"></i> {{ __("Adding :package to your Basket", { 'package': options.package.name }) }}
+      </h2>
+    </header>
+
+    <div class="options-divider"></div>
+
+    <form class="store-form store-form-options mt-3" method="post">
+      
+      {# Selección de Servidor #}
+      {% if options.package.chooseServer %}
+        <div class="field glass-field-wrapper">
+          <p class="field-label"><i class="fas fa-server"></i> {{ __("Please choose which server to receive this package upon") }}</p>
+          <select class="glass-input" name="server" required>
+            {% for server in options.servers %}
+              <option value="{{ server.id }}">{{ server.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+
+      {# Precio Personalizado #}
+      {% if options.package.customPrice %}
+        <div class="field glass-field-wrapper">
+          <p class="field-label"><i class="fas fa-coins"></i> {{ __("Please enter an amount greater than :amount :currency that you'd like to pay", { 'amount': options.package.price, 'currency': store.currency }) }}</p>
+
+          <div class="field-inline flex-group">
+            <input
+              type="number"
+              class="glass-input flex-1"
+              name="price"
+              placeholder="{{ __("Please enter the amount you'd like to pay.") }}"
+              required
+            />
+            <span class="currency-addon glass-addon">{{ store.currency }}</span>
+          </div>
+        </div>
+      {% endif %}
+
+      {# Variables Dinámicas #}
+      {% for variable in options.variables %}
+        {% if variable.type == "dropdown" %}
+          <div class="field glass-field-wrapper">
+            <p class="field-label"><i class="fas fa-list-ul"></i> {{ variable.description }}</p>
+
+            <select class="glass-input" name="variables[{{ variable.id }}]" required>
+              <option value="" disabled>{{ variable.description }}</option>
+
+              {% for option in variable.options %}
+                <option value="{{ option.id }}" {{ option.default == true ? 'selected' : '' }}>
+                  {{ option.name }}
+                  {% if option.price > 0 %}
+                    (+{{ option.price|money }} {{ basket.currency }})
+                  {% endif %}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% elseif variable.id == "discord_id" %}
+          <div class="field glass-field-wrapper discord-field">
+            {% if variable.value %}
+              <div class="alert alert-success glass-alert">
+                <i class="fab fa-discord"></i> {{ __("Thank you for logging in to Discord as") }} <strong>{{ variable.discord_tag }}</strong>
+              </div>
+            {% elseif variable.required == true %}
+              <div class="alert alert-warning glass-alert">
+                <i class="fas fa-exclamation-circle"></i> {{ __("You must login to Discord, so we can identify you on our server.") }}
+              </div>
+            {% else %}
+              <p class="field-label"><i class="fab fa-discord"></i> {{ __("Please login to Discord, so we can identify you on our server.") }}</p>
+            {% endif %}
+
+            <input
+              type="hidden"
+              name="variables[{{ variable.id }}]"
+              value="{{ variable.value }}"
+              {% if variable.required == true %}
+                required
+              {% endif %}
+            />
+          </div>
+        {% else %}
+          <div class="field glass-field-wrapper">
+            <p class="field-label"><i class="fas fa-pencil-alt"></i> {{ variable.description }}</p>
+            <input
+              type="text"
+              class="glass-input"
+              name="variables[{{ variable.id }}]"
+              placeholder="{{ variable.description }}"
+              required
+            />
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {# Acciones / Botones #}
+      <div class="actions options-actions mt-4 {% if discordLogin != null %}actions-multiple{% endif %}">
+        {% if discordLogin != null %}
+          {% if discordLogin.value %}
+            <button type="submit" name="submit" value="Continue" class="btn-primary pulse-glow btn-checkout">
+              <i class="fas fa-check"></i> {{ __("Continue") }}
+            </button>
+
+            <a href="https://ident.tebex.io/discord/?return={{ url(['fivem_id'])|replace({'popup%3D1': ''}) }}" class="btn-secondary link-text">
+              <i class="fas fa-sync-alt"></i> {{ __("Change Discord Account") }}
+            </a>
+          {% else %}
+            
+            <a href="https://ident.tebex.io/discord/?return={{ url(['fivem_id'])|replace({'popup%3D1': ''}) }}" class="btn-discord pulse-glow">
+              <i class="fab fa-discord"></i> {{ __("Login") }}
+            </a>
+
+            {% if discordLoginRequired == false %}
+              <button type="submit" name="submit" value="Continue" class="btn-secondary btn-skip">
+                {{ __("Skip Login") }}
+              </button>
+            {% endif %}
+            
+          {% endif %}
+        {% else %}
+          <button type="submit" name="submit" value="Continue" class="btn-primary pulse-glow btn-checkout w-100">
+            <i class="fas fa-check"></i> {{ __("Continue") }}
+          </button>
+        {% endif %}
+      </div>
+    </form>
+  </main>
+</div>
+{% endblock %}

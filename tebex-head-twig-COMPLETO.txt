@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="{{ store.locale|replace({'_': '-'}) }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, shrink-to-fit=no">
+
+  <title>{{ store.name }} · {{ __(page.title) }}</title>
+
+  <link rel="shortcut icon" href="{{ store.favicon }}">
+
+  {# --- FUENTES E ICONOS PREMIUM (MyLifeCraft Theme) --- #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  {% include "constants.twig" %}
+  <script src="{{ asset('swiper-element-bundle.min.js') }}"></script>
+  <script defer src="https://js.tebex.io/v/1.js"></script>
+  <script defer src="{{ asset('main.js') }}"></script>
+
+  <link href="{{ asset('shared.css') }}" rel="stylesheet">
+
+  {# Si hay un Custom CSS guardado en Tebex, úsalo, sino usa el genérico #}
+  {% if store.css != '' -%}
+    <style>{{ store.css|raw }}</style>
+  {%- else -%}
+    <link href="{{ asset('generic.css') }}" rel="stylesheet">
+  {%- endif %}
+
+  <style>
+    /* Variables Base Dinámicas de Tebex adaptadas a MyLifeCraft */
+    :root {
+      {%- if config('primary-colour') != '#000000' -%}
+        --color-primary: {{ config('primary-colour') }};
+      {%- else -%}
+        --color-primary: #f59e0b; /* Naranja Premium por defecto */
+      {%- endif -%}
+
+      {%- if config('primary-colour-hover') != '#000000' -%}
+        --color-primary-hover: {{ config('primary-colour-hover') }};
+      {%- else -%}
+        --color-primary-hover: #d97706; 
+      {%- endif -%}
+
+      {%- if config('primary-text-colour') != '#000000' -%}
+        --color-primary-text: {{ config('primary-text-colour') }};
+      {%- else -%}
+        --color-primary-text: #ffffff;
+      {%- endif -%}
+
+      {%- if config('primary-text-colour-hover') != '#000000' -%}
+        --color-primary-text-hover: {{ config('primary-text-colour-hover') }};
+      {%- else -%}
+        --color-primary-text-hover: #000000;
+      {%- endif -%}
+
+      {%- if config('sale-banner-colour-text') != '#000000' -%}
+        --color-sale-banner-text: {{ config('sale-banner-colour-text') }};
+      {%- else -%}
+        --color-sale-banner-text: #000000;
+      {%- endif -%}
+
+      {%- if config('sale-banner-colour-bg') != '#000000' -%}
+        --color-sale-banner-bg: {{ config('sale-banner-colour-bg') }};
+      {%- else -%}
+        --color-sale-banner-bg: #fbbf24;
+      {%- endif -%}
+
+      {%- if config('bg-image') != '' -%}
+        --bg-image: url({{ config('bg-image') }});
+      {%- endif -%}
+
+      --text-price: "{{ __("Price") }}";
+      --color-secondary: #22c55e !important;
+      --color-surface-glass: rgba(18, 19, 24, 0.82) !important;
+      --color-surface-hover: rgba(26, 27, 36, 0.94) !important;
+      --shadow-glow: 0 0 36px rgba(245, 158, 11, 0.45) !important;
+    }
+
+    /* ==========================================================================
+       MYLIFECRAFT - ULTRA-PREMIUM TEBEX EDITION (Idéntico a Vercel)
+       ========================================================================== */
+    body, html {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      background-color: transparent !important;
+    }
+
+    /* Capa Base con Luces de ambiente (Igual que en Vercel) */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 75%, rgba(34, 197, 94, 0.07) 0%, transparent 45%),
+                  rgba(9, 9, 11, 0.65) !important; 
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Tipografía Editorial Display Pro */
+    h1, h2, h3, h4, h5, .site-title, .widget-title, .product-title, .category-name {
+      font-family: 'Unbounded', sans-serif !important;
+      font-weight: 900 !important;
+      color: #ffffff !important;
+      text-shadow: 0 8px 32px rgba(0,0,0,0.95) !important;
+    }
+
+    /* Efecto Hover del Logo Central 3D */
+    .site-title img {
+      transform: scale(1.15);
+      margin-bottom: 35px;
+      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 65px rgba(245, 158, 11, 0.45)) !important;
+      transition: all 0.4s ease !important;
+    }
+    .site-title img:hover {
+      transform: scale(1.20) rotate(-1.5deg);
+      filter: drop-shadow(0 25px 55px rgba(0, 0, 0, 1)) drop-shadow(0 0 85px rgba(245, 158, 11, 0.85)) !important;
+    }
+
+    /* Paneles de Cristal Ultra-Premium (Idéntico a Vercel) */
+    .glass-panel, .store-product, .category-description, .basket, .site-header-inner, .site-footer-inner, .popup-content, .widget, .store-text {
+      background: var(--color-surface-glass) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important; 
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75) !important;
+    }
+
+    /* Animaciones Avanzadas de Tarjetas de Producto */
+    .store-product {
+      transition: all 0.3s ease !important;
+    }
+    .store-product:hover {
+      transform: translateY(-6px) !important;
+      border-color: rgba(245, 158, 11, 0.55) !important;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.9), var(--shadow-glow) !important;
+      background: var(--color-surface-hover) !important;
+    }
+    .store-product:hover .product-title {
+      color: var(--color-primary) !important;
+    }
+
+    /* Botones Voxel Amber Gold (Idénticos a Vercel) */
+    .btn-primary, .btn-secondary, .btn-tertiary {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      color: #000 !important;
+      font-weight: 800 !important;
+      border-radius: 12px !important;
+      transition: all 0.2s ease !important;
+      box-shadow: var(--shadow-glow) !important;
+    }
+    .btn-primary:hover, .btn-secondary:hover {
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 0 45px rgba(251, 191, 36, 0.75) !important;
+    }
+
+    /* Menú Lateral (Barra de Categorías Estilo Premium) */
+    .site-navigation .menu {
+      background: transparent !important;
+    }
+    .site-navigation a {
+      border-radius: 8px !important;
+      padding: 10px 15px !important;
+      margin-bottom: 5px !important;
+      color: #cbd5e1 !important;
+      font-weight: 700 !important;
+      transition: all 0.2s ease !important;
+    }
+    .site-navigation a:hover, .site-navigation a.active {
+      background: rgba(245, 158, 11, 0.15) !important;
+      color: #f59e0b !important;
+      padding-left: 20px !important;
+      border-left: 3px solid #f59e0b !important;
+      box-shadow: -5px 0 15px rgba(245, 158, 11, 0.2) !important;
+    }
+  </style>
+</head>

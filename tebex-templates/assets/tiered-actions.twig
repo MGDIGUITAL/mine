@@ -1,0 +1,75 @@
+{% set packageIdentifier = package.identifier ? package.identifier : package.id %}
+
+<div
+  class="actions product-actions premium-actions"
+  data-package="{{ package.id }}"
+  data-package-type="{{ package.type }}"
+  {% if package.purchasable == false %}
+    title="{{ package.reason }}"
+  {% endif %}
+>
+  
+  {# Contenedor del Precio Destacado #}
+  <div class="price-tag-container mb-3 text-center">
+    {% if package.customPrice %}
+      <p class="custom-price-text"><i class="fas fa-hand-holding-usd"></i> {{ __("You decide how much to pay.") }}</p>
+    {% elseif package.price == 0.00 %}
+      <p class="free-item-text text-glow"><i class="fas fa-gift"></i> <strong>{{ __("This item is free.") }}</strong></p>
+    {% else %}
+      {% if package.discount.applied %}
+        <del class="discount text-muted" style="margin-right: 5px;">
+          {% include 'discount.twig' with {
+            price: package.discount.original,
+            currency
+          } %}
+        </del>
+      {% endif %}
+
+      <span class="price-amount text-glow" style="font-size: 1.5rem; font-weight: 800;">
+        {% include 'price.twig' with {
+          price: package.price,
+          currency
+        } %}
+      </span>
+    {% endif %}
+  </div>
+
+  {# Botones de Acción (Suscripciones / Tiers) #}
+  <div class="action-buttons-wrapper">
+    {% if tier and tier.package_id == package.id %}
+      <button class="btn-tertiary w-100 disabled-btn" disabled>
+        <i class="fas fa-check-circle"></i> {{ __("Subscribed") }}
+      </button>
+    {% elseif tier and tier.downgrade_package_id == package.id %}
+      <button class="btn-tertiary w-100 disabled-btn" disabled>
+        <i class="fas fa-arrow-circle-down"></i> {{ __("Pending Downgrade") }}
+      </button>
+    {% elseif tier %}
+      <a
+        href="/tier/quote?category={{ category.id }}&amp;package={{ package.id }}"
+        class="btn-primary w-100 pulse-glow"
+        {% if package.purchasable == false %}disabled{% endif %}
+        {% if package.basket %}hidden{% endif %}
+      >
+        <i class="fas fa-star"></i> {{ __("Subscribe") }}
+      </a>
+    {% else %}
+      <a
+        href="/checkout/packages/add/{{ packageIdentifier }}/subscribe"
+        class="btn-primary subscribe w-100 pulse-glow"
+        {% if package.purchasable == false %}disabled{% endif %}
+        {% if package.basket %}hidden{% endif %}
+      >
+        <i class="fas fa-gem"></i> {{ __("Subscribe") }}
+      </a>
+    {% endif %}
+
+    <button
+      class="btn-secondary w-100 open-basket open-basket-cta mt-2"
+      {% if package.basket == false %}hidden{% endif %}
+    >
+      <i class="fas fa-shopping-cart"></i> {{ __("Added to Basket") }}
+    </button>
+  </div>
+  
+</div>

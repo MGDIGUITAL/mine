@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /estado.html
+Disallow: /saas.html
+Disallow: /gracias.html
+Disallow: /Actualizacion/
+Disallow: /PAGINA VIEJA/
+
+Sitemap: https://mylifecraft.net/sitemap.xml

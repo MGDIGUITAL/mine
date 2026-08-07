@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block bodyClass %}page-index{% endblock %}
+
+{% block content %}
+<div class="mylifecraft-container home-page mt-4">
+
+  {# Tarjetas de Categorías en la Portada (Si están activadas) #}
+  {% if config('home-categories') == 'On' %}
+    <div class="packages-grid mb-4">
+      {% for category in store.categories %}
+        <a class="category-card glass-panel flex-column flex-center pulse-hover" style="text-decoration: none; padding: 2.5rem 1rem; position: relative; overflow: hidden;" href="/category/{{ category.slug ? category.slug : category.id }}">
+          
+          <div class="category-image-wrapper mb-3" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            {% if category.image != packageImageDefault %}
+              <img class="category-image" src="{{ category.image }}" alt="{{ category.name }}" style="max-height: 120px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4));"/>
+            {% else %}
+              <div class="category-image image-default pulse-glow text-glow" style="font-size: 4rem; color: #f59e0b;">
+                <i class="fas fa-box-open" style="font-family: 'Font Awesome 6 Free'; font-weight: 900;"></i>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="category-info text-center">
+            <h3 class="category-name text-glow" style="font-family: 'Unbounded', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff;">{{ category.name }}</h3>
+            <div class="view-btn" style="color: #f59e0b; font-weight: 600; font-size: 0.9rem;">
+              {{ __("Ver Categoría") }} <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+            </div>
+          </div>
+          
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {# Estructura Principal: Mensaje de Bienvenida + Sidebar #}
+  <div class="category-layout flex-group" style="align-items: flex-start; margin-bottom: 3rem;">
+    
+    {# Texto de Bienvenida #}
+    <main class="store-main flex-1 {% if config('home-sidebar') == 'Off' %}w-100{% endif %}">
+      <div class="store-text text-content glass-panel" style="padding: 2.5rem; font-size: 1.05rem; line-height: 1.7; color: #e2e8f0;">
+        {{ index.description|raw }}
+      </div>
+    </main>
+
+    {# Sidebar Derecha (Widgets) #}
+    {% if config('home-sidebar') == 'On' %}
+      <aside class="store-sidebar premium-sidebar" style="min-width: 300px; max-width: 320px; width: 100%;">
+        {% include "sidebar.twig" %}
+      </aside>
+    {% endif %}
+    
+  </div>
+
+  {# Asegurar Responsividad de la Portada #}
+  <style>
+    @media (max-width: 960px) {
+      .category-layout.flex-group {
+        flex-direction: column !important;
+      }
+      .store-sidebar.premium-sidebar {
+        max-width: 100% !important;
+      }
+    }
+  </style>
+
+</div>
+{% endblock %}
