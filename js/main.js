@@ -15,7 +15,7 @@ let selectedProduct = null;
 let isValidatedMinecraftUser = false;
 let currentMinecraftUser = { username: '', uuid: '', avatarUrl: '' };
 
-document.addEventListener('DOMContentLoaded', () => {
+const initApp = () => {
   const safeRun = (fn, name) => {
     try { fn(); } catch (err) { console.warn(`Advertencia al iniciar [${name}]:`, err); }
   };
@@ -35,7 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
   safeRun(initCheckoutModal, 'initCheckoutModal');
   safeRun(initAuth, 'initAuth');
   safeRun(checkPaymentParams, 'checkPaymentParams');
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 // Delegación global de eventos para garantizar que tocar "Ingreso" (#nav-user-btn o .js-toggle-auth) SIEMPRE abra el modal
 document.addEventListener('click', (e) => {
