@@ -127,18 +127,17 @@ button {
   left: 0;
   width: 100%;
   z-index: 50;
-  background: var(--color-surface-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border);
-  padding: 1rem 0;
+  background: #1f2122;
+  border-top: 3px solid #3d3f41;
+  border-bottom: 4px solid #0a0a0a;
+  padding: 0.8rem 0;
   transition: all var(--transition-smooth);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
 }
 
 .site-header.scrolled {
-  background: rgba(9, 9, 11, 0.94);
-  border-bottom-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(245, 158, 11, 0.15);
+  background: #141516;
+  border-bottom-color: #22c55e;
 }
 
 .nav-container {
@@ -204,20 +203,37 @@ button {
 
 .nav-link {
   font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  position: relative;
-  padding: 0.5rem 0;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #a3a3a3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.2rem;
+  background: #2a2c2d;
+  border: 2px solid #111;
+  border-top-color: #4a4d4f;
+  border-left-color: #4a4d4f;
+  border-radius: 4px;
   transition: all var(--transition-fast);
-  white-space: nowrap;
-  letter-spacing: 0.01em;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.3);
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover {
+  background: #36383a;
   color: #fff;
-  text-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+  border-top-color: #5d6063;
+  border-left-color: #5d6063;
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  background: #111;
+  color: #4ade80;
+  border-top-color: #050505;
+  border-left-color: #050505;
+  border-bottom-color: #22c55e;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.9);
+  transform: translateY(1px);
 }
 
 /* Estilo Exclusivo Botón STAFF en Navbar */
@@ -245,23 +261,6 @@ button {
   display: none !important;
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  transition: width var(--transition-fast);
-  border-radius: 2px;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
 
 .nav-actions {
   display: flex;
@@ -860,68 +859,40 @@ button {
 }
 
 .product-card {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(9, 9, 11, 0.95) 100%), url('../img/fondo-productos.png') center/100% 100% no-repeat;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 2rem 1.5rem;
+  background: url('../img/fondo-productos.png') center/100% 100% no-repeat;
+  aspect-ratio: 933 / 1685;
+  border: none;
+  border-radius: 0;
+  padding: 4.5rem 2rem 3rem 2rem;
   position: relative;
   display: flex;
   flex-direction: column;
   transition: all var(--transition-smooth);
   overflow: hidden;
-  backdrop-filter: blur(12px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  background-color: transparent;
 }
 
 .product-card:hover {
   transform: translateY(-8px) scale(1.015);
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(9, 9, 11, 0.90) 100%), url('../img/fondo-productos.png') center/100% 100% no-repeat;
+  background: url('../img/fondo-productos.png') center/100% 100% no-repeat;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
 }
 
 .product-card.rarity-common:hover {
-  border-color: var(--rarity-common);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
 }
 
-.product-card.rarity-rare {
-  border-color: rgba(56, 189, 248, 0.35);
-}
 .product-card.rarity-rare:hover {
-  border-color: var(--rarity-rare);
   box-shadow: var(--rarity-rare-glow);
 }
 
-.product-card.rarity-epic {
-  border-color: rgba(192, 132, 252, 0.4);
-}
 .product-card.rarity-epic:hover {
-  border-color: var(--rarity-epic);
   box-shadow: var(--rarity-epic-glow);
 }
 
-.product-card.rarity-legendary {
-  position: relative;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  background-color: var(--color-surface-card);
+.product-card.rarity-legendary:hover {
   box-shadow: var(--rarity-legendary-glow);
-}
-
-.product-card.rarity-legendary::before {
-  content: '';
-  position: absolute;
-  top: -2px; left: -2px; right: -2px; bottom: -2px;
-  border-radius: 22px;
-  background: linear-gradient(120deg, #fbbf24, #a855f7, #06b6d4, #22c55e, #fbbf24);
-  background-size: 300% 300%;
-  animation: legendary-border-shine 4s ease infinite;
-  z-index: -1;
-}
-
-@keyframes legendary-border-shine {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 .card-top-row {
