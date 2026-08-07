@@ -834,38 +834,69 @@ button {
   display: inline-flex;
   align-items: center;
   padding: 0.35rem 0.95rem;
-  border-radius: 8px;
+  padding-left: 1.8rem;
+  border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  background: #2a2c2d;
+  border: 2px solid #111;
+  border-top-color: #4a4d4f;
+  border-left-color: #4a4d4f;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.4);
+  position: relative;
+}
+
+.rarity-badge::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 1px;
+  border: 1px solid #000;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
 }
 
 .rarity-badge.common {
-  background: rgba(148, 163, 184, 0.18);
-  color: var(--rarity-common);
-  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: #cbd5e1;
 }
+.rarity-badge.common::before { background: #4ade80; box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 0 6px #4ade80; }
 
 .rarity-badge.rare {
-  background: rgba(56, 189, 248, 0.18);
-  color: var(--rarity-rare);
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
 }
+.rarity-badge.rare::before { background: #3b82f6; box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 0 8px #3b82f6; }
 
 .rarity-badge.epic {
-  background: rgba(192, 132, 252, 0.18);
-  color: var(--rarity-epic);
-  border: 1px solid rgba(192, 132, 252, 0.45);
-  box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+  color: #c084fc;
 }
+.rarity-badge.epic::before { background: #a855f7; box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 0 8px #a855f7; }
 
 .rarity-badge.legendary {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.35) 0%, rgba(217, 119, 6, 0.5) 100%);
-  color: var(--rarity-legendary);
-  border: 1px solid rgba(251, 191, 36, 0.7);
-  box-shadow: 0 0 24px rgba(251, 191, 36, 0.6);
+  background: #f59e0b;
+  border-top-color: #fde68a;
+  border-left-color: #fde68a;
+  color: #451a03;
+}
+.rarity-badge.legendary::before { background: #fbbf24; border-color: #78350f; box-shadow: inset 0 2px 0 rgba(255,255,255,0.8), 0 0 8px #fcd34d; }
+
+.rarity-badge.mitico {
+  color: #ef4444;
+}
+.rarity-badge.mitico::before { background: #dc2626; box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 0 10px #dc2626; }
+
+.rarity-badge.supremo {
+  background: #09090b;
+  border-top-color: #27272a;
+  border-left-color: #27272a;
+  color: #fff;
+  text-shadow: 0 0 4px #fff;
+}
+.rarity-badge.supremo::before { 
+  background: linear-gradient(135deg, red, yellow, lime, cyan, blue, magenta); 
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 0 10px magenta; 
 }
 
 .product-card {
@@ -987,40 +1018,72 @@ button {
 
 .btn-card-detail {
   padding: 0.75rem 1.15rem;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.07);
-  color: var(--color-text);
-  font-weight: 600;
+  border-radius: 4px;
+  background: #2a2c2d;
+  border: 2px solid #111;
+  border-top-color: #4a4d4f;
+  border-left-color: #4a4d4f;
+  color: #e4e4e7;
+  font-weight: 800;
+  font-family: var(--font-body);
   font-size: 0.92rem;
+  letter-spacing: 0.05em;
   transition: all var(--transition-fast);
   min-height: 44px;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.4);
+  text-transform: uppercase;
+  position: relative;
 }
 
 .btn-card-detail:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: var(--color-primary);
+  background: #36383a;
+  border-top-color: #5d6063;
+  border-left-color: #5d6063;
+  transform: translateY(-2px);
+  color: #fff;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.5), 0 0 15px rgba(34, 197, 94, 0.4);
+}
+
+.btn-card-detail:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 3px 0 rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
 }
 
 .btn-add-cart {
   flex-grow: 1;
   padding: 0.75rem 1.25rem;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-  color: #000;
-  font-weight: 800;
+  border-radius: 4px;
+  background: #f59e0b;
+  border: 2px solid #111;
+  border-top-color: #fde68a;
+  border-left-color: #fde68a;
+  color: #451a03;
+  font-weight: 900;
+  font-family: var(--font-body);
   font-size: 0.95rem;
+  letter-spacing: 0.05em;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   transition: all var(--transition-fast);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+  box-shadow: inset 0 -4px 0 rgba(180, 83, 9, 0.8), 0 4px 8px rgba(0,0,0,0.5);
   min-height: 44px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .btn-add-cart:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 32px rgba(245, 158, 11, 0.75);
+  background: #fbbf24;
+  border-top-color: #fef3c7;
+  border-left-color: #fef3c7;
+  transform: translateY(-2px);
+  box-shadow: inset 0 -4px 0 rgba(180, 83, 9, 0.8), 0 0 20px rgba(245, 158, 11, 0.6);
+}
+
+.btn-add-cart:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 3px 0 rgba(180, 83, 9, 0.8), 0 1px 2px rgba(0,0,0,0.4);
 }
 
 .products-grid {
